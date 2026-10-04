@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stair Calculator | SKY ARCH LAB</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <h1>SKY ARCH LAB</h1>
+
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="design-lab.html">Design Lab</a>
+            <a href="site-lab.html">Site Lab</a>
+            <a href="building-lab.html">Building Lab</a>
+            <a href="critique-lab.html">Critique Lab</a>
+            <a href="case-studies.html">Case Studies</a>
+            <a href="tools.html" class="active">Tools</a>
+            <a href="my-studio.html">My Studio</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <section class="about-hero">
+        <div class="container">
+            <p class="eyebrow">ARCHITECTURE TOOL</p>
+            <h2>Stair Calculator.</h2>
+            <p>
+                Estimate the number of risers, riser height,
+                tread depth, and approximate stair run.
+            </p>
+        </div>
+    </section>
+
+    <section class="intro">
+        <div class="container intro-content">
+
+            <div>
+                <p class="eyebrow">CALCULATE</p>
+                <h2>Turn floor height into a stair concept.</h2>
+            </div>
+
+            <div>
+                <p>
+                    Enter the vertical floor-to-floor height and your
+                    preferred approximate riser height. The calculator
+                    estimates a practical stair arrangement for early
+                    architectural studies.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="about-features">
+        <div class="container">
+
+            <div class="feature-card">
+
+                <p class="eyebrow">STAIR CALCULATOR</p>
+
+                <h3>Enter Stair Dimensions</h3>
+
+                <div class="tool-form">
+
+                    <label for="floorHeight">
+                        Floor-to-Floor Height (mm)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="floorHeight"
+                        placeholder="Example: 3000"
+                        min="1"
+                        step="1"
+                    >
+
+                    <label for="riserHeight">
+                        Preferred Riser Height (mm)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="riserHeight"
+                        placeholder="Example: 150"
+                        min="1"
+                        step="1"
+                        value="150"
+                    >
+
+                    <label for="treadDepth">
+                        Tread Depth (mm)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="treadDepth"
+                        placeholder="Example: 300"
+                        min="1"
+                        step="1"
+                        value="300"
+                    >
+
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        onclick="calculateStair()"
+                    >
+                        Calculate Stair →
+                    </button>
+
+                </div>
+
+                <div class="tool-result" id="result">
+                    Enter dimensions to calculate the stair arrangement.
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="statement">
+        <div class="container statement-content">
+
+            <p class="eyebrow">STAIR RELATIONSHIP</p>
+
+            <h2>
+                2R + T ≈ 600–650 mm
+            </h2>
+
+            <p>
+                A common preliminary design relationship is that twice
+                the riser height plus the tread depth should fall within
+                approximately 600–650 mm. Final dimensions must be checked
+                against the applicable building regulations and project
+                requirements.
+            </p>
+
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container cta-content">
+
+            <p class="eyebrow">CONTINUE</p>
+
+            <h2>Return to the architecture toolkit.</h2>
+
+            <a href="tools.html" class="btn btn-primary">
+                Back to Tools →
+            </a>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p>SKY ARCH LAB — Think → Test → Design → Critique</p>
+        <p>&copy; <span class="current-year"></span> SKY ARCH LAB</p>
+    </div>
+</
