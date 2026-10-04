@@ -1,33 +1,1081 @@
+/* =========================================================
+   SKY ARCH LAB
+   Main stylesheet
+   ========================================================= */
+
+
+/* =========================================================
+   1. RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  margin: 40px;
-  background-color: #f9f9f9;
-  color: #333;
-}
-
-header, footer {
-  background-color: #004466;
-  color: white;
-  padding: 15px;
-  text-align: center;
-}
-
-nav {
-  margin: 20px 0;
-  text-align: center;
-}
-
-nav a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #004466;
-  font-weight: bold;
-}
-
-nav a:hover {
-  text-decoration: underline;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0b0d0d;
+    color: #f2f0e9;
+    line-height: 1.6;
+    overflow-x: hidden;
 }
 
 a {
-  color: #0066cc;
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+
+/* =========================================================
+   2. VARIABLES
+   ========================================================= */
+
+:root {
+    --black: #0b0d0d;
+    --dark: #111414;
+    --dark-soft: #171b1b;
+    --white: #f2f0e9;
+    --muted: #a7aaa5;
+    --line: rgba(242, 240, 233, 0.15);
+
+    --cream: #e9e1d0;
+    --sand: #d8c7a5;
+    --green: #7f927a;
+    --blue: #7d9294;
+    --orange: #b88a5a;
+
+    --max-width: 1400px;
+}
+
+
+/* =========================================================
+   3. GLOBAL ELEMENTS
+   ========================================================= */
+
+main {
+    width: 100%;
+}
+
+section {
+    position: relative;
+}
+
+.eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.section-label {
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    line-height: 1.05;
+}
+
+p {
+    color: var(--muted);
+}
+
+.primary-button,
+.secondary-button,
+.header-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    border-radius: 100px;
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease;
+}
+
+.primary-button {
+    background: var(--white);
+    color: var(--black);
+    padding: 15px 24px;
+    font-weight: 700;
+}
+
+.primary-button:hover {
+    transform: translateY(-3px);
+    background: var(--cream);
+}
+
+.secondary-button {
+    border: 1px solid var(--line);
+    padding: 14px 23px;
+    color: var(--white);
+}
+
+.secondary-button:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.text-link {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 28px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 5px;
+}
+
+.text-link:hover {
+    color: var(--cream);
+}
+
+
+/* =========================================================
+   4. HEADER
+   ========================================================= */
+
+.site-header {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    padding: 24px 5vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logo a {
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.main-nav a {
+    color: #b8bbb6;
+    font-size: 0.78rem;
+    transition: color 0.25s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: var(--white);
+}
+
+.header-button {
+    background: var(--white);
+    color: var(--black);
+    padding: 10px 17px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.header-button:hover {
+    transform: translateY(-2px);
+    background: var(--cream);
+}
+
+
+/* =========================================================
+   5. HOMEPAGE HERO
+   ========================================================= */
+
+.hero {
+    min-height: 100vh;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    padding: 150px 7vw 100px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(5, 8, 8, 0.96) 0%,
+            rgba(5, 8, 8, 0.82) 42%,
+            rgba(5, 8, 8, 0.35) 75%,
+            rgba(5, 8, 8, 0.75) 100%
+        ),
+        url("assets/images/hero.jpg") center / cover no-repeat;
+
+    background-color: #171b1b;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.55)
+        );
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+}
+
+.hero h1 {
+    margin-top: 22px;
+    max-width: 700px;
+
+    font-size: clamp(4rem, 9vw, 9rem);
+    font-weight: 800;
+    letter-spacing: -0.07em;
+}
+
+.hero h1 span {
+    color: var(--sand);
+}
+
+.hero-content > p {
+    max-width: 500px;
+    margin-top: 28px;
+    font-size: 1.05rem;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 36px;
+}
+
+.hero-note {
+    position: absolute;
+    z-index: 3;
+
+    right: 7vw;
+    bottom: 13%;
+
+    color: var(--sand);
+    font-size: 1rem;
+    font-style: italic;
+    line-height: 1.25;
+}
+
+.hero-note span {
+    display: block;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+
+/* =========================================================
+   6. INTRODUCTION
+   ========================================================= */
+
+.intro-section {
+    padding: 130px 7vw;
+    background: var(--white);
+    color: var(--black);
+}
+
+.intro-section p {
+    color: #555955;
+}
+
+.intro-grid {
+    max-width: var(--max-width);
+    margin: 60px auto 0;
+
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    gap: 10vw;
+}
+
+.intro-grid h2 {
+    max-width: 750px;
+    font-size: clamp(2.8rem, 5vw, 5.5rem);
+    letter-spacing: -0.055em;
+}
+
+.intro-grid > div:last-child {
+    padding-top: 12px;
+}
+
+.intro-grid p {
+    font-size: 1.05rem;
+    max-width: 500px;
+}
+
+
+/* =========================================================
+   7. LABS SECTION
+   ========================================================= */
+
+.labs-section {
+    padding: 130px 7vw;
+    background: #e6e0d4;
+    color: var(--black);
+}
+
+.section-heading {
+    max-width: var(--max-width);
+    margin: 0 auto 65px;
+}
+
+.section-heading h2 {
+    max-width: 800px;
+    margin-top: 22px;
+
+    font-size: clamp(3rem, 6vw, 6rem);
+    letter-spacing: -0.06em;
+}
+
+.labs-grid {
+    max-width: var(--max-width);
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.lab-card {
+    position: relative;
+    min-height: 330px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 35px;
+
+    background: #f0ebe2;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.lab-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+}
+
+.lab-card-large {
+    grid-row: span 2;
+    min-height: 676px;
+}
+
+.lab-card-accent {
+    background: var(--green);
+    color: var(--white);
+}
+
+.lab-card-number {
+    font-size: 0.75rem;
+    font-weight: 700;
+    opacity: 0.55;
+}
+
+.lab-card-content {
+    margin-top: auto;
+    max-width: 500px;
+}
+
+.lab-icon {
+    display: block;
+    margin-bottom: 25px;
+
+    font-size: 2rem;
+}
+
+.lab-card h3 {
+    font-size: clamp(2rem, 3.5vw, 3.8rem);
+    letter-spacing: -0.05em;
+}
+
+.lab-card p {
+    max-width: 430px;
+    margin-top: 15px;
+    color: #666963;
+}
+
+.lab-card-accent p {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.card-arrow {
+    position: absolute;
+    right: 30px;
+    bottom: 28px;
+
+    font-size: 1.4rem;
+
+    transition: transform 0.3s ease;
+}
+
+.lab-card:hover .card-arrow {
+    transform: translate(5px, -5px);
+}
+
+
+/* =========================================================
+   8. PROCESS SECTION
+   ========================================================= */
+
+.process-section {
+    padding: 140px 7vw;
+    background: var(--black);
+}
+
+.process-section h2 {
+    max-width: 900px;
+    margin-top: 25px;
+
+    font-size: clamp(3rem, 6vw, 6rem);
+    letter-spacing: -0.06em;
+}
+
+.process-line {
+    max-width: var(--max-width);
+    margin: 100px auto 0;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    border-top: 1px solid var(--line);
+}
+
+.process-step {
+    padding: 25px 20px 0 0;
+    border-right: 1px solid var(--line);
+}
+
+.process-step:not(:first-child) {
+    padding-left: 20px;
+}
+
+.process-step:last-child {
+    border-right: none;
+}
+
+.process-step span {
+    color: var(--sand);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.process-step h3 {
+    margin-top: 35px;
+    font-size: 1.3rem;
+}
+
+.process-step p {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   9. STATEMENT
+   ========================================================= */
+
+.statement-section {
+    min-height: 85vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 100px 7vw;
+
+    background:
+        linear-gradient(
+            rgba(16, 20, 20, 0.78),
+            rgba(16, 20, 20, 0.88)
+        ),
+        url("assets/images/architecture-1.jpg")
+        center / cover no-repeat;
+}
+
+.statement-content {
+    max-width: 1000px;
+    text-align: center;
+}
+
+.statement-content h2 {
+    margin-top: 25px;
+
+    font-size: clamp(3.5rem, 7vw, 7.5rem);
+    letter-spacing: -0.07em;
+}
+
+.statement-content h2 span {
+    color: var(--sand);
+}
+
+.statement-content p {
+    margin: 30px auto 0;
+    max-width: 550px;
+}
+
+
+/* =========================================================
+   10. CTA
+   ========================================================= */
+
+.cta-section {
+    padding: 120px 7vw;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 50px;
+
+    background: var(--cream);
+    color: var(--black);
+}
+
+.cta-section .eyebrow {
+    color: #666963;
+}
+
+.cta-section h2 {
+    max-width: 850px;
+    margin-top: 22px;
+
+    font-size: clamp(3rem, 6vw, 6rem);
+    letter-spacing: -0.06em;
+}
+
+.cta-section .primary-button {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   11. FOOTER
+   ========================================================= */
+
+.site-footer {
+    padding: 70px 7vw 25px;
+    background: #070909;
+}
+
+.footer-main {
+    max-width: var(--max-width);
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 70px;
+
+    padding-bottom: 70px;
+}
+
+.footer-brand h3 {
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+}
+
+.footer-brand p {
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-column h4 {
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    color: var(--white);
+}
+
+.footer-column a {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.footer-column a:hover {
+    color: var(--white);
+}
+
+.footer-bottom {
+    max-width: var(--max-width);
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+
+    padding-top: 22px;
+
+    border-top: 1px solid var(--line);
+
+    font-size: 0.75rem;
+}
+
+
+/* =========================================================
+   12. ABOUT PAGE
+   ========================================================= */
+
+.about-hero {
+    min-height: 78vh;
+
+    display: flex;
+    align-items: flex-end;
+
+    padding: 150px 7vw 100px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(6, 9, 9, 0.94),
+            rgba(6, 9, 9, 0.55),
+            rgba(6, 9, 9, 0.85)
+        ),
+        url("assets/images/architecture-2.jpg")
+        center / cover no-repeat;
+}
+
+.about-hero-content {
+    max-width: 950px;
+}
+
+.about-hero h1 {
+    margin-top: 25px;
+
+    font-size: clamp(3.5rem, 8vw, 8rem);
+    letter-spacing: -0.07em;
+}
+
+.about-hero h1 span {
+    color: var(--sand);
+}
+
+.hero-description {
+    max-width: 600px;
+    margin-top: 30px;
+    font-size: 1.15rem;
+}
+
+
+/* =========================================================
+   13. ABOUT SECTIONS
+   ========================================================= */
+
+.about-section {
+    padding: 130px 7vw;
+    background: var(--white);
+    color: var(--black);
+}
+
+.about-section p {
+    color: #555955;
+}
+
+.about-grid,
+.future-grid {
+    max-width: var(--max-width);
+    margin: 65px auto 0;
+
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    gap: 10vw;
+}
+
+.about-grid h2,
+.future-grid h2 {
+    font-size: clamp(2.8rem, 5vw, 5rem);
+    letter-spacing: -0.055em;
+}
+
+.about-grid p,
+.future-grid p {
+    margin-bottom: 20px;
+    font-size: 1.02rem;
+}
+
+
+/* =========================================================
+   14. ABOUT PROCESS
+   ========================================================= */
+
+.process-section .section-intro {
+    max-width: 550px;
+    margin-top: 20px;
+}
+
+.process-grid {
+    max-width: var(--max-width);
+    margin: 80px auto 0;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+}
+
+.process-card {
+    min-height: 270px;
+    padding: 30px;
+
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.process-card span {
+    color: var(--sand);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.process-card h3 {
+    margin-top: 55px;
+    font-size: 1.6rem;
+}
+
+.process-card p {
+    margin-top: 12px;
+}
+
+
+/* =========================================================
+   15. FEATURE GRID
+   ========================================================= */
+
+.feature-grid {
+    max-width: var(--max-width);
+    margin: 70px auto 0;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.feature-card {
+    min-height: 300px;
+    padding: 30px;
+
+    background: #e6e0d4;
+}
+
+.feature-number {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #777a74;
+}
+
+.feature-card h3 {
+    margin-top: 70px;
+    font-size: 1.8rem;
+}
+
+.feature-card p {
+    margin-top: 15px;
+}
+
+
+/* =========================================================
+   16. ABOUT VISION
+   ========================================================= */
+
+.vision-section {
+    padding: 140px 7vw;
+
+    background:
+        linear-gradient(
+            rgba(8, 11, 11, 0.8),
+            rgba(8, 11, 11, 0.92)
+        ),
+        url("assets/images/architecture-3.jpg")
+        center / cover no-repeat;
+}
+
+.vision-content {
+    max-width: 1000px;
+}
+
+.vision-content h2 {
+    margin-top: 25px;
+
+    font-size: clamp(4rem, 8vw, 8rem);
+    letter-spacing: -0.07em;
+}
+
+.vision-content p {
+    max-width: 600px;
+    margin-top: 25px;
+}
+
+.vision-content strong {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--sand);
+}
+
+
+/* =========================================================
+   17. FUTURE SECTION
+   ========================================================= */
+
+.future-section {
+    padding: 130px 7vw;
+    background: var(--white);
+    color: var(--black);
+}
+
+.future-grid strong {
+    color: #596c55;
+}
+
+
+/* =========================================================
+   18. ABOUT CTA
+   ========================================================= */
+
+.about-cta {
+    padding: 130px 7vw;
+    text-align: center;
+    background: var(--cream);
+    color: var(--black);
+}
+
+.about-cta .eyebrow {
+    color: #666963;
+}
+
+.about-cta h2 {
+    max-width: 850px;
+    margin: 25px auto 35px;
+
+    font-size: clamp(3.5rem, 7vw, 7rem);
+    letter-spacing: -0.07em;
+}
+
+
+/* =========================================================
+   19. MOBILE NAVIGATION
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .main-nav {
+        display: none;
+    }
+
+    .site-header {
+        padding: 20px 5vw;
+    }
+
+}
+
+
+/* =========================================================
+   20. TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .hero {
+        min-height: 90vh;
+        padding: 140px 6vw 80px;
+    }
+
+    .hero-note {
+        display: none;
+    }
+
+    .intro-grid,
+    .about-grid,
+    .future-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+
+    .labs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lab-card-large {
+        grid-row: auto;
+        min-height: 450px;
+    }
+
+    .process-line {
+        grid-template-columns: 1fr;
+    }
+
+    .process-step,
+    .process-step:not(:first-child) {
+        padding: 25px 0;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .process-step:last-child {
+        border-bottom: none;
+    }
+
+    .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cta-section {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .footer-main {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   21. MOBILE
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+    .site-header {
+        padding: 18px 5vw;
+    }
+
+    .logo a {
+        font-size: 0.85rem;
+    }
+
+    .header-button {
+        padding: 9px 13px;
+        font-size: 0.7rem;
+    }
+
+    .hero {
+        padding: 130px 6vw 70px;
+    }
+
+    .hero h1 {
+        font-size: clamp(3.5rem, 18vw, 5rem);
+    }
+
+    .hero-content > p {
+        font-size: 0.95rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .intro-section,
+    .labs-section,
+    .process-section,
+    .about-section,
+    .vision-section,
+    .future-section,
+    .cta-section,
+    .about-cta {
+        padding: 90px 6vw;
+    }
+
+    .intro-grid h2,
+    .section-heading h2 {
+        font-size: 3rem;
+    }
+
+    .lab-card,
+    .lab-card-large {
+        min-height: 350px;
+        padding: 25px;
+    }
+
+    .lab-card h3 {
+        font-size: 2.3rem;
+    }
+
+    .process-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-card {
+        min-height: 250px;
+    }
+
+    .footer-main {
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .about-hero h1 {
+        font-size: 3.5rem;
+    }
+
+    .statement-content h2 {
+        font-size: 3.4rem;
+    }
+
+    .cta-section h2,
+    .about-cta h2 {
+        font-size: 3.3rem;
+    }
+
 }
