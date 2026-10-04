@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Scale Converter | SKY ARCH LAB</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+
+        <div class="logo">
+            SKY ARCH LAB
+        </div>
+
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="design-lab.html">Design Lab</a>
+            <a href="site-lab.html">Site Lab</a>
+            <a href="building-lab.html">Building Lab</a>
+            <a href="critique-lab.html">Critique</a>
+            <a href="case-studies.html">Case Studies</a>
+            <a href="tools.html" class="active">Tools</a>
+            <a href="my-studio.html">My Studio</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main>
+
+    <section class="about-hero">
+
+        <div class="container">
+
+            <div class="about-hero-content">
+
+                <span class="eyebrow">ARCHITECTURE TOOL / 01</span>
+
+                <h1>
+                    Scale
+                    <span>Converter.</span>
+                </h1>
+
+                <p>
+                    Convert real-world dimensions into drawing dimensions
+                    using common architectural scales.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="intro">
+
+        <div class="container">
+
+            <div class="intro-content">
+
+                <span class="section-number">01</span>
+
+                <h2>
+                    Convert dimensions
+                    <span>instantly.</span>
+                </h2>
+
+                <p>
+                    Enter a real-world dimension and select your
+                    architectural drawing scale.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="about-features">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span class="eyebrow">SCALE CALCULATOR</span>
+
+                <h2>
+                    Real size
+                    <span>→ Drawing size</span>
+                </h2>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+                <article class="feature-card">
+
+                    <h3>Real-world dimension</h3>
+
+                    <input
+                        type="number"
+                        id="realDimension"
+                        placeholder="Enter dimension"
+                        min="0"
+                        step="any"
+                    >
+
+                    <br><br>
+
+                    <label for="unit">Unit:</label>
+
+                    <select id="unit">
+
+                        <option value="mm">Millimetres</option>
+                        <option value="cm">Centimetres</option>
+                        <option value="m" selected>Metres</option>
+
+                    </select>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <h3>Drawing scale</h3>
+
+                    <select id="scale">
+
+                        <option value="20">1 : 20</option>
+                        <option value="50">1 : 50</option>
+                        <option value="100" selected>1 : 100</option>
+                        <option value="200">1 : 200</option>
+                        <option value="500">1 : 500</option>
+
+                    </select>
+
+                    <br><br>
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="calculateScale()"
+                    >
+                        Calculate →
+                    </button>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <span class="card-number">RESULT</span>
+
+                    <h3 id="scaleResult">
+                        0 mm
+                    </h3>
+
+                    <p>
+                        Drawing dimension.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="statement">
+
+        <div class="container">
+
+            <div class="statement-content">
+
+                <span class="eyebrow">FORMULA</span>
+
+                <h2>
+                    Drawing size =
+                    <span>Real size ÷ Scale</span>
+                </h2>
+
+                <p>
+                    Example: a 10 metre wall at 1:100 scale becomes
+                    100 mm on the drawing.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="container">
+
+        <p>
+            SKY ARCH LAB ©
+            <span class="current-year">2026</span>
+        </p>
+
+        <p>
+            Think → Test → Design → Critique
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="../script.js"></script>
+
+<script>
+
+function calculateScale() {
+
+    const realDimension =
+        parseFloat(document.getElementById("realDimension").value);
+
+    const unit =
+        document.getElementById("unit").value;
+
+    const scale =
+        parseFloat(document.getElementById("scale").value);
+
+    const result =
+        document.getElementById("scaleResult");
+
+
+    if (isNaN(realDimension) || realDimension < 0) {
+
+        result.textContent = "Enter a valid dimension";
+
+        return;
+    }
+
+
+    let millimetres;
+
+
+    if (unit === "m") {
+
+        millimetres = realDimension * 1000;
+
+    } else if (unit === "cm") {
+
+        millimetres = realDimension * 10;
+
+    } else {
+
+        millimetres = realDimension;
+
+    }
+
+
+    const drawingSize =
+        millimetres / scale;
+
+
+    result.textContent =
+        drawingSize.toFixed(2) + " mm";
+
+}
+
+</script>
+
+</body>
+</html>
