@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Area Calculator | SKY ARCH LAB</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+
+        <div class="logo">
+            SKY ARCH LAB
+        </div>
+
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="design-lab.html">Design Lab</a>
+            <a href="site-lab.html">Site Lab</a>
+            <a href="building-lab.html">Building Lab</a>
+            <a href="critique-lab.html">Critique</a>
+            <a href="case-studies.html">Case Studies</a>
+            <a href="tools.html" class="active">Tools</a>
+            <a href="my-studio.html">My Studio</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<main>
+
+    <!-- HERO -->
+
+    <section class="about-hero">
+
+        <div class="container">
+
+            <div class="about-hero-content">
+
+                <span class="eyebrow">ARCHITECTURE TOOL / 02</span>
+
+                <h1>
+                    Area
+                    <span>Calculator.</span>
+                </h1>
+
+                <p>
+                    Calculate the area of rectangular spaces quickly
+                    during preliminary architectural planning.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- INTRO -->
+
+    <section class="intro">
+
+        <div class="container">
+
+            <div class="intro-content">
+
+                <span class="section-number">01</span>
+
+                <h2>
+                    Understand the size
+                    <span>of a space.</span>
+                </h2>
+
+                <p>
+                    Enter the length and width of a space to calculate
+                    its floor area.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CALCULATOR -->
+
+    <section class="about-features">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span class="eyebrow">AREA CALCULATOR</span>
+
+                <h2>
+                    Length × Width
+                    <span>= Area</span>
+                </h2>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+                <article class="feature-card">
+
+                    <h3>Length</h3>
+
+                    <input
+                        type="number"
+                        id="length"
+                        placeholder="Enter length"
+                        min="0"
+                        step="any"
+                    >
+
+                    <br><br>
+
+                    <label for="dimensionUnit">
+                        Unit:
+                    </label>
+
+                    <select id="dimensionUnit">
+
+                        <option value="m" selected>
+                            Metres
+                        </option>
+
+                        <option value="cm">
+                            Centimetres
+                        </option>
+
+                    </select>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <h3>Width</h3>
+
+                    <input
+                        type="number"
+                        id="width"
+                        placeholder="Enter width"
+                        min="0"
+                        step="any"
+                    >
+
+                    <br><br>
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="calculateArea()"
+                    >
+                        Calculate →
+                    </button>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <span class="card-number">RESULT</span>
+
+                    <h3 id="areaResult">
+                        0 m²
+                    </h3>
+
+                    <p>
+                        Calculated floor area.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- EXAMPLE -->
+
+    <section class="statement">
+
+        <div class="container">
+
+            <div class="statement-content">
+
+                <span class="eyebrow">EXAMPLE</span>
+
+                <h2>
+                    6 m × 4 m =
+                    <span>24 m²</span>
+                </h2>
+
+                <p>
+                    The calculator converts centimetres to metres
+                    automatically before calculating the area.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <section class="cta">
+
+        <div class="container">
+
+            <div class="cta-content">
+
+                <span class="eyebrow">MORE TOOLS</span>
+
+                <h2>
+                    Continue
+                    <span>testing your design.</span>
+                </h2>
+
+                <p>
+                    Use the other architecture tools available
+                    inside SKY ARCH LAB.
+                </p>
+
+                <a
+                    href="tools.html"
+                    class="btn btn-primary"
+                >
+                    Back to Tools →
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="container">
+
+        <p>
+            SKY ARCH LAB ©
+            <span class="current-year">2026</span>
+        </p>
+
+        <p>
+            Think → Test → Design → Critique
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="../script.js"></script>
+
+<script>
+
+function calculateArea() {
+
+    const length =
+        parseFloat(
+            document.getElementById("length").value
+        );
+
+    const width =
+        parseFloat(
+            document.getElementById("width").value
+        );
+
+    const unit =
+        document.getElementById("dimensionUnit").value;
+
+    const result =
+        document.getElementById("areaResult");
+
+
+    if (
+        isNaN(length) ||
+        isNaN(width) ||
+        length < 0 ||
+        width < 0
+    ) {
+
+        result.textContent =
+            "Enter valid dimensions";
+
+        return;
+    }
+
+
+    let lengthInMetres = length;
+    let widthInMetres = width;
+
+
+    if (unit === "cm") {
+
+        lengthInMetres =
+            length / 100;
+
+        widthInMetres =
+            width / 100;
+
+    }
+
+
+    const area =
+        lengthInMetres * widthInMetres;
+
+
+    result.textContent =
+        area.toFixed(2) + " m²";
+
+}
+
+</script>
+
+</body>
+</html>
