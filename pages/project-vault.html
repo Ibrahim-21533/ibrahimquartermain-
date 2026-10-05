@@ -46,7 +46,7 @@
         <div class="hero-content">
 
             <p class="eyebrow">
-                MY STUDIO / PROJECT VAULT
+                PROJECT VAULT
             </p>
 
             <h1 id="vaultTitle">
@@ -54,8 +54,8 @@
             </h1>
 
             <p id="vaultSubtitle">
-                Your project's drawings, photographs,
-                sketches and documents.
+                Architectural drawings, sketches,
+                photographs and documents.
             </p>
 
         </div>
@@ -63,7 +63,7 @@
     </section>
 
 
-    <!-- PROJECT INFO -->
+    <!-- PROJECT INFORMATION -->
 
     <section class="intro">
 
@@ -74,7 +74,7 @@
             </p>
 
             <h2 id="projectNameDisplay">
-                Loading project...
+                Loading...
             </h2>
 
             <p id="projectInfo">
@@ -93,7 +93,7 @@
         <div class="tool-form">
 
             <label for="fileInput">
-                Add Project Files
+                Add Files
             </label>
 
             <input
@@ -104,11 +104,9 @@
             >
 
             <p>
-                Supported material:
-                sketches, site photographs,
-                drawings and PDF documents.
+                Add sketches, plans, sections,
+                site photographs or PDF documents.
             </p>
-
 
             <div class="tool-buttons">
 
@@ -129,7 +127,6 @@
 
             </div>
 
-
             <div
                 id="vaultMessage"
                 class="tool-result"
@@ -140,7 +137,7 @@
     </section>
 
 
-    <!-- FILES -->
+    <!-- FILE LIBRARY -->
 
     <section class="intro">
 
@@ -151,11 +148,11 @@
             </p>
 
             <h2>
-                Your files.
+                Project Library.
             </h2>
 
             <p>
-                Everything stored for this project appears below.
+                Your architectural material is organized below.
             </p>
 
         </div>
@@ -166,35 +163,35 @@
     <section class="feature-section">
 
         <div
-            class="feature-grid"
             id="fileList"
+            class="vault-grid"
         ></div>
 
     </section>
 
 
-    <!-- STORAGE INFORMATION -->
+    <!-- STORAGE -->
 
     <section class="statement">
 
         <div class="statement-content">
 
             <p class="eyebrow">
-                LOCAL STORAGE
+                LOCAL PROJECT STORAGE
             </p>
 
             <h2>
-                Your project stays organized.
+                Build the project record.
             </h2>
 
             <p>
-                Files are stored locally in this browser
-                using IndexedDB.
+                Keep the sketches, photographs and documents
+                that explain how the project developed.
             </p>
 
             <p>
-                Keep important academic work backed up
-                somewhere else as well.
+                Files are stored locally in this browser.
+                Important academic work should also be backed up.
             </p>
 
         </div>
@@ -223,7 +220,8 @@
 <script>
 
     /* =========================================
-       PROJECT VAULT
+       SKY ARCH LAB
+       VISUAL PROJECT VAULT
        ========================================= */
 
     const PROJECT_STORAGE_KEY =
@@ -243,7 +241,7 @@
 
 
     /* =========================================
-       GET PROJECT ID FROM URL
+       PROJECT ID
        ========================================= */
 
     function getProjectId() {
@@ -396,14 +394,7 @@
                     "projectInfo"
                 )
                 .textContent =
-                "Return to Project Studio and select a saved project.";
-
-
-            document
-                .getElementById(
-                    "fileInput"
-                )
-                .disabled = true;
+                "Return to Project Studio.";
 
 
             return;
@@ -441,7 +432,7 @@
 
 
     /* =========================================
-       UPLOAD FILES
+       UPLOAD
        ========================================= */
 
     async function uploadFiles() {
@@ -459,7 +450,7 @@
         if (!currentProjectId) {
 
             showMessage(
-                "No project has been selected."
+                "No project selected."
             );
 
             return;
@@ -470,7 +461,7 @@
         if (files.length === 0) {
 
             showMessage(
-                "Please select at least one file."
+                "Select at least one file."
             );
 
             return;
@@ -482,22 +473,19 @@
 
             for (const file of files) {
 
-                await saveFile(
-                    file
-                );
+                await saveFile(file);
 
             }
 
 
             input.value = "";
 
+            displayFiles();
+
 
             showMessage(
-                `${files.length} file(s) added to the vault.`
+                `${files.length} file(s) added.`
             );
-
-
-            displayFiles();
 
         } catch (error) {
 
@@ -588,11 +576,6 @@
             );
 
 
-        if (!currentProjectId) {
-            return;
-        }
-
-
         const transaction =
             database.transaction(
                 [STORE_NAME],
@@ -635,12 +618,12 @@
                         </p>
 
                         <h3>
-                            No files yet.
+                            No project material yet.
                         </h3>
 
                         <p>
                             Upload your first sketch,
-                            drawing, photograph or PDF.
+                            drawing or photograph.
                         </p>
 
                     </div>
@@ -664,54 +647,136 @@
 
 
                 card.className =
-                    "feature-card";
+                    "vault-card";
+
+
+                const preview =
+                    createPreview(file);
 
 
                 card.innerHTML = `
 
-                    <p class="eyebrow">
-                        ${getFileCategory(file.type)}
-                    </p>
+                    <div class="vault-preview">
+                        ${preview}
+                    </div>
 
-                    <h3>
-                        ${escapeHTML(file.name)}
-                    </h3>
+                    <div class="vault-card-content">
 
-                    <p>
-                        ${formatFileSize(file.size)}
-                        ·
-                        ${new Date(file.date)
-                            .toLocaleDateString()}
-                    </p>
+                        <p class="eyebrow">
+                            ${getFileCategory(file.type)}
+                        </p>
 
-                    <div class="tool-buttons">
+                        <h3>
+                            ${escapeHTML(file.name)}
+                        </h3>
 
-                        <button
-                            class="btn btn-primary"
-                            onclick="openFile(${file.id})"
-                        >
-                            Open
-                        </button>
+                        <p>
+                            ${formatFileSize(file.size)}
+                            ·
+                            ${new Date(file.date)
+                                .toLocaleDateString()}
+                        </p>
 
-                        <button
-                            class="btn btn-secondary"
-                            onclick="deleteFile(${file.id})"
-                        >
-                            Delete
-                        </button>
+                        <div class="tool-buttons">
+
+                            <button
+                                class="btn btn-primary"
+                                onclick="openFile(${file.id})"
+                            >
+                                Open
+                            </button>
+
+                            <button
+                                class="btn btn-secondary"
+                                onclick="deleteFile(${file.id})"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
 
                     </div>
 
                 `;
 
 
-                container.appendChild(
-                    card
-                );
+                container.appendChild(card);
 
             });
 
         };
+
+    }
+
+
+    /* =========================================
+       CREATE PREVIEW
+       ========================================= */
+
+    function createPreview(record) {
+
+        if (
+            record.type &&
+            record.type.startsWith("image/")
+        ) {
+
+            const url =
+                URL.createObjectURL(
+                    record.file
+                );
+
+
+            return `
+
+                <img
+                    src="${url}"
+                    alt="${escapeHTML(record.name)}"
+                    class="vault-image"
+                >
+
+            `;
+
+        }
+
+
+        if (
+            record.type === "application/pdf"
+        ) {
+
+            return `
+
+                <div class="vault-document">
+
+                    <span class="vault-document-icon">
+                        PDF
+                    </span>
+
+                    <span>
+                        Architectural Document
+                    </span>
+
+                </div>
+
+            `;
+
+        }
+
+
+        return `
+
+            <div class="vault-document">
+
+                <span class="vault-document-icon">
+                    FILE
+                </span>
+
+                <span>
+                    Project Material
+                </span>
+
+            </div>
+
+        `;
 
     }
 
@@ -778,13 +843,11 @@
 
     function deleteFile(id) {
 
-        const confirmed =
-            confirm(
-                "Delete this file from the project?"
-            );
-
-
-        if (!confirmed) {
+        if (
+            !confirm(
+                "Delete this file?"
+            )
+        ) {
             return;
         }
 
@@ -942,15 +1005,6 @@
                     )
                     .textContent =
                     "No project selected";
-
-
-                document
-                    .getElementById(
-                        "projectInfo"
-                    )
-                    .textContent =
-                    "Open a project from Project Studio.";
-
 
                 return;
 
