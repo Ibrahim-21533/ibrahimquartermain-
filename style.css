@@ -1,18 +1,18 @@
 /* =========================================================
    SKY ARCH LAB
-   Architectural Studio / Presentation Board Theme
-   Complete replacement style.css
+   LIGHT ARCHITECTURAL STUDIO THEME
+   Complete style.css
    ========================================================= */
 
 
 /* =========================================================
-   1. DESIGN TOKENS
+   1. DESIGN SYSTEM
    ========================================================= */
 
 :root {
     --paper: #f3f0e8;
     --paper-light: #faf8f2;
-    --paper-white: #ffffff;
+    --white: #ffffff;
 
     --ink: #202321;
     --text: #343936;
@@ -31,13 +31,15 @@
         0 8px 30px rgba(32, 35, 33, 0.07);
 
     --shadow-card:
-        0 12px 35px rgba(32, 35, 33, 0.09);
+        0 14px 40px rgba(32, 35, 33, 0.10);
+
+    --max-width: 1200px;
+
+    --side-space: 60px;
 
     --radius-small: 4px;
     --radius: 8px;
     --radius-large: 14px;
-
-    --max-width: 1200px;
 }
 
 
@@ -47,7 +49,7 @@
 
 * {
     box-sizing: border-box;
-    margin: 10;
+    margin: 0;
     padding: 0;
 }
 
@@ -106,11 +108,6 @@ textarea {
     font: inherit;
 }
 
-button,
-a {
-    -webkit-tap-highlight-color: transparent;
-}
-
 a {
     color: inherit;
     text-decoration: none;
@@ -121,13 +118,14 @@ ol {
     list-style: none;
 }
 
-section,
 header,
-footer,
 main,
+section,
+footer,
 nav,
 article,
-aside {
+aside,
+div {
     min-width: 0;
 }
 
@@ -147,142 +145,7 @@ body.loaded {
 
 
 /* =========================================================
-   4. HEADER
-   ========================================================= */
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-
-    width: 100%;
-
-    background:
-        rgba(250, 248, 242, 0.94);
-
-    border-bottom:
-        1px solid var(--line);
-
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-
-    transition:
-        box-shadow 0.3s ease,
-        background 0.3s ease;
-}
-
-header.scrolled {
-    background:
-        rgba(250, 248, 242, 0.98);
-
-    box-shadow:
-        0 5px 25px rgba(32, 35, 33, 0.08);
-}
-
-header > * {
-    max-width: var(--max-width);
-    margin-left: auto;
-    margin-right: auto;
-}
-
-header h1,
-header .logo {
-    color: var(--ink);
-    letter-spacing: 0.04em;
-}
-
-
-/* =========================================================
-   5. NAVIGATION
-   ========================================================= */
-
-nav {
-    max-width: var(--max-width);
-    margin: 0 auto;
-
-    padding: 12px 20px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    scrollbar-width: none;
-}
-
-nav::-webkit-scrollbar {
-    display: none;
-}
-
-nav a {
-    position: relative;
-
-    flex: 0 0 auto;
-
-    padding: 8px 12px;
-
-    color: var(--muted);
-
-    font-size: 0.78rem;
-    font-weight: 600;
-
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-
-    border: 1px solid transparent;
-
-    transition:
-        color 0.25s ease,
-        border-color 0.25s ease,
-        background 0.25s ease;
-}
-
-nav a::before {
-    content: "";
-
-    position: absolute;
-
-    left: 10px;
-    right: 10px;
-    bottom: 3px;
-
-    height: 1px;
-
-    background: var(--ink);
-
-    transform: scaleX(0);
-    transform-origin: center;
-
-    transition: transform 0.25s ease;
-}
-
-nav a:hover {
-    color: var(--ink);
-}
-
-nav a:hover::before,
-nav a.active::before {
-    transform: scaleX(1);
-}
-
-nav a.active {
-    color: var(--paper-white);
-
-    background: var(--ink);
-
-    border-color: var(--ink);
-}
-
-nav a.active::before {
-    background: var(--paper-white);
-}
-
-
-/* =========================================================
-   6. GLOBAL TYPOGRAPHY
+   4. GLOBAL TYPOGRAPHY
    ========================================================= */
 
 h1,
@@ -323,27 +186,21 @@ strong {
 }
 
 ::selection {
-    color: var(--paper-white);
     background: var(--accent);
+    color: var(--white);
 }
 
 
 /* =========================================================
-   7. GENERAL LAYOUT
+   5. COMMON CENTERED CONTAINERS
+   IMPORTANT:
+   These control the left/right spacing of most information.
    ========================================================= */
-
-main {
-    width: 90%;
-}
-
-section {
-    width: 100%;
-}
 
 .container,
 .section-inner {
     width: min(
-        calc(100% - 40px),
+        calc(100% - (var(--side-space) * 2)),
         var(--max-width)
     );
 
@@ -351,8 +208,118 @@ section {
     margin-right: auto;
 }
 
-section:not(.visual-hero) {
+.section-heading {
+    width: min(
+        calc(100% - (var(--side-space) * 2)),
+        var(--max-width)
+    );
+
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-bottom: 50px;
+}
+
+
+/* =========================================================
+   6. HEADER
+   ========================================================= */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    width: 100%;
+
+    background:
+        rgba(250, 248, 242, 0.95);
+
+    border-bottom:
+        1px solid var(--line);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    transition:
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+header.scrolled {
+    background:
+        rgba(250, 248, 242, 0.98);
+
+    box-shadow:
+        0 5px 25px rgba(32, 35, 33, 0.08);
+}
+
+
+/* =========================================================
+   7. NAVIGATION
+   ========================================================= */
+
+nav {
+    width: min(
+        calc(100% - 30px),
+        var(--max-width)
+    );
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 12px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scrollbar-width: none;
+}
+
+nav::-webkit-scrollbar {
+    display: none;
+}
+
+nav a {
     position: relative;
+
+    flex: 0 0 auto;
+
+    padding: 8px 12px;
+
+    color: var(--muted);
+
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+    border: 1px solid transparent;
+
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+}
+
+nav a:hover {
+    color: var(--ink);
+}
+
+nav a.active {
+    color: var(--white);
+
+    background: var(--ink);
+
+    border-color: var(--ink);
 }
 
 
@@ -370,17 +337,23 @@ section:not(.visual-hero) {
 
     padding: 11px 20px;
 
-    border: 1px solid var(--ink);
+    border:
+        1px solid var(--ink);
 
-    border-radius: var(--radius-small);
+    border-radius:
+        var(--radius-small);
 
-    background: var(--ink);
-    color: var(--paper-white);
+    background:
+        var(--ink);
+
+    color:
+        var(--white);
 
     font-size: 0.82rem;
     font-weight: 600;
 
     letter-spacing: 0.06em;
+
     text-transform: uppercase;
 
     cursor: pointer;
@@ -393,34 +366,40 @@ section:not(.visual-hero) {
 }
 
 .btn:hover {
-    background: var(--accent);
+    background:
+        var(--accent);
 
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
 
     box-shadow:
-        0 8px 20px rgba(32, 35, 33, 0.14);
-}
-
-.btn:active,
-.btn.clicked {
-    transform: translateY(0);
+        0 8px 20px
+        rgba(32, 35, 33, 0.14);
 }
 
 .btn.secondary,
 .btn.outline {
-    color: var(--ink);
-    background: transparent;
+    background:
+        transparent;
+
+    color:
+        var(--ink);
 }
 
 .btn.secondary:hover,
 .btn.outline:hover {
-    color: var(--paper-white);
-    background: var(--ink);
+    background:
+        var(--ink);
+
+    color:
+        var(--white);
 }
 
 .hero-buttons {
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 12px;
 }
 
@@ -433,14 +412,16 @@ section:not(.visual-hero) {
     position: relative;
 
     width: 100%;
+
     min-height: 78vh;
 
     display: flex;
+
     align-items: center;
 
     padding:
         100px
-        max(20px, 5vw);
+        var(--side-space);
 
     overflow: hidden;
 
@@ -452,6 +433,7 @@ section:not(.visual-hero) {
     content: "";
 
     position: absolute;
+
     inset: 0;
 
     pointer-events: none;
@@ -469,24 +451,26 @@ section:not(.visual-hero) {
             transparent 50.2%
         );
 
-    background-size: 120px 120px;
-
-    opacity: 0.7;
+    background-size:
+        120px 120px;
 }
 
 .hero-content {
     position: relative;
+
     z-index: 2;
 
-    width: min(100%, 620px);
+    width:
+        min(100%, 680px);
 }
 
 .hero h1 {
-    margin: 18px 0 24px;
+    margin:
+        18px 0 24px;
 }
 
 .hero p {
-    max-width: 620px;
+    max-width: 650px;
 
     margin-bottom: 30px;
 
@@ -498,27 +482,20 @@ section:not(.visual-hero) {
 .hero-label,
 .eyebrow,
 .section-number {
-    color: var(--terracotta);
+    color:
+        var(--terracotta);
 
     font-size: 0.72rem;
     font-weight: 700;
 
     letter-spacing: 0.18em;
+
     text-transform: uppercase;
-}
-
-.hero-label {
-    display: inline-block;
-
-    padding-bottom: 8px;
-
-    border-bottom:
-        1px solid var(--terracotta);
 }
 
 
 /* =========================================================
-   10. VISUAL HERO
+   10. VISUAL HOMEPAGE HERO
    ========================================================= */
 
 .visual-hero {
@@ -540,26 +517,25 @@ section:not(.visual-hero) {
 }
 
 .visual-hero h1 {
-    font-size: clamp(3.3rem, 8vw, 7.5rem);
+    font-size:
+        clamp(3.3rem, 8vw, 7.5rem);
 
-    letter-spacing: -0.06em;
-}
-
-.visual-hero h1 br {
-    display: block;
+    letter-spacing:
+        -0.06em;
 }
 
 .visual-hero .hero-drawing {
     position: relative;
 
     width: 100%;
-    min-height: 480px;
 
-    border:
-        1px solid var(--line);
+    min-height: 480px;
 
     background:
         var(--paper-light);
+
+    border:
+        1px solid var(--line);
 
     box-shadow:
         var(--shadow-soft);
@@ -569,15 +545,12 @@ section:not(.visual-hero) {
 
 
 /* =========================================================
-   11. ARCHITECTURAL HERO DRAWING
+   11. HERO ARCHITECTURAL DRAWING
    ========================================================= */
-
-.hero-drawing {
-    isolation: isolate;
-}
 
 .drawing-grid {
     position: absolute;
+
     inset: 0;
 
     background:
@@ -591,15 +564,18 @@ section:not(.visual-hero) {
             transparent 1px
         );
 
-    background-size: 35px 35px;
+    background-size:
+        35px 35px;
 }
 
 .drawing-axis {
     position: absolute;
 
-    background: var(--ink);
+    background:
+        var(--ink);
 
-    opacity: 0.65;
+    opacity:
+        0.65;
 }
 
 .drawing-axis.horizontal {
@@ -635,7 +611,8 @@ section:not(.visual-hero) {
     left: 20%;
     top: 27%;
 
-    transform: rotate(-7deg);
+    transform:
+        rotate(-7deg);
 }
 
 .square-two {
@@ -645,9 +622,11 @@ section:not(.visual-hero) {
     left: 54%;
     top: 39%;
 
-    border-color: var(--terracotta);
+    border-color:
+        var(--terracotta);
 
-    transform: rotate(12deg);
+    transform:
+        rotate(12deg);
 }
 
 .drawing-circle {
@@ -662,7 +641,8 @@ section:not(.visual-hero) {
     border:
         1px solid var(--blue);
 
-    border-radius: 50%;
+    border-radius:
+        50%;
 }
 
 .drawing-line {
@@ -670,9 +650,11 @@ section:not(.visual-hero) {
 
     height: 1px;
 
-    background: var(--terracotta);
+    background:
+        var(--terracotta);
 
-    transform-origin: left center;
+    transform-origin:
+        left center;
 }
 
 .line-one {
@@ -681,7 +663,8 @@ section:not(.visual-hero) {
     left: 15%;
     top: 76%;
 
-    transform: rotate(-18deg);
+    transform:
+        rotate(-18deg);
 }
 
 .line-two {
@@ -690,7 +673,8 @@ section:not(.visual-hero) {
     left: 43%;
     top: 70%;
 
-    transform: rotate(24deg);
+    transform:
+        rotate(24deg);
 }
 
 .drawing-arrow {
@@ -699,7 +683,8 @@ section:not(.visual-hero) {
     width: 70px;
     height: 1px;
 
-    background: var(--green);
+    background:
+        var(--green);
 }
 
 .drawing-arrow::after {
@@ -719,37 +704,44 @@ section:not(.visual-hero) {
     border-right:
         1px solid var(--green);
 
-    transform: rotate(45deg);
+    transform:
+        rotate(45deg);
 }
 
 .arrow-one {
     left: 15%;
     top: 20%;
 
-    transform: rotate(20deg);
+    transform:
+        rotate(20deg);
 }
 
 .arrow-two {
     right: 15%;
     bottom: 17%;
 
-    transform: rotate(-20deg);
+    transform:
+        rotate(-20deg);
 }
 
 .drawing-label {
     position: absolute;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-family:
         "Courier New",
         monospace;
 
-    font-size: 0.68rem;
+    font-size:
+        0.68rem;
 
-    letter-spacing: 0.08em;
+    letter-spacing:
+        0.08em;
 
-    text-transform: uppercase;
+    text-transform:
+        uppercase;
 }
 
 .label-a {
@@ -780,52 +772,15 @@ section:not(.visual-hero) {
     border-top:
         1px solid var(--ink);
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-family:
         "Courier New",
         monospace;
 
-    font-size: 0.65rem;
-}
-
-.drawing-dimension::before,
-.drawing-dimension::after {
-    content: "";
-
-    position: absolute;
-
-    top: -5px;
-
-    width: 1px;
-    height: 10px;
-
-    background: var(--ink);
-}
-
-.drawing-dimension::before {
-    left: 0;
-}
-
-.drawing-dimension::after {
-    right: 0;
-}
-
-.drawing-title {
-    position: absolute;
-
-    right: 20px;
-    top: 20px;
-
-    color: var(--ink);
-
-    font-family:
-        "Courier New",
-        monospace;
-
-    font-size: 0.68rem;
-
-    letter-spacing: 0.12em;
+    font-size:
+        0.65rem;
 }
 
 
@@ -838,63 +793,62 @@ section:not(.visual-hero) {
 .lab-section,
 .process-section,
 .statement,
-.cta {
+.cta,
+.graphic-board-section {
     padding:
-        110px
-        0;
-}
-
-.section-heading {
-    width: min(
-        calc(100% - 40px),
-        var(--max-width)
-    );
-
-    margin: 0 auto 50px;
+        110px 0;
 }
 
 .section-heading h2 {
-    max-width: 780px;
+    max-width: 800px;
 
     margin-top: 12px;
 }
 
 .section-heading p {
-    max-width: 650px;
+    max-width: 680px;
 
     margin-top: 18px;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 }
 
 
 /* =========================================================
-   13. INTRO
+   13. HOMEPAGE INTRO
    ========================================================= */
 
-.intro {
-    position: relative;
-}
-
 .intro-content {
-    width: min(
-        calc(100% - 40px),
-        900px
-    );
+    width:
+        min(
+            calc(100% - (var(--side-space) * 2)),
+            1000px
+        );
 
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .intro-content h2 {
-    margin-bottom: 25px;
+    max-width: 850px;
+
+    margin-bottom:
+        25px;
 }
 
 .intro-content p {
-    max-width: 760px;
+    max-width:
+        780px;
 
-    margin-bottom: 18px;
+    margin-bottom:
+        18px;
 
-    font-size: 1.05rem;
+    color:
+        var(--text);
+
+    font-size:
+        1.05rem;
 }
 
 .intro-content p:last-child {
@@ -903,16 +857,18 @@ section:not(.visual-hero) {
 
 
 /* =========================================================
-   14. PROCESS GRID
+   14. PROCESS
    ========================================================= */
 
 .architecture-process {
-    width: min(
-        calc(100% - 40px),
-        var(--max-width)
-    );
+    width:
+        min(
+            calc(100% - (var(--side-space) * 2)),
+            var(--max-width)
+        );
 
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
 
     display: grid;
 
@@ -929,7 +885,8 @@ section:not(.visual-hero) {
 
     padding: 28px;
 
-    background: var(--paper-white);
+    background:
+        var(--white);
 
     border:
         1px solid var(--line);
@@ -945,41 +902,39 @@ section:not(.visual-hero) {
 }
 
 .process-card:hover {
-    transform: translateY(-6px);
+    transform:
+        translateY(-6px);
 
     box-shadow:
         var(--shadow-card);
 }
 
 .process-number {
-    position: relative;
-    z-index: 2;
-
-    color: var(--terracotta);
+    color:
+        var(--terracotta);
 
     font-family:
         "Courier New",
         monospace;
 
-    font-size: 0.72rem;
+    font-size:
+        0.72rem;
 }
 
 .process-card h3 {
-    position: relative;
-    z-index: 2;
+    margin-top:
+        80px;
 
-    margin-top: 80px;
-
-    margin-bottom: 10px;
+    margin-bottom:
+        10px;
 }
 
 .process-card p {
-    position: relative;
-    z-index: 2;
+    color:
+        var(--muted);
 
-    color: var(--muted);
-
-    font-size: 0.9rem;
+    font-size:
+        0.9rem;
 }
 
 
@@ -1009,7 +964,8 @@ section:not(.visual-hero) {
     border:
         1px solid var(--blue);
 
-    border-radius: 50%;
+    border-radius:
+        50%;
 }
 
 .graphic-cross::before,
@@ -1018,7 +974,8 @@ section:not(.visual-hero) {
 
     position: absolute;
 
-    background: var(--terracotta);
+    background:
+        var(--terracotta);
 }
 
 .graphic-cross::before {
@@ -1064,7 +1021,8 @@ section:not(.visual-hero) {
     border-top:
         1px dashed var(--sand);
 
-    transform: rotate(30deg);
+    transform:
+        rotate(30deg);
 }
 
 .wind-line {
@@ -1078,7 +1036,8 @@ section:not(.visual-hero) {
     border-top:
         1px solid var(--blue);
 
-    transform: rotate(-15deg);
+    transform:
+        rotate(-15deg);
 }
 
 .form-block {
@@ -1093,7 +1052,8 @@ section:not(.visual-hero) {
     border:
         2px solid var(--accent);
 
-    transform: rotate(15deg);
+    transform:
+        rotate(15deg);
 }
 
 .form-axis {
@@ -1105,9 +1065,11 @@ section:not(.visual-hero) {
     left: 5px;
     top: 50px;
 
-    background: var(--terracotta);
+    background:
+        var(--terracotta);
 
-    transform: rotate(-20deg);
+    transform:
+        rotate(-20deg);
 }
 
 .test-box {
@@ -1129,261 +1091,4 @@ section:not(.visual-hero) {
     width: 80px;
     height: 1px;
 
-    left: 10px;
-    top: 50px;
-
-    background: var(--green);
-
-    transform: rotate(30deg);
-}
-
-.test-point {
-    position: absolute;
-
-    width: 8px;
-    height: 8px;
-
-    border-radius: 50%;
-
-    background: var(--terracotta);
-
-    left: 70px;
-    top: 20px;
-}
-
-
-/* =========================================================
-   16. GRAPHIC BOARD
-   ========================================================= */
-
-.graphic-board-section {
-    padding:
-        100px 0;
-}
-
-.graphic-board {
-    width: min(
-        calc(100% - 40px),
-        var(--max-width)
-    );
-
-    min-height: 580px;
-
-    margin: auto;
-
-    background:
-        var(--paper-white);
-
-    border:
-        1px solid var(--line);
-
-    box-shadow:
-        var(--shadow-card);
-}
-
-.board-header {
-    padding: 18px 24px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    border-bottom:
-        1px solid var(--line);
-}
-
-.board-header span {
-    color: var(--muted);
-
-    font-family:
-        "Courier New",
-        monospace;
-
-    font-size: 0.68rem;
-
-    letter-spacing: 0.08em;
-}
-
-.board-main {
-    display: grid;
-
-    grid-template-columns:
-        1.2fr 1fr 0.75fr;
-
-    min-height: 500px;
-}
-
-.board-plan,
-.board-section,
-.board-notes {
-    position: relative;
-
-    padding: 35px;
-
-    border-right:
-        1px solid var(--line);
-
-    overflow: hidden;
-}
-
-.board-notes {
-    border-right: 0;
-}
-
-.board-label {
-    position: absolute;
-
-    top: 15px;
-    left: 18px;
-
-    color: var(--muted);
-
-    font-family:
-        "Courier New",
-        monospace;
-
-    font-size: 0.62rem;
-
-    letter-spacing: 0.08em;
-
-    text-transform: uppercase;
-}
-
-
-/* =========================================================
-   17. PLAN GRAPHIC
-   ========================================================= */
-
-.board-plan {
-    background:
-        linear-gradient(
-            var(--line-soft) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            var(--line-soft) 1px,
-            transparent 1px
-        );
-
-    background-size: 28px 28px;
-}
-
-.plan-room {
-    position: absolute;
-
-    border:
-        2px solid var(--ink);
-
-    background:
-        rgba(83, 111, 122, 0.04);
-}
-
-.room-one {
-    width: 160px;
-    height: 130px;
-
-    left: 15%;
-    top: 25%;
-}
-
-.room-two {
-    width: 120px;
-    height: 130px;
-
-    left: calc(15% + 160px);
-    top: 25%;
-
-    border-left: 0;
-}
-
-.room-three {
-    width: 160px;
-    height: 90px;
-
-    left: 15%;
-    top: calc(25% + 130px);
-
-    border-top: 0;
-}
-
-.plan-corridor {
-    position: absolute;
-
-    width: 60px;
-    height: 220px;
-
-    left: calc(15% + 120px);
-    top: 25%;
-
-    border-left:
-        1px dashed var(--terracotta);
-
-    border-right:
-        1px dashed var(--terracotta);
-}
-
-.movement {
-    position: absolute;
-
-    height: 1px;
-
-    background: var(--blue);
-}
-
-.movement::after {
-    content: "";
-
-    position: absolute;
-
-    right: 0;
-    top: -4px;
-
-    width: 8px;
-    height: 8px;
-
-    border-top:
-        1px solid var(--blue);
-
-    border-right:
-        1px solid var(--blue);
-
-    transform: rotate(45deg);
-}
-
-.movement-one {
-    width: 100px;
-
-    left: 17%;
-    top: 45%;
-}
-
-.movement-two {
-    width: 90px;
-
-    left: 47%;
-    top: 60%;
-
-    transform: rotate(90deg);
-}
-
-.movement-three {
-    width: 100px;
-
-    left: 30%;
-    top: 73%;
-}
-
-
-/* =========================================================
-   18. SECTION GRAPHIC
-   ========================================================= */
-
-.board-section {
-    background:
-        linear-gradient(
-            var(--line-soft) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
- 
+    left: 
