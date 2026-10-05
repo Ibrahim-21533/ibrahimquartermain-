@@ -210,7 +210,7 @@ strong {
 
 .section-heading {
     width: min(
-        calc(100% - (var(--side-space) * 2)),
+        calc(100% - (var(--side-space) * 4)),
         var(--max-width)
     );
 
