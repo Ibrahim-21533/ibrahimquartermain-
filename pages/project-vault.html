@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Vault | SKY ARCH LAB</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header>
+
+    <div class="header-inner">
+
+        <a href="../index.html" class="logo">
+            SKY ARCH LAB
+        </a>
+
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="design-lab.html">Design Lab</a>
+            <a href="site-lab.html">Site Lab</a>
+            <a href="building-lab.html">Building Lab</a>
+            <a href="critique-lab.html">Critique Lab</a>
+            <a href="case-studies.html">Case Studies</a>
+            <a href="tools.html">Tools</a>
+            <a href="my-studio.html" class="active">My Studio</a>
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <p class="eyebrow">
+                MY STUDIO / PROJECT VAULT
+            </p>
+
+            <h1>
+                Keep the evidence.
+            </h1>
+
+            <p>
+                Store sketches, drawings, site photographs and
+                project documents alongside your architectural ideas.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- UPLOAD -->
+
+    <section class="intro">
+
+        <div class="intro-content">
+
+            <p class="eyebrow">
+                PROJECT FILES
+            </p>
+
+            <h2>
+                Add material to your project.
+            </h2>
+
+            <p>
+                Files are stored locally in this browser using
+                IndexedDB.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="tool-section">
+
+        <div class="tool-form">
+
+            <label for="projectSelect">
+                Select Project
+            </label>
+
+            <select id="projectSelect">
+                <option value="">
+                    Select a saved project
+                </option>
+            </select>
+
+
+            <label for="fileInput">
+                Select Files
+            </label>
+
+            <input
+                type="file"
+                id="fileInput"
+                multiple
+                accept="image/*,.pdf"
+            >
+
+
+            <div class="tool-buttons">
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="uploadFiles()"
+                >
+                    Add To Vault
+                </button>
+
+                <a
+                    href="project-studio.html"
+                    class="btn btn-secondary"
+                >
+                    Project Studio
+                </a>
+
+            </div>
+
+
+            <div
+                id="vaultMessage"
+                class="tool-result"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- STORED FILES -->
+
+    <section class="intro">
+
+        <div class="intro-content">
+
+            <p class="eyebrow">
+                PROJECT VAULT
+            </p>
+
+            <h2>
+                Stored material.
+            </h2>
+
+            <p>
+                Select a project to see the files connected to it.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="feature-section">
+
+        <div
+            class="feature-grid"
+            id="fileList"
+        >
+
+            <div class="feature-card">
+
+                <p class="eyebrow">
+                    EMPTY
+                </p>
+
+                <h3>
+                    No files selected.
+                </h3>
+
+                <p>
+                    Choose a project above to view its stored files.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- STORAGE NOTE -->
+
+    <section class="statement">
+
+        <div class="statement-content">
+
+            <p class="eyebrow">
+                STORAGE SYSTEM
+            </p>
+
+            <h2>
+                Your project material stays with your browser.
+            </h2>
+
+            <p>
+                This version uses IndexedDB instead of ordinary
+                localStorage, allowing substantially larger files
+                such as images and PDFs to be stored.
+            </p>
+
+            <p>
+                Browser data can still be lost if site data is
+                cleared or the device is reset. Keep important
+                academic work backed up separately.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © <span class="current-year"></span> SKY ARCH LAB
+    </p>
+
+    <p>
+        Think → Test → Design → Critique
+    </p>
+
+</footer>
+
+
+<script src="../script.js"></script>
+
+
+<script>
+
+    /* =========================================
+       SKY ARCH LAB
+       PROJECT VAULT
+       ========================================= */
+
+    const PROJECT_STORAGE_KEY = "skyArchLabProjects";
+
+    const DATABASE_NAME = "SkyArchLabVault";
+
+    const DATABASE_VERSION = 1;
+
+    const STORE_NAME = "projectFiles";
+
+    let database;
+
+
+    /* =========================================
+       OPEN DATABASE
+       ========================================= */
+
+    function openDatabase() {
+
+        return new Promise((resolve, reject) => {
+
+            const request =
+                indexedDB.open(
+                    DATABASE_NAME,
+                    DATABASE_VERSION
+                );
+
+
+            request.onupgradeneeded = event => {
+
+                const db = event.target.result;
+
+
+                if (!db.objectStoreNames.contains(STORE_NAME)) {
+
+                    const store =
+                        db.createObjectStore(
+                            STORE_NAME,
+                            {
+                                keyPath: "id",
+                                autoIncrement: true
+                            }
+                        );
+
+
+                    store.createIndex(
+                        "projectId",
+                        "projectId",
+                        {
+                            unique: false
+                        }
+                    );
+
+                }
+
+            };
+
+
+            request.onsuccess = event => {
+
+                database = event.target.result;
+
+                resolve(database);
+
+            };
+
+
+            request.onerror = () => {
+
+                reject(
+                    request.error
+                );
+
+            };
+
+        });
+
+    }
+
+
+    /* =========================================
+       GET PROJECTS
+       ========================================= */
+
+    function getProjects() {
+
+        const saved =
+            localStorage.getItem(
+                PROJECT_STORAGE_KEY
+            );
+
+
+        if (!saved) {
+            return [];
+        }
+
+
+        try {
+
+            return JSON.parse(saved);
+
+        } catch {
+
+            return [];
+
+        }
+
+    }
+
+
+    /* =========================================
+       LOAD PROJECT SELECT
+       ========================================= */
+
+    function loadProjects() {
+
+        const select =
+            document.getElementById(
+                "projectSelect"
+            );
+
+
+        const projects =
+            getProjects();
+
+
+        select.innerHTML = `
+            <option value="">
+                Select a saved project
+            </option>
+        `;
+
+
+        projects.forEach(project => {
+
+            const option =
+                document.createElement("option");
+
+
+            option.value = project.id;
+
+            option.textContent =
+                project.name;
+
+
+            select.appendChild(option);
+
+        });
+
+    }
+
+
+    /* =========================================
+       UPLOAD FILES
+       ========================================= */
+
+    async function uploadFiles() {
+
+        const projectId =
+            document.getElementById(
+                "projectSelect"
+            ).value;
+
+
+        const input =
+            document.getElementById(
+                "fileInput"
+            );
+
+
+        const files =
+            Array.from(input.files);
+
+
+        if (!projectId) {
+
+            showMessage(
+                "Please select a project first."
+            );
+
+            return;
+
+        }
+
+
+        if (files.length === 0) {
+
+            showMessage(
+                "Please select at least one file."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            for (const file of files) {
+
+                await saveFile(
+                    projectId,
+                    file
+                );
+
+            }
+
+
+            input.value = "";
+
+
+            showMessage(
+                `${files.length} file(s) added to the project.`
+            );
+
+
+            displayFiles(
+                projectId
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            showMessage(
+                "Unable to store the selected files."
+            );
+
+        }
+
+    }
+
+
+    /* =========================================
+       SAVE FILE
+       ========================================= */
+
+    function saveFile(
+        projectId,
+        file
+    ) {
+
+        return new Promise(
+            (resolve, reject) => {
+
+                const transaction =
+                    database.transaction(
+                        [STORE_NAME],
+                        "readwrite"
+                    );
+
+
+                const store =
+                    transaction.objectStore(
+                        STORE_NAME
+                    );
+
+
+                const record = {
+
+                    projectId:
+                        Number(projectId),
+
+                    name:
+                        file.name,
+
+                    type:
+                        file.type,
+
+                    size:
+                        file.size,
+
+                    date:
+                        new Date().toISOString(),
+
+                    file:
+                        file
+
+                };
+
+
+                const request =
+                    store.add(record);
+
+
+                request.onsuccess =
+                    () => resolve();
+
+
+                request.onerror =
+                    () => reject(
+                        request.error
+                    );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+       DISPLAY FILES
+       ========================================= */
+
+    function displayFiles(projectId) {
+
+        if (!projectId) {
+
+            document.getElementById(
+                "fileList"
+            ).innerHTML = `
+
+                <div class="feature-card">
+
+                    <p class="eyebrow">
+                        EMPTY
+                    </p>
+
+                    <h3>
+                        Select a project.
+                    </h3>
+
+                    <p>
+                        Stored project material will appear here.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        const transaction =
+            database.transaction(
+                [STORE_NAME],
+                "readonly"
+            );
+
+
+        const store =
+            transaction.objectStore(
+                STORE_NAME
+            );
+
+
+        const index =
+            store.index(
+                "projectId"
+            );
+
+
+        const request =
+            index.getAll(
+                Number(projectId)
+            );
+
+
+        request.onsuccess = () => {
+
+            const files =
+                request.result;
+
+
+            const container =
+                document.getElementById(
+                    "fileList"
+                );
+
+
+            if (files.length === 0) {
+
+                container.innerHTML = `
+
+                    <div class="feature-card">
+
+                        <p class="eyebrow">
+                            EMPTY PROJECT
+                        </p>
+
+                        <h3>
+                            No files yet.
+                        </h3>
+
+                        <p>
+                            Upload your first sketch,
+                            drawing, photograph or PDF.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            container.innerHTML = "";
+
+
+            files.forEach(file => {
+
+                const card =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                card.className =
+                    "feature-card";
+
+
+                const size =
+                    formatFileSize(
+                        file.size
+                    );
+
+
+                const date =
+                    new Date(
+                        file.date
+                    ).toLocaleDateString();
+
+
+                card.innerHTML = `
+
+                    <p class="eyebrow">
+                        ${getFileCategory(file.type)}
+                    </p>
+
+                    <h3>
+                        ${escapeHTML(file.name)}
+                    </h3>
+
+                    <p>
+                        ${size} · ${date}
+                    </p>
+
+                    <div class="tool-buttons">
+
+                        <button
+                            class="btn btn-primary"
+                            onclick="openFile(${file.id})"
+                        >
+                            Open
+                        </button>
+
+                        <button
+                            class="btn btn-secondary"
+                            onclick="deleteFile(${file.id}, ${file.projectId})"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                container.appendChild(card);
+
+            });
+
+        };
+
+    }
+
+
+    /* =========================================
+       OPEN FILE
+       ========================================= */
+
+    function openFile(id) {
+
+        const transaction =
+            database.transaction(
+                [STORE_NAME],
+                "readonly"
+            );
+
+
+        const store =
+            transaction.objectStore(
+                STORE_NAME
+            );
+
+
+        const request =
+            store.get(id);
+
+
+        request.onsuccess = () => {
+
+            const record =
+                request.result;
+
+
+            if (!record) {
+                return;
+            }
+
+
+            const url =
+                URL.createObjectURL(
+                    record.file
+                );
+
+
+            window.open(
+                url,
+                "_blank"
+            );
+
+
+            setTimeout(() => {
+
+                URL.revokeObjectURL(
+                    url
+                );
+
+            }, 60000);
+
+        };
+
+    }
+
+
+    /* =========================================
+       DELETE FILE
+       ========================================= */
+
+    function deleteFile(
+        id,
+        projectId
+    ) {
+
+        const confirmed =
+            confirm(
+                "Delete this file from the project?"
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        const transaction =
+            database.transaction(
+                [STORE_NAME],
+                "readwrite"
+            );
+
+
+        const store =
+            transaction.objectStore(
+                STORE_NAME
+            );
+
+
+        store.delete(id);
+
+
+        transaction.oncomplete = () => {
+
+            displayFiles(
+                projectId
+            );
+
+            showMessage(
+                "File deleted."
+            );
+
+        };
+
+    }
+
+
+    /* =========================================
+       FILE CATEGORY
+       ========================================= */
+
+    function getFileCategory(type) {
+
+        if (
+            type.startsWith("image/")
+        ) {
+
+            return "IMAGE";
+
+        }
+
+
+        if (
+            type === "application/pdf"
+        ) {
+
+            return "PDF";
+
+        }
+
+
+        return "FILE";
+
+    }
+
+
+    /* =========================================
+       FILE SIZE
+       ========================================= */
+
+    function formatFileSize(bytes) {
+
+        if (bytes < 1024) {
+
+            return bytes + " B";
+
+        }
+
+
+        if (bytes < 1024 * 1024) {
+
+            return (
+                (bytes / 1024).toFixed(1)
+                + " KB"
+            );
+
+        }
+
+
+        return (
+            (bytes / (1024 * 1024)).toFixed(1)
+            + " MB"
+        );
+
+    }
+
+
+    /* =========================================
+       MESSAGE
+       ========================================= */
+
+    function showMessage(message) {
+
+        const element =
+            document.getElementById(
+                "vaultMessage"
+            );
+
+
+        element.textContent =
+            message;
+
+
+        element.style.display =
+            "block";
+
+
+        setTimeout(() => {
+
+            element.style.display =
+                "none";
+
+        }, 3500);
+
+    }
+
+
+    /* =========================================
+       HTML SAFETY
+       ========================================= */
+
+    function escapeHTML(value) {
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    /* =========================================
+       PROJECT CHANGE
+       ========================================= */
+
+    document
+        .getElementById("projectSelect")
+        .addEventListener(
+            "change",
+            event => {
+
+                displayFiles(
+                    event.target.value
+                );
+
+            }
+        );
+
+
+    /* =========================================
+       START VAULT
+       ========================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        async () => {
+
+            try {
+
+                await openDatabase();
+
+                loadProjects();
+
+            } catch (error) {
+
+                console.error(error);
+
+                showMessage(
+                    "Project Vault could not be opened."
+                );
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
