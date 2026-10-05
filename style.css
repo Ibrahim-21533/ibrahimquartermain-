@@ -1,11 +1,7 @@
 /* =========================================================
    SKY ARCH LAB
-   Complete Master Stylesheet
-   ========================================================= */
-
-
-/* =========================================================
-   DESIGN VARIABLES
+   Responsive Architecture Studio Stylesheet
+   Think → Test → Design → Critique
    ========================================================= */
 
 :root {
@@ -20,7 +16,6 @@
 
     --cream: #e9e1d0;
     --sand: #d8c7a5;
-
     --green: #7f927a;
     --blue: #7d9294;
     --orange: #b88a5a;
@@ -28,21 +23,37 @@
 
 
 /* =========================================================
-   RESET
+   GLOBAL
    ========================================================= */
 
-* {
-    margin: 0;
-    padding: 0;
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
 html {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
 body {
-    background: var(--black);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(127, 146, 122, 0.06),
+            transparent 30%
+        ),
+        var(--black);
+
     color: var(--white);
 
     font-family:
@@ -55,51 +66,72 @@ body {
 
     overflow-x: hidden;
 
-    opacity: 0;
-
-    transition: opacity 0.6s ease;
+    -webkit-font-smoothing: antialiased;
 }
 
-body.loaded {
-    opacity: 1;
+img,
+video,
+iframe,
+svg {
+    display: block;
+    max-width: 100%;
 }
 
 img {
+    height: auto;
+}
+
+button,
+input,
+select,
+textarea {
     max-width: 100%;
+    font: inherit;
+}
+
+button,
+.btn,
+a {
+    -webkit-tap-highlight-color: transparent;
 }
 
 a {
     color: inherit;
 }
 
-
-/* =========================================================
-   TYPOGRAPHY
-   ========================================================= */
-
+p,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    font-family:
-        Calibri,
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    font-weight: 600;
-
-    line-height: 1.15;
+    max-width: 100%;
+    overflow-wrap: anywhere;
 }
 
-p {
-    font-family:
-        Calibri,
-        "Segoe UI",
-        Arial,
-        sans-serif;
+section,
+header,
+footer,
+main,
+article,
+aside,
+div {
+    min-width: 0;
+}
+
+
+/* =========================================================
+   PAGE LOADING
+   ========================================================= */
+
+body {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+body.loaded {
+    opacity: 1;
 }
 
 
@@ -109,57 +141,81 @@ p {
 
 header {
     position: relative;
+    z-index: 100;
 
     width: 100%;
+    max-width: 100%;
 
-    padding: 22px 40px 10px;
+    padding: 24px 30px 0;
 
-    background: rgba(11, 13, 13, 0.96);
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(11, 13, 13, 0.98),
+            rgba(11, 13, 13, 0.92)
+        );
 
     border-bottom: 1px solid var(--line);
 
-    z-index: 1000;
-
     transition:
+        padding 0.3s ease,
         background 0.3s ease,
-        box-shadow 0.3s ease,
-        padding 0.3s ease;
+        box-shadow 0.3s ease;
 }
 
 header.scrolled {
-    background: rgba(11, 13, 13, 0.98);
+    padding-top: 16px;
+
+    background: rgba(11, 13, 13, 0.97);
 
     box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.25);
-
-    padding-top: 15px;
+        0 10px 35px rgba(0, 0, 0, 0.3);
 }
 
 
 /* =========================================================
-   SITE TITLE / LOGO
+   BRAND
    ========================================================= */
 
 header h1 {
-    text-align: center;
+    margin: 0;
 
     color: var(--white);
 
-    font-size: 1.7rem;
+    text-align: center;
 
-    letter-spacing: 0.14em;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
 
     text-transform: uppercase;
+}
 
-    margin-bottom: 14px;
+header p {
+    margin: 4px 0 14px;
+
+    color: var(--muted);
+
+    text-align: center;
+
+    font-size: 0.78rem;
+
+    letter-spacing: 0.22em;
+
+    text-transform: uppercase;
 }
 
 
 /* =========================================================
-   ARCHITECTURAL NAVIGATION TABS
+   NAVIGATION
    ========================================================= */
 
 nav {
+    width: 100%;
+    max-width: 100%;
+
     margin: 0;
     padding: 10px 20px;
 
@@ -174,6 +230,15 @@ nav {
         "Segoe UI",
         Arial,
         sans-serif;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scrollbar-width: none;
+}
+
+nav::-webkit-scrollbar {
+    display: none;
 }
 
 nav a {
@@ -183,6 +248,8 @@ nav a {
 
     align-items: center;
     justify-content: center;
+
+    flex: 0 0 auto;
 
     padding: 11px 19px;
 
@@ -206,8 +273,7 @@ nav a {
 
     text-transform: uppercase;
 
-    border: 1px solid
-        rgba(242, 240, 233, 0.12);
+    border: 1px solid rgba(242, 240, 233, 0.12);
 
     transition:
         color 0.3s ease,
@@ -216,9 +282,6 @@ nav a {
         transform 0.3s ease,
         box-shadow 0.3s ease;
 }
-
-
-/* Architectural corner marks */
 
 nav a::before {
     content: "";
@@ -258,9 +321,6 @@ nav a::after {
     transition: opacity 0.3s ease;
 }
 
-
-/* Hover */
-
 nav a:hover {
     color: var(--white);
 
@@ -271,8 +331,7 @@ nav a:hover {
             rgba(242, 240, 233, 0.02)
         );
 
-    border-color:
-        rgba(242, 240, 233, 0.3);
+    border-color: rgba(242, 240, 233, 0.3);
 
     transform: translateY(-2px);
 
@@ -284,9 +343,6 @@ nav a:hover::before,
 nav a:hover::after {
     opacity: 1;
 }
-
-
-/* Active page */
 
 nav a.active {
     color: var(--black);
@@ -301,26 +357,128 @@ nav a.active {
         0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
-nav a.active::before {
-    opacity: 1;
 
-    border-color: var(--black);
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+main {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
-nav a.active::after {
-    opacity: 1;
 
-    border-color: var(--black);
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+    position: relative;
+
+    width: 100%;
+    max-width: 100%;
+
+    min-height: 76vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 90px 6vw;
+
+    text-align: center;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            rgba(11, 13, 13, 0.55),
+            rgba(11, 13, 13, 0.82)
+        ),
+        url("assets/images/hero.jpg")
+        center / cover no-repeat;
 }
 
-nav a.active:hover {
-    color: var(--black);
+.hero::after {
+    content: "";
 
-    background: var(--white);
+    position: absolute;
 
-    border-color: var(--white);
+    inset: 0;
 
-    transform: translateY(-2px);
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent 49.8%,
+            rgba(242, 240, 233, 0.05) 50%,
+            transparent 50.2%
+        );
+}
+
+.hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    width: min(900px, 100%);
+
+    max-width: 100%;
+}
+
+.hero h1 {
+    margin: 0 0 20px;
+
+    color: var(--white);
+
+    font-size: clamp(
+        2.3rem,
+        7vw,
+        5.8rem
+    );
+
+    line-height: 0.98;
+
+    font-weight: 600;
+
+    letter-spacing: -0.04em;
+
+    text-transform: uppercase;
+}
+
+.hero p {
+    width: min(680px, 100%);
+
+    margin: 0 auto 30px;
+
+    color: var(--muted);
+
+    font-size: clamp(
+        0.95rem,
+        2vw,
+        1.15rem
+    );
+}
+
+
+/* =========================================================
+   HERO BUTTONS
+   ========================================================= */
+
+.hero-buttons {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
 }
 
 
@@ -334,9 +492,12 @@ nav a.active:hover {
     align-items: center;
     justify-content: center;
 
-    min-width: 150px;
+    width: fit-content;
+    max-width: 100%;
 
-    padding: 13px 22px;
+    min-height: 46px;
+
+    padding: 12px 22px;
 
     color: var(--black);
 
@@ -352,32 +513,32 @@ nav a.active:hover {
         Arial,
         sans-serif;
 
-    font-size: 0.85rem;
+    font-size: 0.82rem;
 
     font-weight: 600;
 
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
 
     text-transform: uppercase;
+
+    text-align: center;
 
     cursor: pointer;
 
     transition:
         transform 0.25s ease,
         background 0.25s ease,
-        border-color 0.25s ease,
+        color 0.25s ease,
         box-shadow 0.25s ease;
 }
 
 .btn:hover {
-    background: var(--white);
-
-    border-color: var(--white);
-
     transform: translateY(-3px);
 
+    background: var(--white);
+
     box-shadow:
-        0 12px 25px rgba(0, 0, 0, 0.25);
+        0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
 .btn.secondary {
@@ -385,280 +546,146 @@ nav a.active:hover {
 
     background: transparent;
 
-    border-color: var(--line);
+    border-color:
+        rgba(242, 240, 233, 0.3);
 }
 
 .btn.secondary:hover {
     background:
-        rgba(242, 240, 233, 0.07);
+        rgba(242, 240, 233, 0.08);
 
-    border-color:
-        rgba(242, 240, 233, 0.35);
-}
-
-.btn.clicked {
-    transform: scale(0.97);
+    border-color: var(--white);
 }
 
 
 /* =========================================================
-   HERO
+   INTRO
    ========================================================= */
-
-.hero {
-    position: relative;
-
-    min-height: 78vh;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 100px 40px;
-
-    text-align: center;
-
-    background:
-        linear-gradient(
-            rgba(11, 13, 13, 0.72),
-            rgba(11, 13, 13, 0.85)
-        ),
-        url("assets/images/hero.jpg")
-        center / cover no-repeat;
-}
-
-.hero::before {
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent 49.8%,
-            rgba(242, 240, 233, 0.05) 50%,
-            transparent 50.2%
-        );
-
-    pointer-events: none;
-}
-
-.hero-content {
-    position: relative;
-
-    z-index: 2;
-
-    max-width: 900px;
-}
-
-.hero h1 {
-    margin-bottom: 25px;
-
-    font-size:
-        clamp(3rem, 8vw, 7rem);
-
-    letter-spacing:
-        -0.035em;
-}
-
-.hero p {
-    max-width: 700px;
-
-    margin: 0 auto 35px;
-
-    color: var(--muted);
-
-    font-size: 1.15rem;
-
-    line-height: 1.8;
-}
-
-.hero-buttons {
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 14px;
-
-    flex-wrap: wrap;
-}
-
-
-/* =========================================================
-   ABOUT HERO
-   ========================================================= */
-
-.about-hero {
-    background:
-        linear-gradient(
-            rgba(11, 13, 13, 0.72),
-            rgba(11, 13, 13, 0.86)
-        ),
-        url("assets/images/architecture-2.jpg")
-        center / cover no-repeat;
-}
-
-
-/* =========================================================
-   GENERAL SECTIONS
-   ========================================================= */
-
-section {
-    width: 100%;
-}
 
 .intro {
-    padding: 110px 40px;
+    width: 100%;
+    max-width: 100%;
+
+    padding: 110px 6vw;
+
+    background: var(--dark);
 }
 
 .intro-content {
-    max-width: 850px;
+    width: min(1000px, 100%);
 
     margin: 0 auto;
-
-    text-align: center;
 }
 
-.intro-content h2 {
-    margin-bottom: 25px;
+.intro h2 {
+    margin: 0 0 24px;
 
-    font-size:
-        clamp(2rem, 4vw, 3.5rem);
+    color: var(--white);
+
+    font-size: clamp(
+        2rem,
+        5vw,
+        4rem
+    );
+
+    line-height: 1.05;
+
+    font-weight: 500;
 }
 
-.intro-content p {
+.intro p {
+    max-width: 760px;
+
     color: var(--muted);
 
     font-size: 1.05rem;
-
-    line-height: 1.9;
 }
 
 
 /* =========================================================
-   LAB CARDS
+   LAB GRID
    ========================================================= */
 
 .lab-grid {
     width: 100%;
-
     max-width: 1200px;
 
-    margin: 0 auto;
-
-    padding:
-        20px 40px 110px;
+    margin: 55px auto 0;
 
     display: grid;
 
     grid-template-columns:
         repeat(3, minmax(0, 1fr));
 
-    gap: 24px;
+    gap: 18px;
 }
 
 .lab-card {
-    position: relative;
+    min-width: 0;
 
-    padding: 34px;
-
-    min-height: 260px;
+    padding: 30px;
 
     background: var(--dark-soft);
 
     border: 1px solid var(--line);
 
-    overflow: hidden;
-
     transition:
-        transform 0.3s ease,
-        border-color 0.3s ease,
-        background 0.3s ease,
-        box-shadow 0.3s ease;
-}
-
-.lab-card::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 2px;
-
-    background: var(--cream);
-
-    transform:
-        scaleX(0);
-
-    transform-origin: left;
-
-    transition:
-        transform 0.35s ease;
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        background 0.35s ease,
+        box-shadow 0.35s ease;
 }
 
 .lab-card:hover,
 .lab-card.hovered {
-    transform: translateY(-6px);
+    transform: translateY(-7px);
 
     border-color:
         rgba(242, 240, 233, 0.3);
 
-    background: #1a1f1f;
+    background:
+        linear-gradient(
+            145deg,
+            #1a1f1f,
+            #121616
+        );
 
     box-shadow:
-        0 20px 45px rgba(0, 0, 0, 0.25);
-}
-
-.lab-card:hover::before,
-.lab-card.hovered::before {
-    transform: scaleX(1);
-}
-
-.lab-card span {
-    display: block;
-
-    margin-bottom: 22px;
-
-    color: var(--sand);
-
-    font-size: 0.75rem;
-
-    letter-spacing: 0.15em;
-
-    text-transform: uppercase;
+        0 18px 35px rgba(0, 0, 0, 0.2);
 }
 
 .lab-card h3 {
-    margin-bottom: 15px;
+    margin: 0 0 12px;
 
-    font-size: 1.4rem;
+    color: var(--white);
+
+    font-size: 1.25rem;
+
+    font-weight: 600;
 }
 
 .lab-card p {
+    margin: 0;
+
     color: var(--muted);
 
-    line-height: 1.7;
-
-    margin-bottom: 20px;
+    font-size: 0.94rem;
 }
 
 .lab-card a {
+    display: inline-block;
+
+    margin-top: 20px;
+
     color: var(--cream);
 
     text-decoration: none;
 
-    font-size: 0.85rem;
+    font-size: 0.78rem;
 
-    letter-spacing: 0.08em;
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
 
     text-transform: uppercase;
 }
@@ -669,35 +696,33 @@ section {
    ========================================================= */
 
 .process {
-    padding: 100px 40px;
+    width: 100%;
+    max-width: 100%;
 
-    background: var(--dark);
+    padding: 110px 6vw;
+
+    background: var(--black);
 }
 
-.process-header {
-    max-width: 850px;
+.process-inner {
+    width: min(1200px, 100%);
 
-    margin: 0 auto 60px;
-
-    text-align: center;
+    margin: 0 auto;
 }
 
-.process-header h2 {
-    margin-bottom: 20px;
+.process h2 {
+    margin: 0 0 50px;
 
-    font-size:
-        clamp(2rem, 4vw, 3.3rem);
-}
+    font-size: clamp(
+        2rem,
+        5vw,
+        4rem
+    );
 
-.process-header p {
-    color: var(--muted);
+    font-weight: 500;
 }
 
 .process-grid {
-    max-width: 1100px;
-
-    margin: 0 auto;
-
     display: grid;
 
     grid-template-columns:
@@ -706,319 +731,11 @@ section {
     gap: 1px;
 
     background: var(--line);
+
+    border: 1px solid var(--line);
 }
 
 .process-item {
-    padding: 30px 20px;
+    min-width: 0;
 
-    min-height: 180px;
-
-    background: var(--dark);
-
-    text-align: center;
-}
-
-.process-item span {
-    display: block;
-
-    margin-bottom: 18px;
-
-    color: var(--sand);
-
-    font-size: 0.75rem;
-
-    letter-spacing: 0.15em;
-}
-
-.process-item h3 {
-    margin-bottom: 12px;
-
-    font-size: 1.1rem;
-}
-
-.process-item p {
-    color: var(--muted);
-
-    font-size: 0.9rem;
-
-    line-height: 1.6;
-}
-
-
-/* =========================================================
-   STATEMENT
-   ========================================================= */
-
-.statement {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    min-height: 500px;
-}
-
-.statement-image {
-    min-height: 500px;
-
-    background:
-        url("assets/images/architecture-1.jpg")
-        center / cover no-repeat;
-}
-
-.statement-content {
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    padding: 70px;
-
-    background: var(--dark-soft);
-}
-
-.statement-content h2 {
-    margin-bottom: 25px;
-
-    font-size:
-        clamp(2rem, 4vw, 3.5rem);
-}
-
-.statement-content p {
-    max-width: 600px;
-
-    color: var(--muted);
-
-    line-height: 1.9;
-}
-
-
-/* =========================================================
-   ABOUT CONTENT
-   ========================================================= */
-
-.about-content {
-    max-width: 950px;
-
-    margin: 0 auto;
-
-    padding: 100px 40px;
-
-    text-align: center;
-}
-
-.about-content h2 {
-    margin-bottom: 25px;
-
-    font-size:
-        clamp(2rem, 4vw, 3.5rem);
-}
-
-.about-content p {
-    color: var(--muted);
-
-    line-height: 1.9;
-}
-
-
-/* =========================================================
-   FEATURE GRID
-   ========================================================= */
-
-.feature-grid {
-    width: 100%;
-
-    max-width: 1200px;
-
-    margin: 0 auto;
-
-    padding:
-        20px 40px 100px;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 24px;
-}
-
-.feature-card {
-    padding: 30px;
-
-    background: var(--dark-soft);
-
-    border: 1px solid var(--line);
-
-    transition:
-        transform 0.3s ease,
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
-}
-
-.feature-card:hover,
-.feature-card.hovered {
-    transform: translateY(-5px);
-
-    border-color:
-        rgba(242, 240, 233, 0.3);
-
-    box-shadow:
-        0 18px 40px rgba(0, 0, 0, 0.22);
-}
-
-.feature-card h3 {
-    margin-bottom: 12px;
-}
-
-.feature-card p {
-    color: var(--muted);
-
-    line-height: 1.7;
-}
-
-
-/* =========================================================
-   VISION
-   ========================================================= */
-
-.vision {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    min-height: 500px;
-}
-
-.vision-image {
-    min-height: 500px;
-
-    background:
-        url("assets/images/architecture-3.jpg")
-        center / cover no-repeat;
-}
-
-.vision-content {
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    padding: 70px;
-
-    background: var(--dark-soft);
-}
-
-.vision-content h2 {
-    margin-bottom: 20px;
-
-    font-size:
-        clamp(2rem, 4vw, 3.5rem);
-}
-
-.vision-content p {
-    max-width: 600px;
-
-    color: var(--muted);
-
-    line-height: 1.9;
-}
-
-
-/* =========================================================
-   FUTURE
-   ========================================================= */
-
-.future {
-    padding: 100px 40px;
-
-    background: var(--dark);
-}
-
-.future-content {
-    max-width: 850px;
-
-    margin: 0 auto;
-
-    text-align: center;
-}
-
-.future-content h2 {
-    margin-bottom: 20px;
-
-    font-size:
-        clamp(2rem, 4vw, 3.2rem);
-}
-
-.future-content p {
-    color: var(--muted);
-
-    line-height: 1.9;
-}
-
-
-/* =========================================================
-   CTA
-   ========================================================= */
-
-.cta {
-    padding: 110px 40px;
-
-    text-align: center;
-
-    background: var(--black);
-
-    border-top: 1px solid var(--line);
-}
-
-.cta-content {
-    max-width: 850px;
-
-    margin: 0 auto;
-}
-
-.cta-content h2 {
-    margin-bottom: 25px;
-
-    font-size:
-        clamp(2rem, 5vw, 4rem);
-}
-
-.cta-content p {
-    margin-bottom: 30px;
-
-    color: var(--muted);
-}
-
-
-/* =========================================================
-   TOOLS
-   ========================================================= */
-
-.tool-section {
-    padding: 100px 40px;
-}
-
-.tool-container {
-    max-width: 850px;
-
-    margin: 0 auto;
-}
-
-.tool-form {
-    display: grid;
-
-    gap: 20px;
-
-    padding: 35px;
-
-    background: var(--dark-soft);
-
-    border: 1px solid var(--line);
-}
-
-.tool-form label {
-    color:
+    min
