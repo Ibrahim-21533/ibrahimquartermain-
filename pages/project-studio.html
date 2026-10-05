@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project Studio | SKY ARCH LAB</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header>
+
+    <div class="header-inner">
+
+        <a href="../index.html" class="logo">
+            SKY ARCH LAB
+        </a>
+
+        <nav>
+
+            <a href="../index.html">Home</a>
+            <a href="../about.html">About</a>
+            <a href="design-lab.html">Design Lab</a>
+            <a href="site-lab.html">Site Lab</a>
+            <a href="building-lab.html">Building Lab</a>
+            <a href="critique-lab.html">Critique Lab</a>
+            <a href="case-studies.html">Case Studies</a>
+            <a href="tools.html">Tools</a>
+            <a href="my-studio.html" class="active">My Studio</a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <p class="eyebrow">
+                MY STUDIO / PROJECT STORAGE
+            </p>
+
+            <h1>
+                Project Studio.
+            </h1>
+
+            <p>
+                Create, store and develop your architectural projects
+                directly inside SKY ARCH LAB.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- PROJECT FORM -->
+
+    <section class="intro">
+
+        <div class="intro-content">
+
+            <p class="eyebrow">
+                NEW PROJECT
+            </p>
+
+            <h2>
+                Start a project.
+            </h2>
+
+            <p>
+                Record the idea before it disappears. Your projects
+                are stored locally in this browser.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="tool-section">
+
+        <div class="tool-form">
+
+            <label for="projectName">
+                Project Name
+            </label>
+
+            <input
+                type="text"
+                id="projectName"
+                placeholder="e.g. Community Library"
+            >
+
+
+            <label for="projectType">
+                Project Type
+            </label>
+
+            <select id="projectType">
+
+                <option value="">
+                    Select project type
+                </option>
+
+                <option value="Academic Project">
+                    Academic Project
+                </option>
+
+                <option value="Residential">
+                    Residential
+                </option>
+
+                <option value="Commercial">
+                    Commercial
+                </option>
+
+                <option value="Public Building">
+                    Public Building
+                </option>
+
+                <option value="Cultural Building">
+                    Cultural Building
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+
+            <label for="projectLocation">
+                Site / Location
+            </label>
+
+            <input
+                type="text"
+                id="projectLocation"
+                placeholder="e.g. Nairobi, Kenya"
+            >
+
+
+            <label for="projectStatus">
+                Project Status
+            </label>
+
+            <select id="projectStatus">
+
+                <option value="Idea">
+                    Idea
+                </option>
+
+                <option value="Research">
+                    Research
+                </option>
+
+                <option value="Concept">
+                    Concept
+                </option>
+
+                <option value="Development">
+                    Development
+                </option>
+
+                <option value="Final">
+                    Final
+                </option>
+
+            </select>
+
+
+            <label for="projectConcept">
+                Design Concept
+            </label>
+
+            <textarea
+                id="projectConcept"
+                rows="6"
+                placeholder="Describe the main architectural idea..."
+            ></textarea>
+
+
+            <label for="projectNotes">
+                Project Notes
+            </label>
+
+            <textarea
+                id="projectNotes"
+                rows="7"
+                placeholder="Record observations, decisions, problems, ideas and next steps..."
+            ></textarea>
+
+
+            <div class="tool-buttons">
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="saveProject()"
+                >
+                    Save Project
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="clearProjectForm()"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+            <div
+                id="projectResult"
+                class="tool-result"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- STORED PROJECTS -->
+
+    <section class="intro">
+
+        <div class="intro-content">
+
+            <p class="eyebrow">
+                YOUR STORAGE
+            </p>
+
+            <h2>
+                Saved Projects.
+            </h2>
+
+            <p>
+                Projects saved on this browser will appear here.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="feature-section">
+
+        <div class="feature-grid" id="projectList">
+
+            <!-- Projects are inserted here by JavaScript -->
+
+        </div>
+
+    </section>
+
+
+
+    <!-- STORAGE INFORMATION -->
+
+    <section class="statement">
+
+        <div class="statement-content">
+
+            <p class="eyebrow">
+                LOCAL STORAGE
+            </p>
+
+            <h2>
+                Your studio stays with your browser.
+            </h2>
+
+            <p>
+                SKY ARCH LAB currently stores project information
+                locally on your device using browser storage.
+                No account or server is required.
+            </p>
+
+            <p>
+                Clearing your browser's site data may remove these
+                projects, so important work should also be backed up
+                elsewhere.
+            </p>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<footer>
+
+    <p>
+        © <span class="current-year"></span> SKY ARCH LAB
+    </p>
+
+    <p>
+        Think → Test → Design → Critique
+    </p>
+
+</footer>
+
+
+
+<script src="../script.js"></script>
+
+
+<script>
+
+    /* =========================================
+       SKY ARCH LAB
+       PROJECT STORAGE SYSTEM
+       ========================================= */
+
+    const STORAGE_KEY = "skyArchLabProjects";
+
+
+    /* =========================================
+       GET SAVED PROJECTS
+       ========================================= */
+
+    function getProjects() {
+
+        const saved =
+            localStorage.getItem(STORAGE_KEY);
+
+        if (!saved) {
+            return [];
+        }
+
+        try {
+
+            return JSON.parse(saved);
+
+        } catch (error) {
+
+            return [];
+
+        }
+
+    }
+
+
+    /* =========================================
+       SAVE PROJECT
+       ========================================= */
+
+    function saveProject() {
+
+        const name =
+            document.getElementById("projectName").value.trim();
+
+        const type =
+            document.getElementById("projectType").value;
+
+        const location =
+            document.getElementById("projectLocation").value.trim();
+
+        const status =
+            document.getElementById("projectStatus").value;
+
+        const concept =
+            document.getElementById("projectConcept").value.trim();
+
+        const notes =
+            document.getElementById("projectNotes").value.trim();
+
+
+        if (!name) {
+
+            showResult(
+                "Please enter a project name.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const project = {
+
+            id: Date.now(),
+
+            name: name,
+
+            type: type || "Unspecified",
+
+            location: location || "Not specified",
+
+            status: status,
+
+            concept: concept,
+
+            notes: notes,
+
+            date: new Date().toISOString()
+
+        };
+
+
+        const projects = getProjects();
+
+        projects.unshift(project);
+
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(projects)
+        );
+
+
+        showResult(
+            "Project saved successfully.",
+            "success"
+        );
+
+
+        clearProjectForm(false);
+
+        displayProjects();
+
+    }
+
+
+    /* =========================================
+       DISPLAY PROJECTS
+       ========================================= */
+
+    function displayProjects() {
+
+        const container =
+            document.getElementById("projectList");
+
+        const projects = getProjects();
+
+
+        if (projects.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="feature-card">
+
+                    <p class="eyebrow">
+                        EMPTY STUDIO
+                    </p>
+
+                    <h3>
+                        No projects yet.
+                    </h3>
+
+                    <p>
+                        Create your first architecture project
+                        using the workspace above.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML = projects.map(project => {
+
+            const date =
+                new Date(project.date).toLocaleDateString(
+                    undefined,
+                    {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric"
+                    }
+                );
+
+
+            return `
+
+                <article class="feature-card">
+
+                    <p class="eyebrow">
+                        ${escapeHTML(project.status)}
+                    </p>
+
+                    <h3>
+                        ${escapeHTML(project.name)}
+                    </h3>
+
+                    <p>
+                        <strong>Type:</strong>
+                        ${escapeHTML(project.type)}
+                    </p>
+
+                    <p>
+                        <strong>Site:</strong>
+                        ${escapeHTML(project.location)}
+                    </p>
+
+                    <p>
+                        <strong>Created:</strong>
+                        ${date}
+                    </p>
+
+
+                    ${
+                        project.concept
+                        ?
+                        `
+                        <p>
+                            <strong>Concept:</strong><br>
+                            ${escapeHTML(project.concept)}
+                        </p>
+                        `
+                        :
+                        ""
+                    }
+
+
+                    <div class="tool-buttons">
+
+                        <button
+                            class="btn btn-secondary"
+                            onclick="loadProject(${project.id})"
+                        >
+                            Load
+                        </button>
+
+                        <button
+                            class="btn btn-secondary"
+                            onclick="deleteProject(${project.id})"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }).join("");
+
+    }
+
+
+    /* =========================================
+       LOAD PROJECT
+       ========================================= */
+
+    function loadProject(id) {
+
+        const projects = getProjects();
+
+        const project =
+            projects.find(item => item.id === id);
+
+
+        if (!project) {
+            return;
+        }
+
+
+        document.getElementById("projectName").value =
+            project.name;
+
+        document.getElementById("projectType").value =
+            project.type === "Unspecified"
+            ? ""
+            : project.type;
+
+        document.getElementById("projectLocation").value =
+            project.location === "Not specified"
+            ? ""
+            : project.location;
+
+        document.getElementById("projectStatus").value =
+            project.status;
+
+        document.getElementById("projectConcept").value =
+            project.concept;
+
+        document.getElementById("projectNotes").value =
+            project.notes;
+
+
+        showResult(
+            "Project loaded into the workspace.",
+            "success"
+        );
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+
+    /* =========================================
+       DELETE PROJECT
+       ========================================= */
+
+    function deleteProject(id) {
+
+        const projects = getProjects();
+
+        const project =
+            projects.find(item => item.id === id);
+
+
+        if (!project) {
+            return;
+        }
+
+
+        const confirmed =
+            confirm(
+                `Delete "${project.name}"? This cannot be undone.`
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        const updatedProjects =
+            projects.filter(item => item.id !== id);
+
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(updatedProjects)
+        );
+
+
+        displayProjects();
+
+
+        showResult(
+            "Project deleted.",
+            "success"
+        );
+
+    }
+
+
+    /* =========================================
+       CLEAR FORM
+       ========================================= */
+
+    function clearProjectForm(showMessage = true) {
+
+        document.getElementById("projectName").value = "";
+
+        document.getElementById("projectType").value = "";
+
+        document.getElementById("projectLocation").value = "";
+
+        document.getElementById("projectStatus").value = "Idea";
+
+        document.getElementById("projectConcept").value = "";
+
+        document.getElementById("projectNotes").value = "";
+
+
+        if (showMessage) {
+
+            showResult(
+                "Form cleared.",
+                "success"
+            );
+
+        }
+
+    }
+
+
+    /* =========================================
+       RESULT MESSAGE
+       ========================================= */
+
+    function showResult(message, type) {
+
+        const result =
+            document.getElementById("projectResult");
+
+
+        result.textContent = message;
+
+        result.style.display = "block";
+
+        result.dataset.type = type;
+
+
+        setTimeout(() => {
+
+            result.style.display = "none";
+
+        }, 3500);
+
+    }
+
+
+    /* =========================================
+       SECURITY
+       ========================================= */
+
+    function escapeHTML(value) {
+
+        return String(value)
+
+            .replace(/&/g, "&amp;")
+
+            .replace(/</g, "&lt;")
+
+            .replace(/>/g, "&gt;")
+
+            .replace(/"/g, "&quot;")
+
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================================
+       START
+       ========================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        displayProjects
+    );
+
+</script>
+
+</body>
+
+</html>
