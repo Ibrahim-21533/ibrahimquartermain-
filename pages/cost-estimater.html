@@ -9,7 +9,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Cost Estimator | SKY ARCH LAB</title>
+    <title>Architecture Tools | SKY ARCH LAB</title>
 
     <link
         rel="stylesheet"
@@ -17,22 +17,34 @@
     >
 </head>
 
+
 <body>
+
 
 <header>
 
     <h1>SKY ARCH LAB</h1>
 
     <nav>
+
         <a href="../index.html">Home</a>
+
         <a href="../about.html">About</a>
+
         <a href="design-lab.html">Design Lab</a>
+
         <a href="site-lab.html">Site Lab</a>
+
         <a href="building-lab.html">Building Lab</a>
+
         <a href="critique-lab.html">Critique Lab</a>
+
         <a href="case-studies.html">Case Studies</a>
+
         <a href="tools.html">Tools</a>
+
         <a href="my-studio.html">My Studio</a>
+
     </nav>
 
 </header>
@@ -40,162 +52,312 @@
 
 <main>
 
-    <section class="hero">
 
-        <div class="hero-content">
+<!-- =====================================================
+     HERO
+===================================================== -->
 
-            <h1>Cost Estimator</h1>
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>Architecture Tools</h1>
+
+        <p>
+            Practical tools for architectural
+            calculations, planning and early
+            design decisions.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<section class="intro">
+
+    <div class="intro-content">
+
+        <h2>
+            Think with numbers.
+        </h2>
+
+        <p>
+            Architecture combines creativity,
+            technical understanding and measurable
+            decisions. These tools help you test
+            ideas before turning them into drawings.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TOOL GRID
+===================================================== -->
+
+<section>
+
+    <div class="feature-grid">
+
+
+        <!-- SCALE -->
+
+        <div class="feature-card">
+
+            <span>01 · SCALE</span>
+
+            <h3>
+                Scale Converter
+            </h3>
 
             <p>
-                Estimate the basic construction cost
-                of an architectural project using
-                floor area and cost per square metre.
+                Convert real-world dimensions
+                into drawing dimensions using
+                common architectural scales.
             </p>
-
-        </div>
-
-    </section>
-
-
-    <section class="tool-section">
-
-        <div class="tool-container">
-
-            <div class="intro-content">
-
-                <h2>Estimate Project Cost</h2>
-
-                <p>
-                    Enter the approximate floor area
-                    and construction cost per square metre.
-                </p>
-
-            </div>
-
 
             <br>
 
-
-            <form
-                class="tool-form"
-                id="costForm"
-            >
-
-                <div>
-
-                    <label for="area">
-                        Floor Area
-                    </label>
-
-                    <input
-                        type="number"
-                        id="area"
-                        placeholder="Example: 250"
-                        min="0"
-                        step="0.01"
-                        required
-                    >
-
-                </div>
-
-
-                <div>
-
-                    <label for="rate">
-                        Cost per Square Metre
-                    </label>
-
-                    <input
-                        type="number"
-                        id="rate"
-                        placeholder="Example: 45000"
-                        min="0"
-                        step="0.01"
-                        required
-                    >
-
-                </div>
-
-
-                <div>
-
-                    <label for="currency">
-                        Currency
-                    </label>
-
-                    <select id="currency">
-
-                        <option value="KSh">
-                            KSh
-                        </option>
-
-                        <option value="$">
-                            USD
-                        </option>
-
-                        <option value="£">
-                            GBP
-                        </option>
-
-                        <option value="€">
-                            EUR
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <button
-                    type="submit"
-                    class="btn"
-                >
-                    Calculate Cost
-                </button>
-
-            </form>
-
-
-            <div
-                id="result"
-                class="tool-result"
-            >
-                Enter your project information
-                above to calculate the estimated
-                construction cost.
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="cta">
-
-        <div class="cta-content">
-
-            <h2>
-                Design with numbers in mind.
-            </h2>
-
-            <p>
-                Cost is part of architectural
-                decision-making.
-            </p>
-
             <a
-                href="tools.html"
-                class="btn secondary"
+                href="scale-converter.html"
+                class="btn"
             >
-                Back to Tools
+                Open Tool
             </a>
 
         </div>
 
-    </section>
+
+
+        <!-- AREA -->
+
+        <div class="feature-card">
+
+            <span>02 · AREA</span>
+
+            <h3>
+                Area Calculator
+            </h3>
+
+            <p>
+                Calculate floor and surface areas
+                from basic dimensions.
+            </p>
+
+            <br>
+
+            <a
+                href="area-calculator.html"
+                class="btn"
+            >
+                Open Tool
+            </a>
+
+        </div>
+
+
+
+        <!-- VOLUME -->
+
+        <div class="feature-card">
+
+            <span>03 · VOLUME</span>
+
+            <h3>
+                Volume Calculator
+            </h3>
+
+            <p>
+                Calculate the volume of spaces,
+                rooms and simple building forms.
+            </p>
+
+            <br>
+
+            <a
+                href="volume-calculator.html"
+                class="btn"
+            >
+                Open Tool
+            </a>
+
+        </div>
+
+
+
+        <!-- STAIRS -->
+
+        <div class="feature-card">
+
+            <span>04 · CIRCULATION</span>
+
+            <h3>
+                Stair Calculator
+            </h3>
+
+            <p>
+                Explore riser, tread, stair run
+                and basic stair proportions.
+            </p>
+
+            <br>
+
+            <a
+                href="stair-calculator.html"
+                class="btn"
+            >
+                Open Tool
+            </a>
+
+        </div>
+
+
+
+        <!-- COST -->
+
+        <div class="feature-card">
+
+            <span>05 · COST</span>
+
+            <h3>
+                Cost Estimator
+            </h3>
+
+            <p>
+                Produce a basic construction-cost
+                estimate using floor area and
+                cost per square metre.
+            </p>
+
+            <br>
+
+            <a
+                href="estimater.html"
+                class="btn"
+            >
+                Open Tool
+            </a>
+
+        </div>
+
+
+
+        <!-- SPACE -->
+
+        <div class="feature-card">
+
+            <span>06 · SPACE</span>
+
+            <h3>
+                Space Calculator
+            </h3>
+
+            <p>
+                Calculate the approximate area
+                required for different spaces
+                within a building.
+            </p>
+
+            <br>
+
+            <a
+                href="space-calculator.html"
+                class="btn"
+            >
+                Open Tool
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ARCHITECTURAL THINKING
+===================================================== -->
+
+<section class="statement">
+
+    <div class="statement-image"></div>
+
+    <div class="statement-content">
+
+        <h2>
+            Numbers become decisions.
+        </h2>
+
+        <p>
+            A dimension is not just a number.
+            It affects movement, proportion,
+            comfort, structure, cost and the
+            experience of a building.
+        </p>
+
+        <br>
+
+        <p>
+            Use these tools as a starting point,
+            then test your decisions against
+            architectural standards, site conditions
+            and the requirements of your project.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CTA
+===================================================== -->
+
+<section class="cta">
+
+    <div class="cta-content">
+
+        <h2>
+            Build your ideas.
+        </h2>
+
+        <p>
+            Keep your calculations, drawings,
+            experiments and projects together
+            inside your digital studio.
+        </p>
+
+        <a
+            href="my-studio.html"
+            class="btn"
+        >
+            Open My Studio
+        </a>
+
+    </div>
+
+</section>
+
 
 </main>
 
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
@@ -211,74 +373,6 @@
 <script src="../script.js"></script>
 
 
-<script>
-
-document
-    .getElementById("costForm")
-    .addEventListener("submit", function(event) {
-
-        event.preventDefault();
-
-        const area =
-            parseFloat(
-                document.getElementById("area").value
-            );
-
-        const rate =
-            parseFloat(
-                document.getElementById("rate").value
-            );
-
-        const currency =
-            document.getElementById("currency").value;
-
-        const result =
-            document.getElementById("result");
-
-
-        if (
-            isNaN(area) ||
-            isNaN(rate) ||
-            area <= 0 ||
-            rate <= 0
-        ) {
-
-            result.textContent =
-                "Please enter valid positive values.";
-
-            return;
-        }
-
-
-        const total = area * rate;
-
-
-        result.innerHTML = `
-            <strong>Estimated Construction Cost</strong>
-            <br><br>
-
-            Floor Area:
-            ${area.toLocaleString()}
-            m²
-
-            <br>
-
-            Cost per m²:
-            ${currency}
-            ${rate.toLocaleString()}
-
-            <br><br>
-
-            <strong>
-                Estimated Total:
-                ${currency}
-                ${total.toLocaleString()}
-            </strong>
-        `;
-
-    });
-
-</script>
-
 </body>
+
 </html>
