@@ -49,13 +49,36 @@
                 MY STUDIO / PROJECT VAULT
             </p>
 
-            <h1>
-                Keep the evidence.
+            <h1 id="vaultTitle">
+                Project Vault.
             </h1>
 
-            <p>
-                Store sketches, drawings, site photographs and
-                project documents alongside your architectural ideas.
+            <p id="vaultSubtitle">
+                Your project's drawings, photographs,
+                sketches and documents.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROJECT INFO -->
+
+    <section class="intro">
+
+        <div class="intro-content">
+
+            <p class="eyebrow">
+                CURRENT PROJECT
+            </p>
+
+            <h2 id="projectNameDisplay">
+                Loading project...
+            </h2>
+
+            <p id="projectInfo">
+                Loading project information...
             </p>
 
         </div>
@@ -65,45 +88,12 @@
 
     <!-- UPLOAD -->
 
-    <section class="intro">
-
-        <div class="intro-content">
-
-            <p class="eyebrow">
-                PROJECT FILES
-            </p>
-
-            <h2>
-                Add material to your project.
-            </h2>
-
-            <p>
-                Files are stored locally in this browser using
-                IndexedDB.
-            </p>
-
-        </div>
-
-    </section>
-
-
     <section class="tool-section">
 
         <div class="tool-form">
 
-            <label for="projectSelect">
-                Select Project
-            </label>
-
-            <select id="projectSelect">
-                <option value="">
-                    Select a saved project
-                </option>
-            </select>
-
-
             <label for="fileInput">
-                Select Files
+                Add Project Files
             </label>
 
             <input
@@ -112,6 +102,12 @@
                 multiple
                 accept="image/*,.pdf"
             >
+
+            <p>
+                Supported material:
+                sketches, site photographs,
+                drawings and PDF documents.
+            </p>
 
 
             <div class="tool-buttons">
@@ -128,7 +124,7 @@
                     href="project-studio.html"
                     class="btn btn-secondary"
                 >
-                    Project Studio
+                    Back To Projects
                 </a>
 
             </div>
@@ -144,22 +140,22 @@
     </section>
 
 
-    <!-- STORED FILES -->
+    <!-- FILES -->
 
     <section class="intro">
 
         <div class="intro-content">
 
             <p class="eyebrow">
-                PROJECT VAULT
+                PROJECT MATERIAL
             </p>
 
             <h2>
-                Stored material.
+                Your files.
             </h2>
 
             <p>
-                Select a project to see the files connected to it.
+                Everything stored for this project appears below.
             </p>
 
         </div>
@@ -172,53 +168,33 @@
         <div
             class="feature-grid"
             id="fileList"
-        >
-
-            <div class="feature-card">
-
-                <p class="eyebrow">
-                    EMPTY
-                </p>
-
-                <h3>
-                    No files selected.
-                </h3>
-
-                <p>
-                    Choose a project above to view its stored files.
-                </p>
-
-            </div>
-
-        </div>
+        ></div>
 
     </section>
 
 
-    <!-- STORAGE NOTE -->
+    <!-- STORAGE INFORMATION -->
 
     <section class="statement">
 
         <div class="statement-content">
 
             <p class="eyebrow">
-                STORAGE SYSTEM
+                LOCAL STORAGE
             </p>
 
             <h2>
-                Your project material stays with your browser.
+                Your project stays organized.
             </h2>
 
             <p>
-                This version uses IndexedDB instead of ordinary
-                localStorage, allowing substantially larger files
-                such as images and PDFs to be stored.
+                Files are stored locally in this browser
+                using IndexedDB.
             </p>
 
             <p>
-                Browser data can still be lost if site data is
-                cleared or the device is reset. Keep important
-                academic work backed up separately.
+                Keep important academic work backed up
+                somewhere else as well.
             </p>
 
         </div>
@@ -247,19 +223,73 @@
 <script>
 
     /* =========================================
-       SKY ARCH LAB
        PROJECT VAULT
        ========================================= */
 
-    const PROJECT_STORAGE_KEY = "skyArchLabProjects";
+    const PROJECT_STORAGE_KEY =
+        "skyArchLabProjects";
 
-    const DATABASE_NAME = "SkyArchLabVault";
+    const DATABASE_NAME =
+        "SkyArchLabVault";
 
     const DATABASE_VERSION = 1;
 
-    const STORE_NAME = "projectFiles";
+    const STORE_NAME =
+        "projectFiles";
 
     let database;
+
+    let currentProjectId = null;
+
+
+    /* =========================================
+       GET PROJECT ID FROM URL
+       ========================================= */
+
+    function getProjectId() {
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        return params.get("project");
+
+    }
+
+
+    /* =========================================
+       GET PROJECT
+       ========================================= */
+
+    function getProject(id) {
+
+        const saved =
+            localStorage.getItem(
+                PROJECT_STORAGE_KEY
+            );
+
+        if (!saved) {
+            return null;
+        }
+
+        try {
+
+            const projects =
+                JSON.parse(saved);
+
+            return projects.find(
+                project =>
+                    String(project.id) === String(id)
+            ) || null;
+
+        } catch {
+
+            return null;
+
+        }
+
+    }
 
 
     /* =========================================
@@ -268,135 +298,144 @@
 
     function openDatabase() {
 
-        return new Promise((resolve, reject) => {
+        return new Promise(
+            (resolve, reject) => {
 
-            const request =
-                indexedDB.open(
-                    DATABASE_NAME,
-                    DATABASE_VERSION
-                );
-
-
-            request.onupgradeneeded = event => {
-
-                const db = event.target.result;
-
-
-                if (!db.objectStoreNames.contains(STORE_NAME)) {
-
-                    const store =
-                        db.createObjectStore(
-                            STORE_NAME,
-                            {
-                                keyPath: "id",
-                                autoIncrement: true
-                            }
-                        );
-
-
-                    store.createIndex(
-                        "projectId",
-                        "projectId",
-                        {
-                            unique: false
-                        }
+                const request =
+                    indexedDB.open(
+                        DATABASE_NAME,
+                        DATABASE_VERSION
                     );
 
-                }
 
-            };
+                request.onupgradeneeded =
+                    event => {
 
-
-            request.onsuccess = event => {
-
-                database = event.target.result;
-
-                resolve(database);
-
-            };
+                        const db =
+                            event.target.result;
 
 
-            request.onerror = () => {
+                        if (
+                            !db.objectStoreNames
+                                .contains(STORE_NAME)
+                        ) {
 
-                reject(
-                    request.error
-                );
+                            const store =
+                                db.createObjectStore(
+                                    STORE_NAME,
+                                    {
+                                        keyPath: "id",
+                                        autoIncrement: true
+                                    }
+                                );
 
-            };
 
-        });
+                            store.createIndex(
+                                "projectId",
+                                "projectId",
+                                {
+                                    unique: false
+                                }
+                            );
+
+                        }
+
+                    };
+
+
+                request.onsuccess =
+                    event => {
+
+                        database =
+                            event.target.result;
+
+                        resolve(database);
+
+                    };
+
+
+                request.onerror =
+                    () => {
+
+                        reject(
+                            request.error
+                        );
+
+                    };
+
+            }
+        );
 
     }
 
 
     /* =========================================
-       GET PROJECTS
+       DISPLAY PROJECT
        ========================================= */
 
-    function getProjects() {
+    function displayProject() {
 
-        const saved =
-            localStorage.getItem(
-                PROJECT_STORAGE_KEY
+        const project =
+            getProject(
+                currentProjectId
             );
 
 
-        if (!saved) {
-            return [];
+        if (!project) {
+
+            document
+                .getElementById(
+                    "projectNameDisplay"
+                )
+                .textContent =
+                "Project not found";
+
+
+            document
+                .getElementById(
+                    "projectInfo"
+                )
+                .textContent =
+                "Return to Project Studio and select a saved project.";
+
+
+            document
+                .getElementById(
+                    "fileInput"
+                )
+                .disabled = true;
+
+
+            return;
+
         }
 
 
-        try {
-
-            return JSON.parse(saved);
-
-        } catch {
-
-            return [];
-
-        }
-
-    }
+        document
+            .getElementById(
+                "vaultTitle"
+            )
+            .textContent =
+            project.name;
 
 
-    /* =========================================
-       LOAD PROJECT SELECT
-       ========================================= */
-
-    function loadProjects() {
-
-        const select =
-            document.getElementById(
-                "projectSelect"
-            );
+        document
+            .getElementById(
+                "projectNameDisplay"
+            )
+            .textContent =
+            project.name;
 
 
-        const projects =
-            getProjects();
+        document
+            .getElementById(
+                "projectInfo"
+            )
+            .textContent =
+            `${project.type} · ${project.location} · ${project.status}`;
 
 
-        select.innerHTML = `
-            <option value="">
-                Select a saved project
-            </option>
-        `;
-
-
-        projects.forEach(project => {
-
-            const option =
-                document.createElement("option");
-
-
-            option.value = project.id;
-
-            option.textContent =
-                project.name;
-
-
-            select.appendChild(option);
-
-        });
+        displayFiles();
 
     }
 
@@ -406,12 +445,6 @@
        ========================================= */
 
     async function uploadFiles() {
-
-        const projectId =
-            document.getElementById(
-                "projectSelect"
-            ).value;
-
 
         const input =
             document.getElementById(
@@ -423,10 +456,10 @@
             Array.from(input.files);
 
 
-        if (!projectId) {
+        if (!currentProjectId) {
 
             showMessage(
-                "Please select a project first."
+                "No project has been selected."
             );
 
             return;
@@ -450,7 +483,6 @@
             for (const file of files) {
 
                 await saveFile(
-                    projectId,
                     file
                 );
 
@@ -461,20 +493,18 @@
 
 
             showMessage(
-                `${files.length} file(s) added to the project.`
+                `${files.length} file(s) added to the vault.`
             );
 
 
-            displayFiles(
-                projectId
-            );
+            displayFiles();
 
         } catch (error) {
 
             console.error(error);
 
             showMessage(
-                "Unable to store the selected files."
+                "The files could not be stored."
             );
 
         }
@@ -486,10 +516,7 @@
        SAVE FILE
        ========================================= */
 
-    function saveFile(
-        projectId,
-        file
-    ) {
+    function saveFile(file) {
 
         return new Promise(
             (resolve, reject) => {
@@ -510,7 +537,7 @@
                 const record = {
 
                     projectId:
-                        Number(projectId),
+                        Number(currentProjectId),
 
                     name:
                         file.name,
@@ -553,34 +580,16 @@
        DISPLAY FILES
        ========================================= */
 
-    function displayFiles(projectId) {
+    function displayFiles() {
 
-        if (!projectId) {
-
+        const container =
             document.getElementById(
                 "fileList"
-            ).innerHTML = `
+            );
 
-                <div class="feature-card">
 
-                    <p class="eyebrow">
-                        EMPTY
-                    </p>
-
-                    <h3>
-                        Select a project.
-                    </h3>
-
-                    <p>
-                        Stored project material will appear here.
-                    </p>
-
-                </div>
-
-            `;
-
+        if (!currentProjectId) {
             return;
-
         }
 
 
@@ -605,7 +614,7 @@
 
         const request =
             index.getAll(
-                Number(projectId)
+                Number(currentProjectId)
             );
 
 
@@ -615,12 +624,6 @@
                 request.result;
 
 
-            const container =
-                document.getElementById(
-                    "fileList"
-                );
-
-
             if (files.length === 0) {
 
                 container.innerHTML = `
@@ -628,7 +631,7 @@
                     <div class="feature-card">
 
                         <p class="eyebrow">
-                            EMPTY PROJECT
+                            EMPTY VAULT
                         </p>
 
                         <h3>
@@ -664,18 +667,6 @@
                     "feature-card";
 
 
-                const size =
-                    formatFileSize(
-                        file.size
-                    );
-
-
-                const date =
-                    new Date(
-                        file.date
-                    ).toLocaleDateString();
-
-
                 card.innerHTML = `
 
                     <p class="eyebrow">
@@ -687,7 +678,10 @@
                     </h3>
 
                     <p>
-                        ${size} · ${date}
+                        ${formatFileSize(file.size)}
+                        ·
+                        ${new Date(file.date)
+                            .toLocaleDateString()}
                     </p>
 
                     <div class="tool-buttons">
@@ -701,7 +695,7 @@
 
                         <button
                             class="btn btn-secondary"
-                            onclick="deleteFile(${file.id}, ${file.projectId})"
+                            onclick="deleteFile(${file.id})"
                         >
                             Delete
                         </button>
@@ -711,7 +705,9 @@
                 `;
 
 
-                container.appendChild(card);
+                container.appendChild(
+                    card
+                );
 
             });
 
@@ -766,13 +762,10 @@
             );
 
 
-            setTimeout(() => {
-
-                URL.revokeObjectURL(
-                    url
-                );
-
-            }, 60000);
+            setTimeout(
+                () => URL.revokeObjectURL(url),
+                60000
+            );
 
         };
 
@@ -783,10 +776,7 @@
        DELETE FILE
        ========================================= */
 
-    function deleteFile(
-        id,
-        projectId
-    ) {
+    function deleteFile(id) {
 
         const confirmed =
             confirm(
@@ -817,9 +807,7 @@
 
         transaction.oncomplete = () => {
 
-            displayFiles(
-                projectId
-            );
+            displayFiles();
 
             showMessage(
                 "File deleted."
@@ -837,20 +825,17 @@
     function getFileCategory(type) {
 
         if (
+            type &&
             type.startsWith("image/")
         ) {
-
             return "IMAGE";
-
         }
 
 
         if (
             type === "application/pdf"
         ) {
-
             return "PDF";
-
         }
 
 
@@ -866,25 +851,21 @@
     function formatFileSize(bytes) {
 
         if (bytes < 1024) {
-
-            return bytes + " B";
-
+            return `${bytes} B`;
         }
 
 
         if (bytes < 1024 * 1024) {
 
             return (
-                (bytes / 1024).toFixed(1)
-                + " KB"
+                `${(bytes / 1024).toFixed(1)} KB`
             );
 
         }
 
 
         return (
-            (bytes / (1024 * 1024)).toFixed(1)
-            + " MB"
+            `${(bytes / (1024 * 1024)).toFixed(1)} MB`
         );
 
     }
@@ -928,65 +909,59 @@
 
         return String(value)
 
-            .replace(
-                /&/g,
-                "&amp;"
-            )
+            .replace(/&/g, "&amp;")
 
-            .replace(
-                /</g,
-                "&lt;"
-            )
+            .replace(/</g, "&lt;")
 
-            .replace(
-                />/g,
-                "&gt;"
-            )
+            .replace(/>/g, "&gt;")
 
-            .replace(
-                /"/g,
-                "&quot;"
-            )
+            .replace(/"/g, "&quot;")
 
-            .replace(
-                /'/g,
-                "&#039;"
-            );
+            .replace(/'/g, "&#039;");
 
     }
 
 
     /* =========================================
-       PROJECT CHANGE
-       ========================================= */
-
-    document
-        .getElementById("projectSelect")
-        .addEventListener(
-            "change",
-            event => {
-
-                displayFiles(
-                    event.target.value
-                );
-
-            }
-        );
-
-
-    /* =========================================
-       START VAULT
+       START
        ========================================= */
 
     document.addEventListener(
         "DOMContentLoaded",
         async () => {
 
+            currentProjectId =
+                getProjectId();
+
+
+            if (!currentProjectId) {
+
+                document
+                    .getElementById(
+                        "projectNameDisplay"
+                    )
+                    .textContent =
+                    "No project selected";
+
+
+                document
+                    .getElementById(
+                        "projectInfo"
+                    )
+                    .textContent =
+                    "Open a project from Project Studio.";
+
+
+                return;
+
+            }
+
+
             try {
 
                 await openDatabase();
 
-                loadProjects();
+                displayProject();
 
             } catch (error) {
 
