@@ -1,128 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Cost Estimator | SKY ARCH LAB</title>
-    <link rel="stylesheet" href="../style.css">
+
+    <link
+        rel="stylesheet"
+        href="../style.css"
+    >
 </head>
 
 <body>
 
 <header>
-    <div class="container">
-        <h1>SKY ARCH LAB</h1>
 
-        <nav>
-            <a href="../index.html">Home</a>
-            <a href="design-lab.html">Design Lab</a>
-            <a href="site-lab.html">Site Lab</a>
-            <a href="building-lab.html">Building Lab</a>
-            <a href="critique-lab.html">Critique Lab</a>
-            <a href="case-studies.html">Case Studies</a>
-            <a href="tools.html" class="active">Tools</a>
-            <a href="my-studio.html">My Studio</a>
-        </nav>
-    </div>
+    <h1>SKY ARCH LAB</h1>
+
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="design-lab.html">Design Lab</a>
+        <a href="site-lab.html">Site Lab</a>
+        <a href="building-lab.html">Building Lab</a>
+        <a href="critique-lab.html">Critique Lab</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="tools.html">Tools</a>
+        <a href="my-studio.html">My Studio</a>
+    </nav>
+
 </header>
+
 
 <main>
 
-    <section class="about-hero">
-        <div class="container">
-            <p class="eyebrow">ARCHITECTURE TOOL</p>
-            <h2>Cost Estimator.</h2>
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>Cost Estimator</h1>
+
             <p>
-                Create a quick preliminary construction cost estimate
-                from floor area and an estimated cost per square metre.
+                Estimate the basic construction cost
+                of an architectural project using
+                floor area and cost per square metre.
             </p>
+
         </div>
+
     </section>
 
-    <section class="intro">
-        <div class="container intro-content">
 
-            <div>
-                <p class="eyebrow">ESTIMATE</p>
-                <h2>Connect space with cost.</h2>
-            </div>
+    <section class="tool-section">
 
-            <div>
+        <div class="tool-container">
+
+            <div class="intro-content">
+
+                <h2>Estimate Project Cost</h2>
+
                 <p>
-                    Early architectural decisions are often influenced
-                    by the relationship between floor area and construction
-                    cost. Use this tool for preliminary comparisons between
-                    different design options.
+                    Enter the approximate floor area
+                    and construction cost per square metre.
                 </p>
+
             </div>
 
-        </div>
-    </section>
 
-    <section class="about-features">
-        <div class="container">
+            <br>
 
-            <div class="feature-card">
 
-                <p class="eyebrow">COST ESTIMATOR</p>
+            <form
+                class="tool-form"
+                id="costForm"
+            >
 
-                <h3>Enter Project Information</h3>
+                <div>
 
-                <div class="tool-form">
-
-                    <label for="floorArea">
-                        Floor Area (m²)
+                    <label for="area">
+                        Floor Area
                     </label>
 
                     <input
                         type="number"
-                        id="floorArea"
+                        id="area"
                         placeholder="Example: 250"
                         min="0"
-                        step="any"
+                        step="0.01"
+                        required
                     >
 
-                    <label for="costPerSquareMetre">
-                        Estimated Cost per m²
+                </div>
+
+
+                <div>
+
+                    <label for="rate">
+                        Cost per Square Metre
                     </label>
 
                     <input
                         type="number"
-                        id="costPerSquareMetre"
-                        placeholder="Example: 50000"
+                        id="rate"
+                        placeholder="Example: 45000"
                         min="0"
-                        step="any"
+                        step="0.01"
+                        required
                     >
+
+                </div>
+
+
+                <div>
 
                     <label for="currency">
                         Currency
                     </label>
 
                     <select id="currency">
-                        <option value="KSh">KSh</option>
-                        <option value="$">USD ($)</option>
-                        <option value="£">GBP (£)</option>
-                        <option value="€">EUR (€)</option>
+
+                        <option value="KSh">
+                            KSh
+                        </option>
+
+                        <option value="$">
+                            USD
+                        </option>
+
+                        <option value="£">
+                            GBP
+                        </option>
+
+                        <option value="€">
+                            EUR
+                        </option>
+
                     </select>
 
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        onclick="calculateCost()"
-                    >
-                        Estimate Cost →
-                    </button>
-
                 </div>
 
-                <div class="tool-result" id="result">
-                    Enter project information to calculate an estimate.
-                </div>
 
+                <button
+                    type="submit"
+                    class="btn"
+                >
+                    Calculate Cost
+                </button>
+
+            </form>
+
+
+            <div
+                id="result"
+                class="tool-result"
+            >
+                Enter your project information
+                above to calculate the estimated
+                construction cost.
             </div>
 
         </div>
+
     </section>
 
-    <section class="statement">
-        <
+
+    <section class="cta">
+
+        <div class="cta-content">
+
+            <h2>
+                Design with numbers in mind.
+            </h2>
+
+            <p>
+                Cost is part of architectural
+                decision-making.
+            </p>
+
+            <a
+                href="tools.html"
+                class="btn secondary"
+            >
+                Back to Tools
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        SKY ARCH LAB ©
+        <span class="current-year"></span>
+        · Think · Test · Design · Critique
+    </p>
+
+</footer>
+
+
+<script src="../script.js"></script>
+
+
+<script>
+
+document
+    .getElementById("costForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const area =
+            parseFloat(
+                document.getElementById("area").value
+            );
+
+        const rate =
+            parseFloat(
+                document.getElementById("rate").value
+            );
+
+        const currency =
+            document.getElementById("currency").value;
+
+        const result =
+            document.getElementById("result");
+
+
+        if (
+            isNaN(area) ||
+            isNaN(rate) ||
+            area <= 0 ||
+            rate <= 0
+        ) {
+
+            result.textContent =
+                "Please enter valid positive values.";
+
+            return;
+        }
+
+
+        const total = area * rate;
+
+
+        result.innerHTML = `
+            <strong>Estimated Construction Cost</strong>
+            <br><br>
+
+            Floor Area:
+            ${area.toLocaleString()}
+            m²
+
+            <br>
+
+            Cost per m²:
+            ${currency}
+            ${rate.toLocaleString()}
+
+            <br><br>
+
+            <strong>
+                Estimated Total:
+                ${currency}
+                ${total.toLocaleString()}
+            </strong>
+        `;
+
+    });
+
+</script>
+
+</body>
+</html>
