@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Calculator | SKY ARCH LAB</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <h1>SKY ARCH LAB</h1>
+
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="design-lab.html">Design Lab</a>
+            <a href="site-lab.html">Site Lab</a>
+            <a href="building-lab.html">Building Lab</a>
+            <a href="critique-lab.html">Critique Lab</a>
+            <a href="case-studies.html">Case Studies</a>
+            <a href="tools.html" class="active">Tools</a>
+            <a href="my-studio.html">My Studio</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <section class="about-hero">
+        <div class="container">
+            <p class="eyebrow">ARCHITECTURE TOOL</p>
+            <h2>Space Calculator.</h2>
+            <p>
+                Estimate the total floor area required for a group of
+                spaces using room quantities and individual areas.
+            </p>
+        </div>
+    </section>
+
+    <section class="intro">
+        <div class="container intro-content">
+
+            <div>
+                <p class="eyebrow">SPACE PLANNING</p>
+                <h2>Turn a room schedule into an area estimate.</h2>
+            </div>
+
+            <div>
+                <p>
+                    Space planning begins by understanding what spaces
+                    are required and how much area each space may need.
+                    Use this calculator for preliminary programming and
+                    comparison of design options.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="about-features">
+        <div class="container">
+
+            <div class="feature-card">
+
+                <p class="eyebrow">SPACE CALCULATOR</p>
+
+                <h3>Enter Space Requirements</h3>
+
+                <div class="tool-form">
+
+                    <label for="spaceName">
+                        Space Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="spaceName"
+                        placeholder="Example: Classroom"
+                    >
+
+                    <label for="quantity">
+                        Quantity
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        placeholder="Example: 4"
+                        min="1"
+                        step="1"
+                        value="1"
+                    >
+
+                    <label for="areaPerSpace">
+                        Area per Space (m²)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="areaPerSpace"
+                        placeholder="Example: 48"
+                        min="0"
+                        step="any"
+                    >
+
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        onclick="calculateSpace()"
+                    >
+                        Calculate Space →
+                    </button>
+
+                </div>
+
+                <div class="tool-result" id="result">
+                    Enter the space requirements to calculate the area.
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="statement">
+        <div class="container statement-content">
+
+            <p class="eyebrow">FORMULA</p>
+
+            <h2>
+                Total Area = Quantity × Area per Space
+            </h2>
+
+            <p>
+                For example, 4 classrooms with an area of 48 m² each
+                require a total classroom area of 192 m².
+            </p>
+
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container cta-content">
+
+            <p class="eyebrow">CONTINUE</p>
+
+            <h2>Return to the architecture toolkit.</h2>
+
+            <a href="tools.html" class="btn btn-primary">
+                Back to Tools →
+            </a>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p>SKY ARCH LAB — Think → Test → Design → Critique</p>
+        <p>&copy; <span class="current-year"></span> SKY ARCH LAB</p>
+    </div>
+</footer>
+
+<script src="../script.js"></script>
+
+<script>
+function calculateSpace() {
+
+    const spaceName =
+        document.getElementById("spaceName").value.trim();
+
+    const quantity =
+        parseFloat(document.getElementById("quantity").value);
+
+    const areaPerSpace =
+        parseFloat(document.getElementById("areaPerSpace").value);
+
+    const result =
+        document.getElementById("result");
+
+    if (
+        isNaN(quantity) ||
+        isNaN(areaPerSpace) ||
+        quantity <= 0 ||
+        areaPerSpace <= 0
+    ) {
+        result.textContent =
+            "Please enter valid space requirements.";
+        return;
+    }
+
+    const totalArea = quantity * areaPerSpace;
+
+    const name =
+        spaceName !== "" ? spaceName : "Space";
+
+    result.innerHTML =
+        "<strong>" + name + "</strong>" +
+        "<br>Quantity: " + quantity +
+        "<br>Area per space: " +
+        areaPerSpace.toFixed(2) + " m²" +
+        "<br><br><strong>Total Area:</strong> " +
+        totalArea.toFixed(2) + " m²";
+}
+</script>
+
+</body>
+</html>
