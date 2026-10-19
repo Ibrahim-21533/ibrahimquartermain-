@@ -1,502 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.5">
-
-    <title>SKY ARCH LAB | THINK. TEST. DESIGN. CRITIQUE.</title>
-
-    <meta name="description"
-          content="SKY ARCH LAB is a digital laboratory for architectural design thinking, experimentation and critique.">
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f0e8">
+  <meta name="description" content="SKY ARCH LAB — architecture, design and innovation. Think. Test. Design. Critique.">
+  <title>SKY ARCH LAB — Architecture / Design / Innovation</title>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="top">
+    <a class="brand" href="#top" aria-label="SKY ARCH LAB home">SKY <span>ARCH</span> LAB</a>
+    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-nav">
+      <span></span><span></span>
+    </button>
+    <nav class="primary-nav" id="primary-nav" aria-label="Main navigation">
+      <a class="active" href="#top">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="header-cta" href="#contact">Let’s Build <span>↗</span></a>
+  </header>
 
-    <!-- HEADER -->
-    <header class="site-header">
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-image"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-content">
+        <p class="eyebrow">ARCHITECTURE / DESIGN / INNOVATION</p>
+        <h1 id="hero-title">Think. Test.<br>Design. <em>Critique.</em></h1>
+        <p class="hero-copy">We imagine spaces that connect people, respond to place, and make everyday life better.</p>
+        <a class="button button-dark" href="#projects">Explore Our Work <span>→</span></a>
+      </div>
+      <div class="hero-meta"><span>01 — 04</span><span>Spaces shaped by purpose</span><span class="scroll-note">SCROLL TO EXPLORE ↓</span></div>
+      <div class="hero-stamp" aria-hidden="true"><span>DESIGN WITH</span><strong>INTENT.</strong><span>BUILD FOR LIFE.</span></div>
+    </section>
 
-        <div class="logo">
-            <a href="index.html">SKY ARCH LAB</a>
+    <section class="intro section-pad" id="about">
+      <div class="intro-copy">
+        <p class="eyebrow">01 / WHO WE ARE</p>
+        <h2>Architecture is<br>more than buildings.</h2>
+        <p>SKY ARCH LAB is a design-led architecture studio exploring how space, material, light and culture shape the way we live. We bring curiosity and careful thinking to every brief.</p>
+        <a class="text-link" href="#process">Discover our approach <span>↗</span></a>
+      </div>
+      <figure class="intro-image">
+        <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1100&q=85" alt="Minimal contemporary architecture with strong geometric forms" loading="lazy">
+        <figcaption>FORM / LIGHT / MATERIAL <span>FIG. 01</span></figcaption>
+      </figure>
+      <div class="principles">
+        <article class="principle">
+          <span class="principle-icon">↗</span><div><h3>Sustainable thinking</h3><p>Climate-aware design, responsible material choices and spaces that work with their surroundings.</p></div>
+        </article>
+        <article class="principle">
+          <span class="principle-icon">□</span><div><h3>Functional beauty</h3><p>Clear plans and thoughtful details where usefulness and character belong together.</p></div>
+        </article>
+        <article class="principle">
+          <span class="principle-icon">⌘</span><div><h3>Collaborative process</h3><p>Good architecture grows from listening, testing ideas and sharing knowledge.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="services section-pad" id="services">
+      <div class="section-heading">
+        <div><p class="eyebrow">02 / WHAT WE DO</p><h2>Services with<br>purpose.</h2></div>
+        <p>From the first sketch to the final presentation, we turn complex briefs into clear design opportunities.</p>
+        <a class="text-link" href="#contact">Discuss a project <span>↗</span></a>
+      </div>
+      <div class="service-grid">
+        <article class="service-card"><span class="service-number">01</span><div class="service-icon">⌂</div><h3>Architectural design</h3><p>Concept development, spatial planning and design exploration for residential, commercial and community projects.</p><a href="#contact" aria-label="Ask about architectural design">↗</a></article>
+        <article class="service-card"><span class="service-number">02</span><div class="service-icon">▤</div><h3>Interior spaces</h3><p>Human-centred interiors that balance circulation, comfort, texture, lighting and function.</p><a href="#contact" aria-label="Ask about interior design">↗</a></article>
+        <article class="service-card"><span class="service-number">03</span><div class="service-icon">⌗</div><h3>3D visualisation</h3><p>Visual storytelling through models, rendered views and clear presentation boards.</p><a href="#contact" aria-label="Ask about 3D visualisation">↗</a></article>
+        <article class="service-card"><span class="service-number">04</span><div class="service-icon">▦</div><h3>Research & planning</h3><p>Site analysis, precedent studies, design research and early-stage planning support.</p><a href="#contact" aria-label="Ask about research and planning">↗</a></article>
+      </div>
+    </section>
+
+    <section class="projects section-pad" id="projects">
+      <div class="projects-top">
+        <div><p class="eyebrow">03 / SELECTED WORK</p><h2>Ideas made<br><em>visible.</em></h2></div>
+        <p>A selection of concept explorations, imagined places and design studies. Each project starts with a question.</p>
+        <div class="project-controls" aria-label="Filter projects">
+          <button class="filter-btn active" data-filter="all">All work <span>04</span></button>
+          <button class="filter-btn" data-filter="residential">Residential</button>
+          <button class="filter-btn" data-filter="public">Public</button>
+          <button class="filter-btn" data-filter="concept">Concept</button>
         </div>
-
-        <nav class="main-nav">
-            <a href="index.html" class="active">Home</a>
-            <a href="about.html">About</a>
-            <a href="pages/design-lab.html">Design Lab</a>
-            <a href="pages/site-lab.html">Site Lab</a>
-            <a href="pages/building-lab.html">Building Lab</a>
-            <a href="pages/critique-lab.html">Critique Lab</a>
-            <a href="pages/case-studies.html">Case Studies</a>
-            <a href="pages/tools.html">Tools</a>
-        </nav>
-
-        <a href="pages/design-lab.html" class="header-button">
-            Start a Project
-        </a>
-
-    </header>
-
-
-    <!-- HERO -->
-    <main>
-
-        <section class="hero">
-
-            <div class="hero-overlay"></div>
-
-            <div class="hero-content">
-
-                <span class="eyebrow">
-                    DIGITAL ARCHITECTURE LABORATORY
-                </span>
-
-                <h1>
-                    Think.
-                    <br>
-                    Test.
-                    <br>
-                    <span>Design.</span>
-                    <br>
-                    Critique.
-                </h1>
-
-                <p>
-                    A digital laboratory for developing,
-                    testing and improving architectural ideas.
-                </p>
-
-                <div class="hero-actions">
-
-                    <a href="pages/design-lab.html"
-                       class="primary-button">
-                        Start a Project
-                        <span>↗</span>
-                    </a>
-
-                    <a href="#explore"
-                       class="secondary-button">
-                        Explore the Lab
-                        <span>↓</span>
-                    </a>
-
-                </div>
-
-            </div>
-
-            <div class="hero-note">
-                <span>✦</span>
-                Better decisions,
-                <br>
-                better spaces.
-            </div>
-
-        </section>
-
-
-        <!-- INTRODUCTION -->
-        <section class="intro-section" id="explore">
-
-            <div class="section-label">
-                01 — THE LAB
-            </div>
-
-            <div class="intro-grid">
-
-                <div>
-                    <h2>
-                        Architecture is a process,
-                        not just a final drawing.
-                    </h2>
-                </div>
-
-                <div>
-                    <p>
-                        SKY ARCH LAB gives architecture students
-                        a digital space to explore ideas, analyse
-                        problems, test alternatives and understand
-                        the reasoning behind their designs.
-                    </p>
-
-                    <a href="about.html" class="text-link">
-                        Discover the idea
-                        <span>↗</span>
-                    </a>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- LABS -->
-        <section class="labs-section">
-
-            <div class="section-heading">
-
-                <div class="section-label">
-                    02 — EXPLORE
-                </div>
-
-                <h2>
-                    Your digital
-                    architecture studio.
-                </h2>
-
-            </div>
-
-
-            <div class="labs-grid">
-
-                <!-- DESIGN -->
-                <a href="pages/design-lab.html"
-                   class="lab-card lab-card-large">
-
-                    <div class="lab-card-number">
-                        01
-                    </div>
-
-                    <div class="lab-card-content">
-
-                        <span class="lab-icon">✦</span>
-
-                        <h3>
-                            Design Lab
-                        </h3>
-
-                        <p>
-                            Develop concepts, explore alternatives
-                            and document the decisions behind your
-                            architectural project.
-                        </p>
-
-                        <span class="card-arrow">↗</span>
-
-                    </div>
-
-                </a>
-
-
-                <!-- SITE -->
-                <a href="pages/site-lab.html"
-                   class="lab-card">
-
-                    <div class="lab-card-number">
-                        02
-                    </div>
-
-                    <div class="lab-card-content">
-
-                        <span class="lab-icon">◉</span>
-
-                        <h3>
-                            Site Lab
-                        </h3>
-
-                        <p>
-                            Understand orientation, climate,
-                            access, context and site conditions.
-                        </p>
-
-                        <span class="card-arrow">↗</span>
-
-                    </div>
-
-                </a>
-
-
-                <!-- BUILDING -->
-                <a href="pages/building-lab.html"
-                   class="lab-card">
-
-                    <div class="lab-card-number">
-                        03
-                    </div>
-
-                    <div class="lab-card-content">
-
-                        <span class="lab-icon">▦</span>
-
-                        <h3>
-                            Building Lab
-                        </h3>
-
-                        <p>
-                            Explore structure, materials, space,
-                            circulation and environmental strategies.
-                        </p>
-
-                        <span class="card-arrow">↗</span>
-
-                    </div>
-
-                </a>
-
-
-                <!-- CRITIQUE -->
-                <a href="pages/critique-lab.html"
-                   class="lab-card">
-
-                    <div class="lab-card-number">
-                        04
-                    </div>
-
-                    <div class="lab-card-content">
-
-                        <span class="lab-icon">?</span>
-
-                        <h3>
-                            Critique Lab
-                        </h3>
-
-                        <p>
-                            Challenge your assumptions and discover
-                            weaknesses and opportunities in your design.
-                        </p>
-
-                        <span class="card-arrow">↗</span>
-
-                    </div>
-
-                </a>
-
-
-                <!-- CASE STUDIES -->
-                <a href="pages/case-studies.html"
-                   class="lab-card">
-
-                    <div class="lab-card-number">
-                        05
-                    </div>
-
-                    <div class="lab-card-content">
-
-                        <span class="lab-icon">▤</span>
-
-                        <h3>
-                            Case Studies
-                        </h3>
-
-                        <p>
-                            Study real buildings through site,
-                            concept, structure, form and material.
-                        </p>
-
-                        <span class="card-arrow">↗</span>
-
-                    </div>
-
-                </a>
-
-
-                <!-- TOOLS -->
-                <a href="pages/tools.html"
-                   class="lab-card lab-card-accent">
-
-                    <div class="lab-card-number">
-                        06
-                    </div>
-
-                    <div class="lab-card-content">
-
-                        <span class="lab-icon">+</span>
-
-                        <h3>
-                            Architecture Tools
-                        </h3>
-
-                        <p>
-                            Practical calculators and tools for
-                            everyday architectural work.
-                        </p>
-
-                        <span class="card-arrow">↗</span>
-
-                    </div>
-
-                </a>
-
-            </div>
-
-        </section>
-
-
-        <!-- PROCESS -->
-        <section class="process-section">
-
-            <div class="section-label">
-                03 — HOW IT WORKS
-            </div>
-
-            <h2>
-                From an idea
-                <br>
-                to a better design.
-            </h2>
-
-
-            <div class="process-line">
-
-                <div class="process-step">
-                    <span>01</span>
-                    <h3>Research</h3>
-                    <p>
-                        Understand the problem.
-                    </p>
-                </div>
-
-                <div class="process-step">
-                    <span>02</span>
-                    <h3>Analyse</h3>
-                    <p>
-                        Understand the context.
-                    </p>
-                </div>
-
-                <div class="process-step">
-                    <span>03</span>
-                    <h3>Design</h3>
-                    <p>
-                        Develop possibilities.
-                    </p>
-                </div>
-
-                <div class="process-step">
-                    <span>04</span>
-                    <h3>Test</h3>
-                    <p>
-                        Challenge your decisions.
-                    </p>
-                </div>
-
-                <div class="process-step">
-                    <span>05</span>
-                    <h3>Refine</h3>
-                    <p>
-                        Improve the result.
-                    </p>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- STATEMENT -->
-        <section class="statement-section">
-
-            <div class="statement-content">
-
-                <span class="eyebrow">
-                    THE IDEA
-                </span>
-
-                <h2>
-                    Don't just design
-                    a building.
-                    <br>
-                    Understand
-                    <span>why.</span>
-                </h2>
-
-                <p>
-                    Every line, space, material and decision
-                    should have a reason.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- CTA -->
-        <section class="cta-section">
-
-            <div>
-
-                <span class="eyebrow">
-                    BEGIN YOUR PROCESS
-                </span>
-
-                <h2>
-                    Ready to test
-                    your next idea?
-                </h2>
-
-            </div>
-
-            <a href="pages/design-lab.html"
-               class="primary-button">
-                Enter Design Lab
-                <span>↗</span>
-            </a>
-
-        </section>
-
-    </main>
-
-
-    <!-- FOOTER -->
-    <footer class="site-footer">
-
-        <div class="footer-main">
-
-            <div class="footer-brand">
-
-                <h3>
-                    SKY ARCH LAB
-                </h3>
-
-                <p>
-                    Think → Test → Design → Critique
-                </p>
-
-            </div>
-
-
-            <div class="footer-column">
-
-                <h4>Explore</h4>
-
-                <a href="about.html">About</a>
-                <a href="pages/design-lab.html">Design Lab</a>
-                <a href="pages/site-lab.html">Site Lab</a>
-                <a href="pages/building-lab.html">Building Lab</a>
-
-            </div>
-
-
-            <div class="footer-column">
-
-                <h4>Resources</h4>
-
-                <a href="pages/critique-lab.html">Critique Lab</a>
-                <a href="pages/case-studies.html">Case Studies</a>
-                <a href="pages/tools.html">Tools</a>
-                <a href="about.html">About</a>
-
-            </div>
-
+      </div>
+      <div class="project-grid">
+        <article class="project-card" data-category="residential">
+          <a class="project-image" href="#contact" aria-label="Enquire about Courtyard House"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1100&q=85" alt="Modern courtyard house with glass walls and landscaped garden" loading="lazy"><span class="project-arrow">↗</span></a>
+          <div class="project-info"><div><p class="project-type">RESIDENTIAL / CONCEPT</p><h3>Courtyard House</h3></div><span class="project-year">2025</span></div>
+        </article>
+        <article class="project-card" data-category="public">
+          <a class="project-image" href="#contact" aria-label="Enquire about Civic Exchange"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1100&q=85" alt="Contemporary glass office building rising into the sky" loading="lazy"><span class="project-arrow">↗</span></a>
+          <div class="project-info"><div><p class="project-type">COMMERCIAL / STUDY</p><h3>Civic Exchange</h3></div><span class="project-year">2025</span></div>
+        </article>
+        <article class="project-card" data-category="public">
+          <a class="project-image" href="#contact" aria-label="Enquire about Culture Pavilion"><img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1100&q=85" alt="Sculptural contemporary cultural building with expressive roofline" loading="lazy"><span class="project-arrow">↗</span></a>
+          <div class="project-info"><div><p class="project-type">CULTURE / CONCEPT</p><h3>Culture Pavilion</h3></div><span class="project-year">2024</span></div>
+        </article>
+        <article class="project-card" data-category="concept">
+          <a class="project-image" href="#contact" aria-label="Enquire about Open Frame"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1100&q=85" alt="Warm contemporary architectural interior with natural materials" loading="lazy"><span class="project-arrow">↗</span></a>
+          <div class="project-info"><div><p class="project-type">SPATIAL STUDY / CONCEPT</p><h3>Open Frame</h3></div><span class="project-year">2024</span></div>
+        </article>
+      </div>
+      <p class="portfolio-note"><span class="small-dot"></span> Selected projects are concept studies and visual references, not claims of completed commissions.</p>
+    </section>
+
+    <section class="process section-pad" id="process">
+      <div class="process-art">
+        <div class="drawing-label">STUDY 04 — SPATIAL FRAMEWORK</div>
+        <svg viewBox="0 0 520 420" role="img" aria-label="Line drawing of a conceptual modern building" class="building-drawing">
+          <g fill="none" stroke="currentColor" stroke-width="1.15">
+            <path d="M54 300 L250 154 L448 220 L253 369 Z"/><path d="M54 300 L54 187 L250 49 L250 154"/><path d="M250 49 L448 115 L448 220"/>
+            <path d="M54 187 L250 253 L448 115"/><path d="M54 224 L250 290 L448 151"/><path d="M54 262 L250 327 L448 188"/>
+            <path d="M115 256 L115 142 M164 273 L164 108 M210 288 L210 76 M305 237 L305 68 M354 221 L354 83 M401 205 L401 99"/>
+            <path d="M250 154 L250 369 M305 173 L305 328 M354 156 L354 292 M401 139 L401 255"/>
+            <path d="M78 292 L78 196 M99 307 L99 211 M138 320 L138 237 M180 337 L180 260 M224 353 L224 292"/>
+            <path d="M32 370 L476 370 M28 379 L482 379 M76 384 L76 398 M132 384 L132 398 M188 384 L188 398 M244 384 L244 398 M300 384 L300 398 M356 384 L356 398 M412 384 L412 398"/>
+            <path d="M54 187 L28 174 M250 49 L268 30 M448 115 L475 104"/>
+          </g>
+          <g fill="currentColor" font-size="10" letter-spacing="2"><text x="35" y="28">AXONOMETRIC</text><text x="35" y="42">STUDY / 001</text><text x="350" y="410">SCALE — NTS</text></g>
+        </svg>
+      </div>
+      <div class="process-content">
+        <p class="eyebrow">04 / HOW WE THINK</p><h2>From question<br>to <em>place.</em></h2>
+        <p class="process-lead">A thoughtful process keeps imagination connected to the needs of people and the realities of a site.</p>
+        <div class="process-steps">
+          <article><span>01</span><div><h3>Discover</h3><p>Listen, observe, analyse the site and define the real question.</p></div></article>
+          <article><span>02</span><div><h3>Design</h3><p>Sketch alternatives, test spatial ideas and develop a clear concept.</p></div></article>
+          <article><span>03</span><div><h3>Develop</h3><p>Refine the layout, materials, structure and presentation.</p></div></article>
+          <article><span>04</span><div><h3>Deliver</h3><p>Communicate the proposal with drawings, models and visualisations.</p></div></article>
         </div>
+      </div>
+    </section>
 
+    <section class="quote-band">
+      <p class="eyebrow">A DESIGN PRINCIPLE</p>
+      <blockquote>“Great architecture is not just about buildings. It is about people, places and possibilities.”</blockquote>
+      <span>— SKY ARCH LAB</span>
+      <div class="quote-mark" aria-hidden="true">“</div>
+    </section>
 
-        <div class="footer-bottom">
+    <section class="contact section-pad" id="contact">
+      <div class="contact-copy"><p class="eyebrow">05 / START A CONVERSATION</p><h2>Let’s build<br><em>something great.</em></h2><p>Have a project in mind, an idea to test, or a collaboration to explore? Tell us what you’re imagining.</p><a class="button button-light" href="mailto:hello@skyarchlab.example?subject=Project%20enquiry">Start a project <span>↗</span></a></div>
+      <div class="contact-details">
+        <div class="contact-item"><span>EMAIL</span><a href="mailto:hello@skyarchlab.example">hello@skyarchlab.example</a></div>
+        <div class="contact-item"><span>STUDIO</span><p>Nairobi, Kenya<br>Working across ideas and places</p></div>
+        <div class="contact-item"><span>FOLLOW THE PROCESS</span><p>Instagram · Behance · LinkedIn</p></div>
+        <p class="contact-small">Replace the example email and social links with your official contact details before launch.</p>
+      </div>
+    </section>
+  </main>
 
-            <p>
-                © 2026 SKY ARCH LAB
-            </p>
-
-            <p>
-                Built for architectural thinking.
-            </p>
-
-        </div>
-
-    </footer>
-
-
-    <script src="script.js"></script>
-
+  <footer class="site-footer">
+    <a class="brand" href="#top">SKY <span>ARCH</span> LAB</a>
+    <p>Think carefully. Design responsibly. Build for life.</p>
+    <a class="back-top" href="#top">BACK TO TOP ↑</a>
+    <small>© <span id="year"></span> SKY ARCH LAB. Design is a continuous process.</small>
+  </footer>
+  <script src="script.js"></script>
 </body>
 </html>
