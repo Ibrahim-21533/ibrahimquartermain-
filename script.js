@@ -1,312 +1,341 @@
-// =========================================
-// SKY ARCH LAB
-// Main Site Script
-// =========================================
+
+/* =========================================
+   SKY ARCH LAB
+   Main Site Script
+   ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+  const $ = (selector, root = document) =>
+    root.querySelector(selector);
 
-    /* =====================================
-       PAGE LOAD
-       ===================================== */
+  const $$ = (selector, root = document) =>
+    [...root.querySelectorAll(selector)];
 
-    document.body.classList.add("loaded");
+  // PAGE LOAD
+  document.body.classList.add("loaded");
 
+  // CURRENT YEAR
+  $$(".current-year").forEach(element => {
+    element.textContent = new Date().getFullYear();
+  });
 
-    /* =====================================
-       SMOOTH INTERNAL LINKS
-       ===================================== */
+  // MOBILE NAVIGATION
+  const menuToggle = $(".menu-toggle");
+  const primaryNav = $("#primary-nav");
 
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
+  function closeMenu() {
+    if (!menuToggle || !primaryNav) return;
 
-        link.addEventListener("click", function (event) {
+    menuToggle.setAttribute("aria-expanded", "false");
+    primaryNav.classList.remove("is-open");
+    document.body.classList.remove("menu-open");
+  }
 
-            const targetId = this.getAttribute("href");
+  if (menuToggle && primaryNav) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen =
+        menuToggle.getAttribute("aria-expanded") === "true";
 
-            if (
-                !targetId ||
-                targetId === "#" ||
-                targetId.startsWith("#!")
-            ) {
-                return;
-            }
+      menuToggle.setAttribute(
+        "aria-expanded",
+        String(!isOpen)
+      );
 
-            const target = document.querySelector(targetId);
-
-            if (target) {
-
-                event.preventDefault();
-
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-
-            }
-
-        });
-
+      primaryNav.classList.toggle("is-open", !isOpen);
+      document.body.classList.toggle("menu-open", !isOpen);
     });
 
+    $$("#primary-nav a").forEach(link => {
+      link.addEventListener("click", closeMenu);
+    });
 
-    /* =====================================
-       SCROLL REVEAL
-       ===================================== */
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeMenu();
+    });
 
-    const revealElements = document.querySelectorAll(
-        ".intro-content, " +
-        ".lab-card, " +
-        ".process-item, " +
-        ".statement-content, " +
-        ".about-content, " +
-        ".feature-card, " +
-        ".vision-content, " +
-        ".future-content, " +
-        ".cta-content"
+    document.addEventListener("click", event => {
+      if (
+        menuToggle.getAttribute("aria-expanded") === "true" &&
+        !primaryNav.contains(event.target) &&
+        !menuToggle.contains(event.target)
+      ) {
+        closeMenu();
+      }
+    });
+  }
+
+  // SMOOTH INTERNAL LINKS
+  $$('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", event => {
+      const href = link.getAttribute("href");
+
+      if (!href || href === "#" || href.startsWith("#!")) {
+        event.preventDefault();
+        return;
+      }
+
+      let target;
+
+      try {
+        target = $(href);
+      } catch {
+        return;
+      }
+
+      if (!target) return;
+
+      event.preventDefault();
+
+      target.scrollIntoView({
+        behavior: window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches ? "auto" : "smooth",
+        block: "start"
+      });
+
+      // Keep the URL in sync without triggering a jump.
+      if (window.location.hash !== href) {
+        history.replaceState(null, "", href);
+      }
+    });
+  });
+
+  // HEADER SCROLL EFFECT
+  const header = $(".site-header") || $("header");
+
+  function updateHeader() {
+    if (!header) return;
+    header.classList.toggle("scrolled", window.scrollY > 40);
+  }
+
+  updateHeader();
+
+  window.addEventListener("scroll", updateHeader, {
+    passive: true
+  });
+
+  // SCROLL REVEAL
+  const revealElements = $$(
+    ".intro-content, .lab-card, .process-item, " +
+    ".statement-content, .about-content, .feature-card, " +
+    ".vision-content, .future-content, .cta-content"
+  );
+
+  if (
+    "IntersectionObserver" in window &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
     );
 
-    if ("IntersectionObserver" in window) {
+    revealElements.forEach(element => {
+      element.classList.add("reveal");
+      revealObserver.observe(element);
+    });
+  } else {
+    revealElements.forEach(element => {
+      element.classList.add("visible");
+    });
+  }
 
-        const revealObserver = new IntersectionObserver(
-            (entries, observer) => {
+  // PROJECT CATEGORY FILTERS
+  const filterButtons = $$("[data-filter]");
+  const projectCards = $$(".project-card");
 
-                entries.forEach(entry => {
+  function applyProjectFilter(filter) {
+    projectCards.forEach(card => {
+      const category = card.dataset.category || "";
+      const matches =
+        filter === "all" || category === filter;
 
-                    if (entry.isIntersecting) {
+      card.hidden = !matches;
+    });
 
-                        entry.target.classList.add("visible");
+    filterButtons.forEach(button => {
+      const active = button.dataset.filter === filter;
 
-                        observer.unobserve(entry.target);
+      button.classList.toggle("active", active);
 
-                    }
+      if (active) {
+        button.setAttribute("aria-pressed", "true");
+      } else {
+        button.setAttribute("aria-pressed", "false");
+      }
+    });
+  }
 
-                });
+  filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      applyProjectFilter(button.dataset.filter || "all");
+    });
+  });
 
-            },
-            {
-                threshold: 0.12
-            }
-        );
-
-        revealElements.forEach(element => {
-
-            element.classList.add("reveal");
-
-            revealObserver.observe(element);
-
-        });
-
-    } else {
-
-        revealElements.forEach(element => {
-            element.classList.add("visible");
-        });
-
-    }
-
-
-    /* =====================================
-       HEADER SCROLL EFFECT
-       ===================================== */
-
-    const header = document.querySelector("header");
-
-    if (header) {
-
-        const updateHeader = () => {
-
-            if (window.scrollY > 40) {
-                header.classList.add("scrolled");
-            } else {
-                header.classList.remove("scrolled");
-            }
-
-        };
-
-        updateHeader();
-
-        window.addEventListener(
-            "scroll",
-            updateHeader,
-            { passive: true }
-        );
-
-    }
-
-
-    /* =====================================
-       CARD HOVER EFFECT
-       ===================================== */
-
-    const cards = document.querySelectorAll(
-        ".lab-card, .feature-card"
+  if (filterButtons.length) {
+    applyProjectFilter(
+      filterButtons.find(button =>
+        button.classList.contains("active")
+      )?.dataset.filter || "all"
     );
+  }
 
-    cards.forEach(card => {
+  // SERVICE DETAIL DIALOGS
+  const serviceDialog = $("#service-dialog");
+  const serviceBackdrop = $("#service-dialog-backdrop");
 
-        card.addEventListener("mouseenter", () => {
-            card.classList.add("hovered");
-        });
+  const serviceDetails = {
+    architecture: {
+      title: "Architecture & Design",
+      description:
+        "Develop thoughtful spaces through site analysis, spatial planning, concept development and design exploration."
+    },
+    interiors: {
+      title: "Interior Environments",
+      description:
+        "Explore material choices, lighting, spatial flow and interior concepts that support the people using each space."
+    },
+    visualisation: {
+      title: "Architectural Visualisation",
+      description:
+        "Communicate design ideas through visual studies, presentation graphics and architectural imagery."
+    },
+    research: {
+      title: "Research & Innovation",
+      description:
+        "Investigate building systems, sustainable strategies, materials and new approaches to the built environment."
+    }
+  };
 
-        card.addEventListener("mouseleave", () => {
-            card.classList.remove("hovered");
-        });
-
-    });
-
-
-    /* =====================================
-       CURRENT YEAR
-       ===================================== */
-
-    const yearElements =
-        document.querySelectorAll(".current-year");
-
-    yearElements.forEach(element => {
-
-        element.textContent =
-            new Date().getFullYear();
-
-    });
-
-
-    /* =====================================
-       IMAGE ERROR HANDLING
-       ===================================== */
-
-    document.querySelectorAll("img").forEach(image => {
-
-        image.addEventListener("error", () => {
-
-            image.style.opacity = "0";
-
-        });
-
-    });
-
-
-    /* =====================================
-       TOOL BUTTON FEEDBACK
-       ===================================== */
-
-    document.querySelectorAll(".tool-form .btn").forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            button.classList.add("clicked");
-
-            setTimeout(() => {
-                button.classList.remove("clicked");
-            }, 250);
-
-        });
-
-    });
-
-
-    /* =====================================
-       ENTER KEY FOR TOOL FORMS
-       ===================================== */
-
-    document.querySelectorAll(".tool-form").forEach(form => {
-
-        form.addEventListener("keydown", event => {
-
-            if (
-                event.key === "Enter" &&
-                event.target.tagName !== "SELECT"
-            ) {
-
-                const button =
-                    form.querySelector("button");
-
-                if (button) {
-                    button.click();
-                }
-
-            }
-
-        });
-
-    });
-
-
-    /* =====================================
-       NUMBER INPUT VALIDATION
-       ===================================== */
-
-    document.querySelectorAll(
-        '.tool-form input[type="number"]'
-    ).forEach(input => {
-
-        input.addEventListener("input", () => {
-
-            if (input.value < 0) {
-                input.value = 0;
-            }
-
-        });
-
-    });
-
-
-    /* =====================================
-       TOOL INPUT FOCUS
-       ===================================== */
-
-    document.querySelectorAll(
-        ".tool-form input, .tool-form select"
-    ).forEach(input => {
-
-        input.addEventListener("focus", () => {
-            input.parentElement?.classList.add("input-focused");
-        });
-
-        input.addEventListener("blur", () => {
-            input.parentElement?.classList.remove("input-focused");
-        });
-
-    });
-
-
-    /* =====================================
-       ACTIVE NAVIGATION
-       ===================================== */
-
-    const currentPage =
-        window.location.pathname.split("/").pop();
-
-    if (currentPage) {
-
-        document.querySelectorAll("nav a").forEach(link => {
-
-            const linkPage =
-                link.getAttribute("href")
-                    ?.split("/")
-                    .pop();
-
-            if (linkPage === currentPage) {
-
-                link.classList.add("active");
-
-            }
-
-        });
-
+  function closeServiceDialog() {
+    if (serviceDialog?.open && typeof serviceDialog.close === "function") {
+      serviceDialog.close();
     }
 
+    if (serviceBackdrop) {
+      serviceBackdrop.hidden = true;
+    }
+  }
 
-    /* =====================================
-       PREVENT EMPTY HASH JUMP
-       ===================================== */
+  $$(".service-arrow[data-service]").forEach(button => {
+    button.addEventListener("click", () => {
+      const service = serviceDetails[button.dataset.service];
 
-    document.querySelectorAll('a[href="#"]').forEach(link => {
+      if (!service || !serviceDialog) return;
 
-        link.addEventListener("click", event => {
+      const title = $("#service-dialog-title");
+      const description = $("#service-dialog-description");
 
-            event.preventDefault();
+      if (title) title.textContent = service.title;
+      if (description) description.textContent = service.description;
 
-        });
+      if (typeof serviceDialog.showModal === "function") {
+        serviceDialog.showModal();
 
+        if (serviceBackdrop) {
+          serviceBackdrop.hidden = false;
+        }
+      } else {
+        // Fallback for browsers without native dialog support.
+        serviceDialog.setAttribute("open", "");
+      }
+    });
+  });
+
+  const closeDialogButton = $("#service-dialog-close");
+
+  if (closeDialogButton) {
+    closeDialogButton.addEventListener(
+      "click",
+      closeServiceDialog
+    );
+  }
+
+  if (serviceDialog) {
+    serviceDialog.addEventListener("close", () => {
+      if (serviceBackdrop) {
+        serviceBackdrop.hidden = true;
+      }
     });
 
+    serviceDialog.addEventListener("click", event => {
+      if (event.target === serviceDialog) {
+        closeServiceDialog();
+      }
+    });
+  }
+
+  if (serviceBackdrop) {
+    serviceBackdrop.addEventListener(
+      "click",
+      closeServiceDialog
+    );
+  }
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      closeServiceDialog();
+    }
+  });
+
+  // CARD HOVER EFFECT
+  $$(".lab-card, .feature-card").forEach(card => {
+    card.addEventListener("mouseenter", () => {
+      card.classList.add("hovered");
+    });
+
+    card.addEventListener("mouseleave", () => {
+      card.classList.remove("hovered");
+    });
+  });
+
+  // IMAGE ERROR HANDLING
+  $$("img").forEach(image => {
+    image.addEventListener("error", () => {
+      image.classList.add("image-unavailable");
+    });
+  });
+
+  // TOOL BUTTON FEEDBACK
+  $$(".tool-form .btn").forEach(button => {
+    button.addEventListener("click", () => {
+      button.classList.add("clicked");
+
+      setTimeout(() => {
+        button.classList.remove("clicked");
+      }, 250);
+    });
+  });
+
+  // TOOL FORM VALIDATION
+  $$(".tool-form input[type='number']").forEach(input => {
+    input.addEventListener("input", () => {
+      if (input.value !== "" && Number(input.value) < 0) {
+        input.value = "0";
+      }
+    });
+  });
+
+  // ACTIVE PAGE NAVIGATION
+  const currentPage =
+    window.location.pathname.split("/").pop() || "index.html";
+
+  $$("nav a").forEach(link => {
+    const href = link.getAttribute("href");
+
+    if (!href || href.startsWith("#")) return;
+
+    const linkPage = href.split("/").pop().split("?")[0];
+
+    if (linkPage === currentPage) {
+      link.classList.add("active");
+    }
+  });
 });
