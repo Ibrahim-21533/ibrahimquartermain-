@@ -1,361 +1,355 @@
+
+"use strict";
+
 /* =========================================
-   SKY ARCH LAB
-   Main Site Script
+   SKY ARCH LAB — MAIN JAVASCRIPT
    ========================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  const $ = (selector, root = document) =>
-    root.querySelector(selector);
 
-  const $$ = (selector, root = document) =>
-    [...root.querySelectorAll(selector)];
+/* 1. MOBILE NAVIGATION */
 
-  // PAGE LOAD
-  document.body.classList.add("loaded");
+const menuToggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector(".primary-nav");
 
-  // CURRENT YEAR
-  $$(".current-year").forEach(element => {
-    element.textContent = new Date().getFullYear();
+if (menuToggle && nav) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+    const newState = !isOpen;
+
+    menuToggle.setAttribute("aria-expanded", String(newState));
+    menuToggle.setAttribute(
+      "aria-label",
+      newState ? "Close navigation" : "Open navigation"
+    );
+
+    nav.classList.toggle("open", newState);
   });
 
-  // MOBILE NAVIGATION
-  const menuToggle = $(".menu-toggle");
-  const primaryNav = $("#primary-nav");
+  nav.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      nav.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "Open navigation");
+    });
+  });
+}
 
-  function closeMenu() {
-    if (!menuToggle || !primaryNav) return;
 
-    menuToggle.setAttribute("aria-expanded", "false");
-    primaryNav.classList.remove("is-open");
-    document.body.classList.remove("menu-open");
-  }
+/* 2. PROJECT FILTERS */
 
-  if (menuToggle && primaryNav) {
-    menuToggle.addEventListener("click", () => {
-      const isOpen =
-        menuToggle.getAttribute("aria-expanded") === "true";
+const filterButtons = document.querySelectorAll(".filter-btn");
+const projectCards = document.querySelectorAll(".project-card");
 
-      menuToggle.setAttribute("aria-expanded", String(!isOpen));
-      primaryNav.classList.toggle("is-open", !isOpen);
-      document.body.classList.toggle("menu-open", !isOpen);
+filterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const filter = button.dataset.filter;
+
+    filterButtons.forEach(item => {
+      item.classList.toggle("active", item === button);
     });
 
-    $$("#primary-nav a").forEach(link => {
-      link.addEventListener("click", closeMenu);
+    projectCards.forEach(card => {
+      const matches =
+        filter === "all" || card.dataset.category === filter;
+
+      card.classList.toggle("hidden", !matches);
     });
+  });
+});
 
-    document.addEventListener("click", event => {
-      if (
-        menuToggle.getAttribute("aria-expanded") === "true" &&
-        !primaryNav.contains(event.target) &&
-        !menuToggle.contains(event.target)
-      ) {
-        closeMenu();
-      }
-    });
-  }
 
-  // SMOOTH INTERNAL LINKS
-  $$('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", event => {
-      const href = link.getAttribute("href");
+/* 3. AUTOMATIC COPYRIGHT YEAR */
 
-      if (!href || href === "#" || href.startsWith("#!")) {
-        event.preventDefault();
-        return;
-      }
+const year = document.querySelector("#year");
 
-      let target;
+if (year) {
+  year.textContent = new Date().getFullYear();
+}
 
-      try {
-        target = $(href);
-      } catch {
-        return;
-      }
 
-      if (!target) return;
+/* 4. ACTIVE NAVIGATION LINK */
 
-      event.preventDefault();
+const sections = [
+  ...document.querySelectorAll("main section[id]")
+];
 
-      target.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "auto"
-          : "smooth",
-        block: "start"
+const navLinks = [
+  ...document.querySelectorAll(".primary-nav a")
+];
+
+if ("IntersectionObserver" in window) {
+  const sectionObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+
+        navLinks.forEach(link => {
+          const isActive =
+            link.getAttribute("href") === `#${entry.target.id}`;
+
+          link.classList.toggle("active", isActive);
+        });
       });
-
-      if (window.location.hash !== href) {
-        history.replaceState(null, "", href);
-      }
-    });
-  });
-
-  // HEADER SCROLL EFFECT
-  const header = $(".site-header") || $("header");
-
-  function updateHeader() {
-    if (!header) return;
-    header.classList.toggle("scrolled", window.scrollY > 40);
-  }
-
-  updateHeader();
-
-  window.addEventListener("scroll", updateHeader, {
-    passive: true
-  });
-
-  // SCROLL REVEAL
-  const revealElements = $$(
-    ".intro-content, .lab-card, .process-item, " +
-    ".statement-content, .about-content, .feature-card, " +
-    ".vision-content, .future-content, .cta-content"
+    },
+    {
+      rootMargin: "-35% 0px -55% 0px"
+    }
   );
 
-  if (
-    "IntersectionObserver" in window &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  ) {
-    const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-
-    revealElements.forEach(element => {
-      element.classList.add("reveal");
-      revealObserver.observe(element);
-    });
-  } else {
-    revealElements.forEach(element => {
-      element.classList.add("visible");
-    });
-  }
-
-  // PROJECT CATEGORY FILTERS
-  const filterButtons = $$("[data-filter]");
-  const projectCards = $$(".project-card");
-
-  function applyProjectFilter(filter) {
-    projectCards.forEach(card => {
-      const category = card.dataset.category || "";
-      const matches = filter === "all" || category === filter;
-
-      card.hidden = !matches;
-    });
-
-    filterButtons.forEach(button => {
-      const active = button.dataset.filter === filter;
-
-      button.classList.toggle("active", active);
-
-      if (active) {
-        button.setAttribute("aria-pressed", "true");
-      } else {
-        button.setAttribute("aria-pressed", "false");
-      }
-    });
-  }
-
-  filterButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      applyProjectFilter(button.dataset.filter || "all");
-    });
+  sections.forEach(section => {
+    sectionObserver.observe(section);
   });
+}
 
-  if (filterButtons.length) {
-    applyProjectFilter(
-      filterButtons.find(button =>
-        button.classList.contains("active")
-      )?.dataset.filter || "all"
-    );
+
+/* 5. PROJECT INFORMATION */
+
+const portfolioDetails = {
+  "courtyard-house": {
+    title: "Courtyard House",
+    description:
+      "A residential concept exploring privacy, natural light, greenery and the relationship between indoor and outdoor living.",
+    focus:
+      "Residential planning, daylight, privacy and courtyard space.",
+    approach:
+      "Organise the home around a planted courtyard to encourage daylight, ventilation and a connection with nature.",
+    image:
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1100&q=85",
+    page: "courtyard-house.html"
+  },
+
+  "civic-exchange": {
+    title: "Civic Exchange",
+    description:
+      "A commercial and public-space study exploring contemporary urban architecture, circulation and the relationship between buildings and city life.",
+    focus:
+      "Urban connections, circulation and shared public space.",
+    approach:
+      "Explore clear movement routes and a strong architectural identity within an urban setting.",
+    image:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1100&q=85",
+    page: "case-study.html?project=civic-exchange"
+  },
+
+  "culture-pavilion": {
+    title: "Culture Pavilion",
+    description:
+      "A cultural architecture concept exploring gathering spaces, expressive forms and the role of architecture in community life.",
+    focus:
+      "Community, cultural identity and gathering spaces.",
+    approach:
+      "Investigate how spatial openness, shade and a distinctive roof form can support social interaction.",
+    image:
+      "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1100&q=85",
+    page: "case-study.html?project=culture-pavilion"
+  },
+
+  "open-frame": {
+    title: "Open Frame",
+    description:
+      "A spatial concept study focused on natural materials, flexible spaces and the visual relationship between structure and interior.",
+    focus:
+      "Material expression, flexibility and spatial continuity.",
+    approach:
+      "Use a clear spatial framework and a restrained material palette to explore adaptable interiors.",
+    image:
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1100&q=85",
+    page: "case-study.html?project=open-frame"
+  }
+};
+
+
+/* 6. PROJECT PREVIEW ELEMENTS */
+
+const projectPreview = document.querySelector("#project-preview");
+const previewClose = document.querySelector("#preview-close");
+const previewImage = document.querySelector("#preview-image");
+const previewTitle = document.querySelector("#preview-title");
+const previewDescription = document.querySelector("#preview-description");
+const previewFocus = document.querySelector("#preview-focus");
+const previewApproach = document.querySelector("#preview-approach");
+const previewFullLink = document.querySelector("#preview-full-link");
+
+
+/* 7. FIND THE PROJECT KEY */
+
+function getProjectKey(link) {
+  try {
+    const url = new URL(link.href, window.location.href);
+    return url.searchParams.get("project");
+  } catch (error) {
+    return null;
+  }
+}
+
+
+/* 8. OPEN PROJECT PREVIEW */
+
+function openProjectPreview(link) {
+  const key = getProjectKey(link);
+  const project = portfolioDetails[key];
+
+  if (!project) {
+    window.location.href = link.href;
+    return;
   }
 
-  // SERVICE DETAIL DIALOGS
-  const serviceDialog = $("#service-dialog");
-  const serviceBackdrop = $("#service-dialog-backdrop");
-
-  const serviceDetails = {
-    architecture: {
-      title: "Architecture & Design",
-      description:
-        "Develop thoughtful spaces through site analysis, spatial planning, concept development and design exploration."
-    },
-    interiors: {
-      title: "Interior Environments",
-      description:
-        "Explore material choices, lighting, spatial flow and interior concepts that support the people using each space."
-    },
-    visualisation: {
-      title: "Architectural Visualisation",
-      description:
-        "Communicate design ideas through visual studies, presentation graphics and architectural imagery."
-    },
-    research: {
-      title: "Research & Innovation",
-      description:
-        "Investigate building systems, sustainable strategies, materials and new approaches to the built environment."
-    }
-  };
-
-  function closeServiceDialog() {
-    if (serviceDialog && serviceDialog.open && typeof serviceDialog.close === "function") {
-      serviceDialog.close();
-    }
-
-    if (serviceBackdrop) {
-      serviceBackdrop.hidden = true;
-    }
+  /*
+   * If the preview window is missing, open
+   * the project's full page instead.
+   */
+  if (!projectPreview || typeof projectPreview.showModal !== "function") {
+    window.location.href = new URL(
+      project.page,
+      window.location.href
+    ).href;
+    return;
   }
 
-  $$(".service-arrow[data-service]").forEach(button => {
-    button.addEventListener("click", () => {
-      const service = serviceDetails[button.dataset.service];
+  if (previewImage) {
+    previewImage.src = project.image;
+    previewImage.alt = project.title;
+  }
 
-      if (!service || !serviceDialog) return;
+  if (previewTitle) {
+    previewTitle.textContent = project.title;
+  }
 
-      const title = $("#service-dialog-title");
-      const description = $("#service-dialog-description");
+  if (previewDescription) {
+    previewDescription.textContent = project.description;
+  }
 
-      if (title) title.textContent = service.title;
-      if (description) description.textContent = service.description;
+  if (previewFocus) {
+    previewFocus.textContent = project.focus;
+  }
 
-      if (typeof serviceDialog.showModal === "function") {
-        serviceDialog.showModal();
+  if (previewApproach) {
+    previewApproach.textContent = project.approach;
+  }
 
-        if (serviceBackdrop) {
-          serviceBackdrop.hidden = false;
+  if (previewFullLink) {
+    previewFullLink.href = project.page;
+  }
+
+  projectPreview.showModal();
+}
+
+
+/* 9. MAKE PROJECT IMAGES CLICKABLE */
+
+document.querySelectorAll(".project-card .project-image").forEach(link => {
+  link.addEventListener("click", event => {
+    const key = getProjectKey(link);
+
+    /*
+     * Only intercept links belonging to
+     * projects in our portfolio information.
+     */
+    if (!key || !portfolioDetails[key]) {
+      return;
+    }
+
+    event.preventDefault();
+    openProjectPreview(link);
+  });
+});
+
+
+/* 10. CLOSE PREVIEW BUTTON */
+
+if (previewClose && projectPreview) {
+  previewClose.addEventListener("click", () => {
+    projectPreview.close();
+  });
+}
+
+
+/* 11. CLOSE PREVIEW BY TAPPING OUTSIDE */
+
+if (projectPreview) {
+  projectPreview.addEventListener("click", event => {
+    if (event.target === projectPreview) {
+      projectPreview.close();
+    }
+  });
+}
+
+
+/* 12. ESCAPE KEY SUPPORT */
+
+if (projectPreview) {
+  projectPreview.addEventListener("close", () => {
+    /*
+     * The browser closes a dialog when
+     * the Escape key is pressed.
+     */
+  });
+}
+
+
+/* 13. SMOOTH INTERNAL NAVIGATION */
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener("click", event => {
+    const targetId = link.getAttribute("href");
+
+    if (!targetId || targetId === "#") return;
+
+    const target = document.querySelector(targetId);
+
+    if (!target) return;
+
+    event.preventDefault();
+
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+    /*
+     * Keep the URL in sync with the section
+     * without triggering a sudden jump.
+     */
+    if (history.replaceState) {
+      history.replaceState(null, "", targetId);
+    }
+  });
+});
+
+
+/* 14. IMAGE FALLBACK */
+
+document.querySelectorAll("img").forEach(img => {
+  img.addEventListener("error", () => {
+    img.classList.add("image-unavailable");
+  });
+});
+
+
+/* 15. OPTIONAL SCROLL REVEAL */
+
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealed");
+          revealObserver.unobserve(entry.target);
         }
-      } else {
-        serviceDialog.setAttribute("open", "open");
-      }
-    });
-  });
-
-  const closeDialogButton = $("#service-dialog-close");
-
-  if (closeDialogButton) {
-    closeDialogButton.addEventListener("click", closeServiceDialog);
-  }
-
-  if (serviceDialog) {
-    serviceDialog.addEventListener("close", () => {
-      if (serviceBackdrop) {
-        serviceBackdrop.hidden = true;
-      }
-    });
-
-    serviceDialog.addEventListener("click", event => {
-      if (event.target === serviceDialog) {
-        closeServiceDialog();
-      }
-    });
-  }
-
-  if (serviceBackdrop) {
-    serviceBackdrop.addEventListener("click", closeServiceDialog);
-  }
-
-  // Single Escape handler for both menu and service dialog
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape") {
-      closeMenu();
-      closeServiceDialog();
-    }
-  });
-
-  // CARD HOVER EFFECT
-  $$(".lab-card, .feature-card").forEach(card => {
-    card.addEventListener("mouseenter", () => {
-      card.classList.add("hovered");
-    });
-
-    card.addEventListener("mouseleave", () => {
-      card.classList.remove("hovered");
-    });
-  });
-
-  // IMAGE ERROR HANDLING
-  $$("img").forEach(image => {
-    image.addEventListener("error", () => {
-      image.classList.add("image-unavailable");
-    });
-  });
-
-  // TOOL BUTTON FEEDBACK
-  $$(".tool-form .btn").forEach(button => {
-    button.addEventListener("click", () => {
-      button.classList.add("clicked");
-
-      setTimeout(() => {
-        button.classList.remove("clicked");
-      }, 250);
-    });
-  });
-
-  // TOOL FORM VALIDATION
-  $$(".tool-form input[type='number']").forEach(input => {
-    input.addEventListener("input", () => {
-      if (input.value !== "" && Number(input.value) < 0) {
-        input.value = "0";
-      }
-    });
-  });
-
-  // ACTIVE PAGE NAVIGATION
-  const currentPage =
-    window.location.pathname.split("/").pop() || "index.html";
-
-  $$("nav a").forEach(link => {
-    const href = link.getAttribute("href");
-
-    if (!href || href.startsWith("#")) return;
-
-    const linkPage = href.split("/").pop().split("?")[0];
-
-    if (linkPage === currentPage) {
-      link.classList.add("active");
-    }
-  });
-
-  // =========================================
-  // PORTFOLIO PROJECT PREVIEWS
-  // =========================================
-
-  const projectPreview = document.getElementById("project-preview");
-  const previewClose = document.getElementById("preview-close");
-  const previewImage = document.getElementById("preview-image");
-  const previewTitle = document.getElementById("preview-title");
-  const previewDescription = document.getElementById("preview-description");
-  const previewFocus = document.getElementById("preview-focus");
-  const previewApproach = document.getElementById("preview-approach");
-  const previewFullLink = document.getElementById("preview-full-link");
-
-  const portfolioDetails = {
-    "courtyard-house": {
-      title: "Courtyard House",
-      description:
-        "A residential concept exploring privacy, daylight and natural ventilation through a sheltered central courtyard.",
-      focus: "Residential space and daylight",
-      approach: "Climate-responsive planning"
+      });
     },
-    "civic-exchange": {
-      title: "Civic Exchange",
-      description:
-        "A public-building concept focused on accessible circulation, flexible community use and a welcoming relationship with its surroundings.",
-      focus: "Public space and accessibility",
-      approach: "Connected civic spaces"
-    },
-    "culture-pavilion": {
-      title: "Culture Pavilion",
-      description:
-        "A pavilion concept exploring gathering spaces, shade, natural light and a lightweight architectural expression.",
-      focus: "Culture and shared experience",
+    {
+      threshold: 0.12
+    }
+  );
+
+  document.querySelectorAll(
+    ".intro, .services, .projects, .process, .quote-band, .contact"
+  ).forEach(section => {
+    revealObserver.observe(section);
+  });
+     }
+     focus: "Culture and shared experience",
       approach: "Climate-aware pavilion design"
     },
     "open-frame": {
