@@ -120,9 +120,18 @@
     }
   };
 
+  
   const params = new URLSearchParams(window.location.search);
   const key = params.get("project");
+
+  // Send the flagship concept to its dedicated case-study page.
+  if (key === "courtyard-house") {
+    window.location.replace("courtyard-house.html");
+    return;
+  }
+
   const project = projects[key];
+
 
   const setText = (id, value) => {
     const element = document.getElementById(id);
