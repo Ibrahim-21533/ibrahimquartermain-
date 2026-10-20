@@ -7,13 +7,15 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-aut
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCkdwk-oUVgMBY2qhiMGKmJ1wJYBNsVJFg",
+  authDomain: "sky-arch-lab.firebaseapp.com",
+  databaseURL: "https://sky-arch-lab-default-rtdb.firebaseio.com",
+  projectId: "sky-arch-lab",
+  storageBucket: "sky-arch-lab.firebasestorage.app",
+  messagingSenderId: "865466952230",
+  appId: "1:865466952230:web:1fbb5d1ee70881d2bf14e7"
 };
+
 
 const isConfigured = Object.values(firebaseConfig).every(
   value => value && !value.startsWith("YOUR_")
