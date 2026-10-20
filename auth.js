@@ -1,4 +1,5 @@
 import { auth, db, isConfigured } from "./firebase.js";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -9,11 +10,11 @@ import {
   onAuthStateChanged,
   signOut,
   updateProfile
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";import {
-  doc, setDoc, getDoc, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
-const $ = (id) => document.getElementById(id);
+import {
+  doc, setDoc, getDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";const $ = (id) => document.getElementById(id);
 const showMessage = (text, type = "error") => {
   const el = $("message");
   if (!el) return;
