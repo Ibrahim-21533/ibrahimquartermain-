@@ -137,3 +137,211 @@ h1 em,h2 em{font-style:normal;color:var(--accent)}
 .service-dialog-close{position:absolute;top:12px;right:14px;border:1px solid var(--line);border-radius:50%;width:36px;height:36px;background:transparent;color:inherit;font-size:24px;cursor:pointer}
 .service-dialog .button{display:inline-flex;align-items:center;gap:18px;text-decoration:none;padding:14px 18px;background:var(--ink);color:white}
 @media(max-width:760px){.service-dialog{padding:30px 22px}.service-dialog h2{padding-right:18px}}
+/* =========================================
+   SKY ARCH LAB — PORTFOLIO PREVIEW
+   ========================================= */
+
+.project-preview {
+  width: min(920px, calc(100% - 28px));
+  max-width: 920px;
+  max-height: min(88vh, 820px);
+  padding: 0;
+  border: 1px solid rgba(32, 35, 33, 0.2);
+  background: #faf8f2;
+  color: #202321;
+  overflow: auto;
+}
+
+.project-preview::backdrop {
+  background: rgba(17, 22, 20, 0.76);
+  backdrop-filter: blur(5px);
+}
+
+.project-preview[open] {
+  animation: previewEnter 180ms ease-out;
+}
+
+@keyframes previewEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.preview-close {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(32, 35, 33, 0.2);
+  border-radius: 50%;
+  background: #faf8f2;
+  color: #202321;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.preview-close:hover {
+  background: #202321;
+  color: #fffefa;
+}
+
+.preview-layout {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  min-height: 420px;
+}
+
+.preview-media {
+  min-height: 420px;
+  background: #e6e0d4;
+}
+
+.preview-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: cover;
+}
+
+.preview-content {
+  align-self: center;
+  padding: clamp(24px, 4vw, 44px);
+}
+
+.preview-content .eyebrow {
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: #6d706b;
+}
+
+.preview-status {
+  display: inline-block;
+  margin: 12px 0;
+  padding: 5px 8px;
+  border: 1px solid rgba(185, 110, 75, 0.45);
+  color: #99573b;
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+}
+
+.preview-content h2 {
+  margin: 10px 0 14px;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(27px, 4vw, 42px);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1.08;
+}
+
+.preview-content > p:not(.eyebrow):not(.preview-status) {
+  color: #6d706b;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.preview-details {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0;
+  padding: 18px 0;
+  border-top: 1px solid rgba(32, 35, 33, 0.15);
+  border-bottom: 1px solid rgba(32, 35, 33, 0.15);
+}
+
+.preview-details div {
+  display: grid;
+  gap: 4px;
+}
+
+.preview-details span {
+  color: #6d706b;
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+}
+
+.preview-details strong {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.preview-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 13px 16px;
+  background: #202321;
+  color: #fffefa;
+  font-size: 11px;
+  transition: background 180ms ease;
+}
+
+.preview-link:hover {
+  background: #b96e4b;
+  color: #fff;
+}
+
+.preview-link span {
+  font-size: 16px;
+}
+
+.project-preview button:focus-visible,
+.project-preview a:focus-visible {
+  outline: 2px solid #b96e4b;
+  outline-offset: 4px;
+}
+
+@media (max-width: 640px) {
+  .project-preview {
+    max-height: 90vh;
+  }
+
+  .preview-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-media,
+  .preview-media img {
+    min-height: 220px;
+    max-height: 300px;
+  }
+
+  .preview-content {
+    padding: 24px 20px;
+  }
+
+  .preview-content h2 {
+    font-size: 32px;
+  }
+
+  .preview-close {
+    position: sticky;
+    float: right;
+    margin-bottom: -40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-preview[open] {
+    animation: none;
+  }
+
+  .preview-link {
+    transition: none;
+  }
+}
+
