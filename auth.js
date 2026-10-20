@@ -3,13 +3,13 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   sendPasswordResetEmail,
   onAuthStateChanged,
   signOut,
   updateProfile
-} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import {
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";import {
   doc, setDoc, getDoc, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
@@ -54,7 +54,32 @@ const requireConfig = () => {
   return true;
 };
 const goMain = () => { window.location.href = "./main1.html"; };
+const saveGoogleProfile = async (user) => {
+  const profileRef = doc(db, "users", user.uid);
+  const profile = await getDoc(profileRef);
 
+  if (!profile.exists()) {
+    await setDoc(profileRef, {
+      fullName: user.displayName || "",
+      email: user.email || "",
+      mobile: "",
+      createdAt: serverTimestamp()
+    });
+  }
+};
+
+// Process the result when Google redirects back to this website.
+getRedirectResult(auth)
+  .then(async (result) => {
+    if (!result) return;
+
+    await saveGoogleProfile(result.user);
+    goMain();
+  })
+  .catch((error) => {
+    console.error("Google redirect sign-in error:", error.code, error.message);
+    showMessage(friendlyError(error));
+  });
 // Login page
 const loginForm = $("login-form");
 if (loginForm) {
@@ -83,26 +108,22 @@ if (loginForm) {
   });
 
   $("google-button")?.addEventListener("click", async () => {
-    clearMessage(); if (!requireConfig()) return;
-    const button = $("google-button"); setBusy(button, true, "Connecting to Google…");
-    try {
-      const credential = await signInWithPopup(auth, new GoogleAuthProvider());
-      const user = credential.user;
-      // Profile policy: create a profile only if one does not exist; do not overwrite user-entered fields.
-      const profileRef = doc(db, "users", user.uid);
-      const profile = await getDoc(profileRef);
-      if (!profile.exists()) {
-        await setDoc(profileRef, {
-          fullName: user.displayName || "",
-          email: user.email || "",
-          mobile: "",
-          createdAt: serverTimestamp()
-        });
-      }
-      goMain();
-    } catch (error) { showMessage(friendlyError(error)); }
-    finally { setBusy(button, false); }
-  });
+  clearMessage();
+
+  if (!requireConfig()) return;
+
+  const button = $("google-button");
+  setBusy(button, true, "Connecting to Google…");
+
+  try {
+    const provider = new GoogleAuthProvider();
+    await signInWithRedirect(auth, provider);
+  } catch (error) {
+    console.error("Google sign-in error:", error.code, error.message);
+    showMessage(friendlyError(error));
+    setBusy(button, false);
+  }
+});
 }
 
 // Sign-up page
@@ -135,27 +156,23 @@ if (signupForm) {
     finally { setBusy(button, false); }
   });
 
-  $("google-signup-button")?.addEventListener("click", async () => {
-    clearMessage(); if (!requireConfig()) return;
-    const googleButton = $("google-signup-button");
-    setBusy(googleButton, true, "Connecting to Google…");
-    try {
-      const credential = await signInWithPopup(auth, new GoogleAuthProvider());
-      const user = credential.user;
-      const profileRef = doc(db, "users", user.uid);
-      const profile = await getDoc(profileRef);
-      if (!profile.exists()) {
-        await setDoc(profileRef, {
-          fullName: user.displayName || "",
-          email: user.email || "",
-          mobile: "",
-          createdAt: serverTimestamp()
-        });
-      }
-      goMain();
-    } catch (error) { showMessage(friendlyError(error)); }
-    finally { setBusy(googleButton, false); }
-  });
+$("google-signup-button")?.addEventListener("click", async () => {
+  clearMessage();
+
+  if (!requireConfig()) return;
+
+  const button = $("google-signup-button");
+  setBusy(button, true, "Connecting to Google…");
+
+  try {
+    const provider = new GoogleAuthProvider();
+    await signInWithRedirect(auth, provider);
+  } catch (error) {
+    console.error("Google signup error:", error.code, error.message);
+    showMessage(friendlyError(error));
+    setBusy(button, false);
+  }
+});
 }
 
 // Password reset page
