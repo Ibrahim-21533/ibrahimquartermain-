@@ -338,4 +338,9 @@ document.addEventListener("DOMContentLoaded", () => {
       link.classList.add("active");
     }
   });
+});  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      closeServiceDialog();
+    }
+  });
 });
