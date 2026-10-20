@@ -343,4 +343,134 @@ document.addEventListener("DOMContentLoaded", () => {
       closeServiceDialog();
     }
   });
-});
+  // =========================================
+  // PORTFOLIO PROJECT PREVIEWS
+  // =========================================
+
+  const projectPreview = document.getElementById("project-preview");
+  const previewClose = document.getElementById("preview-close");
+  const previewImage = document.getElementById("preview-image");
+  const previewTitle = document.getElementById("preview-title");
+  const previewDescription = document.getElementById("preview-description");
+  const previewFocus = document.getElementById("preview-focus");
+  const previewApproach = document.getElementById("preview-approach");
+  const previewFullLink = document.getElementById("preview-full-link");
+
+  const portfolioDetails = {
+    "courtyard-house": {
+      title: "Courtyard House",
+      description:
+        "A residential concept exploring privacy, daylight and natural ventilation through a sheltered central courtyard.",
+      focus: "Residential space and daylight",
+      approach: "Climate-responsive planning"
+    },
+    "civic-exchange": {
+      title: "Civic Exchange",
+      description:
+        "A public-building concept focused on accessible circulation, flexible community use and a welcoming relationship with its surroundings.",
+      focus: "Public space and accessibility",
+      approach: "Connected civic spaces"
+    },
+    "culture-pavilion": {
+      title: "Culture Pavilion",
+      description:
+        "A pavilion concept exploring gathering spaces, shade, natural light and a lightweight architectural expression.",
+      focus: "Culture and shared experience",
+      approach: "Climate-aware pavilion design"
+    },
+    "open-frame": {
+      title: "Open Frame",
+      description:
+        "A flexible architectural concept investigating modular planning, adaptable space and the relationship between structure and use.",
+      focus: "Modular and adaptable space",
+      approach: "A clear structural framework"
+    }
+  };
+
+  function getProjectKey(link) {
+    try {
+      return new URL(link.href, window.location.href)
+        .searchParams.get("project");
+    } catch {
+      return null;
+    }
+  }
+
+  function getProjectImage(link) {
+    const image = link.querySelector("img");
+
+    if (image && image.currentSrc) {
+      return {
+        src: image.currentSrc,
+        alt: image.alt || ""
+      };
+    }
+
+    if (image && image.src) {
+      return {
+        src: image.src,
+        alt: image.alt || ""
+      };
+    }
+
+    const background = window.getComputedStyle(link).backgroundImage;
+    const match = background.match(/url\(["']?(.*?)["']?\)/);
+
+    return {
+      src: match ? match[1] : "",
+      alt: ""
+    };
+  }
+
+  function openProjectPreview(link) {
+    const key = getProjectKey(link);
+    const project = portfolioDetails[key];
+
+    if (!project || !projectPreview) return;
+
+    const card = link.closest(".project-card");
+    const image = getProjectImage(link);
+
+    previewTitle.textContent = project.title;
+    previewDescription.textContent = project.description;
+    previewFocus.textContent = project.focus;
+    previewApproach.textContent = project.approach;
+
+    previewImage.src = image.src;
+    previewImage.alt = image.alt || project.title + " concept image";
+    previewImage.hidden = !image.src;
+
+    previewFullLink.href = link.getAttribute("href");
+    previewFullLink.href = "case-study.html?project=" +
+      encodeURIComponent(key);
+
+    if (typeof projectPreview.showModal === "function") {
+      projectPreview.showModal();
+    } else {
+      // Older-browser fallback: follow the full case-study link.
+      window.location.href = previewFullLink.href;
+    }
+  }
+
+  document.querySelectorAll(".project-card .project-image").forEach(link => {
+    link.addEventListener("click", event => {
+      const key = getProjectKey(link);
+
+      if (!portfolioDetails[key] || !projectPreview) return;
+
+      event.preventDefault();
+      openProjectPreview(link);
+    });
+  });
+
+  if (previewClose && projectPreview) {
+    previewClose.addEventListener("click", () => {
+      projectPreview.close();
+    });
+
+    projectPreview.addEventListener("click", event => {
+      if (event.target === projectPreview) {
+        projectPreview.close();
+      }
+    });
+  }
