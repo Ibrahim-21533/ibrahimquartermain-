@@ -58,3 +58,57 @@ textarea{resize:vertical;min-height:110px}
 .footer span:first-child{font-family:var(--mono);letter-spacing:.18em;color:var(--ink)}
 @media(max-width:820px){.workspace{grid-template-columns:1fr}.side-panel{position:static}.shell{padding-top:38px}.footer{flex-direction:column}}
 @media(max-width:480px){.topbar{height:66px;padding:0 16px}.brand{font-size:10px}.back-link{font-size:10px}.shell{padding-left:16px;padding-right:16px}.panel{padding:19px 16px}.two-col{grid-template-columns:1fr;gap:0}.panel-heading{margin-bottom:18px}.footer{margin-top:32px}}
+/* PROJECT SEARCH */
+.search-area {
+  margin: 20px 0;
+}
+
+.search-area label {
+  display: block;
+  margin: 0 0 7px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.search-area input {
+  width: 100%;
+}
+
+.search-status {
+  min-height: 15px;
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+/* PROJECT ACTIONS */
+.project-item-actions button:focus-visible,
+.primary:focus-visible,
+.secondary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.project-item-actions button {
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.primary,
+.secondary {
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-item-actions button,
+  .primary,
+  .secondary {
+    transition: none;
+  }
+}
+
