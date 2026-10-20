@@ -1,4 +1,3 @@
-
 /* =========================================
    SKY ARCH LAB
    Main Site Script
@@ -36,21 +35,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const isOpen =
         menuToggle.getAttribute("aria-expanded") === "true";
 
-      menuToggle.setAttribute(
-        "aria-expanded",
-        String(!isOpen)
-      );
-
+      menuToggle.setAttribute("aria-expanded", String(!isOpen));
       primaryNav.classList.toggle("is-open", !isOpen);
       document.body.classList.toggle("menu-open", !isOpen);
     });
 
     $$("#primary-nav a").forEach(link => {
       link.addEventListener("click", closeMenu);
-    });
-
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape") closeMenu();
     });
 
     document.addEventListener("click", event => {
@@ -87,13 +78,12 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
 
       target.scrollIntoView({
-        behavior: window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches ? "auto" : "smooth",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
         block: "start"
       });
 
-      // Keep the URL in sync without triggering a jump.
       if (window.location.hash !== href) {
         history.replaceState(null, "", href);
       }
@@ -154,8 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function applyProjectFilter(filter) {
     projectCards.forEach(card => {
       const category = card.dataset.category || "";
-      const matches =
-        filter === "all" || category === filter;
+      const matches = filter === "all" || category === filter;
 
       card.hidden = !matches;
     });
@@ -215,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   function closeServiceDialog() {
-    if (serviceDialog?.open && typeof serviceDialog.close === "function") {
+    if (serviceDialog && serviceDialog.open && typeof serviceDialog.close === "function") {
       serviceDialog.close();
     }
 
@@ -243,8 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
           serviceBackdrop.hidden = false;
         }
       } else {
-        // Fallback for browsers without native dialog support.
-        serviceDialog.setAttribute("open", "");
+        serviceDialog.setAttribute("open", "open");
       }
     });
   });
@@ -252,10 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeDialogButton = $("#service-dialog-close");
 
   if (closeDialogButton) {
-    closeDialogButton.addEventListener(
-      "click",
-      closeServiceDialog
-    );
+    closeDialogButton.addEventListener("click", closeServiceDialog);
   }
 
   if (serviceDialog) {
@@ -273,14 +258,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (serviceBackdrop) {
-    serviceBackdrop.addEventListener(
-      "click",
-      closeServiceDialog
-    );
+    serviceBackdrop.addEventListener("click", closeServiceDialog);
   }
 
+  // Single Escape handler for both menu and service dialog
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
+      closeMenu();
       closeServiceDialog();
     }
   });
@@ -338,11 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
       link.classList.add("active");
     }
   });
-});  document.addEventListener("keydown", event => {
-    if (event.key === "Escape") {
-      closeServiceDialog();
-    }
-  });
+
   // =========================================
   // PORTFOLIO PROJECT PREVIEWS
   // =========================================
@@ -428,7 +408,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!project || !projectPreview) return;
 
-    const card = link.closest(".project-card");
     const image = getProjectImage(link);
 
     previewTitle.textContent = project.title;
@@ -440,14 +419,11 @@ document.addEventListener("DOMContentLoaded", () => {
     previewImage.alt = image.alt || project.title + " concept image";
     previewImage.hidden = !image.src;
 
-    previewFullLink.href = link.getAttribute("href");
-    previewFullLink.href = "case-study.html?project=" +
-      encodeURIComponent(key);
+    previewFullLink.href = "case-study.html?project=" + encodeURIComponent(key);
 
     if (typeof projectPreview.showModal === "function") {
       projectPreview.showModal();
     } else {
-      // Older-browser fallback: follow the full case-study link.
       window.location.href = previewFullLink.href;
     }
   }
@@ -474,3 +450,4 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+});
