@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f0e8">
+  <meta name="description" content="Start and organise a project with SKY ARCH LAB.">
+  <title>Build a Project — SKY ARCH LAB</title>
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">SKY <span>ARCH</span> LAB</a>
+    <a class="back-link" href="index.html">← Back to studio</a>
+  </header>
+
+  <main class="shell">
+    <section class="intro">
+      <p class="eyebrow">SKY ARCH LAB / PROJECT BUILDER</p>
+      <h1>Start something<br><em>meaningful.</em></h1>
+      <p class="lead">Give your idea a structure. Create a project brief now, then build it out with tasks, documents and collaborators as Ibrahim Sky grows.</p>
+    </section>
+
+    <div class="workspace">
+      <section class="panel form-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">01 / PROJECT BRIEF</p>
+            <h2>Tell us about your idea.</h2>
+          </div>
+          <span class="step">01 — 02</span>
+        </div>
+
+        <form id="project-form">
+          <label for="project-name">Project name <span>*</span></label>
+          <input id="project-name" name="projectName" maxlength="100" placeholder="e.g. Sustainable Community Library" required>
+
+          <div class="two-col">
+            <div>
+              <label for="category">Project category <span>*</span></label>
+              <select id="category" name="category" required>
+                <option value="Architecture & Design">Architecture & Design</option>
+                <option value="Business & Startup">Business & Startup</option>
+                <option value="Technology & Software">Technology & Software</option>
+                <option value="Research & Education">Research & Education</option>
+                <option value="Community & Social Impact">Community & Social Impact</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="stage">Current stage</label>
+              <select id="stage" name="stage">
+                <option value="Idea">Idea</option>
+                <option value="Planning">Planning</option>
+                <option value="In progress">In progress</option>
+                <option value="On hold">On hold</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="description">Project description <span>*</span></label>
+          <textarea id="description" name="description" rows="5" maxlength="1500" placeholder="What are you trying to create or solve? Who is it for?" required></textarea>
+
+          <label for="goal">Main objective</label>
+          <select id="goal" name="goal">
+            <option value="Plan and organise a project">Plan and organise a project</option>
+            <option value="Create documents and spreadsheets">Create documents and spreadsheets</option>
+            <option value="Find collaborators">Find collaborators</option>
+            <option value="Develop a business idea">Develop a business idea</option>
+            <option value="Research and test an idea">Research and test an idea</option>
+          </select>
+
+          <div class="two-col">
+            <div>
+              <label for="deadline">Target date <small>(optional)</small></label>
+              <input id="deadline" name="deadline" type="date">
+            </div>
+            <div>
+              <label for="visibility">Visibility</label>
+              <select id="visibility" name="visibility">
+                <option value="Private">Private — just me</option>
+                <option value="Team">Team — invite collaborators later</option>
+                <option value="Public later">Consider publishing later</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="notice" role="note">
+            <strong>Prototype notice</strong>
+            <p>This first version saves projects only in this browser on this device. It does not yet create an account, sync to the cloud, or connect Google Drive.</p>
+          </div>
+
+          <div class="actions">
+            <button class="primary" type="submit">Create project <span>↗</span></button>
+            <button class="secondary" type="reset" id="clear-form">Clear form</button>
+          </div>
+          <p class="status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <aside class="panel side-panel">
+        <p class="eyebrow">02 / YOUR WORKSPACE</p>
+        <h2>Projects on this device.</h2>
+        <p class="side-copy">Projects you create in this prototype appear here. Cloud accounts and collaboration will be connected in a later milestone.</p>
+        <div id="project-list" class="project-list">
+          <div class="empty-state">
+            <span class="empty-icon">＋</span>
+            <strong>No projects yet</strong>
+            <p>Your first project will appear here after you create it.</p>
+          </div>
+        </div>
+        <div class="side-foot">
+          <span class="status-dot"></span>
+          <span>LOCAL PROTOTYPE</span>
+        </div>
+      </aside>
+    </div>
+    <footer class="footer">
+      <span>SKY ARCH LAB</span>
+      <span>Think carefully. Design responsibly. Build for life.</span>
+    </footer>
+  </main>
+  <script src="project.js"></script>
+</body>
+</html>
