@@ -1,1 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f3f0e8">
+  <meta name="description" content="SKY ARCH LAB — architecture, engineering, design and collaboration.">
+  <title>SKY ARCH LAB</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="SKY ARCH LAB home"><span class="brand-mark">S</span><span>SKY ARCH <small>LAB</small></span></a>
+    <button id="installBtn" class="button button-outline" hidden>Install app</button>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">ARCHITECTURE · ENGINEERING · DESIGN</p>
+      <h1>Ideas become <em>places.</em></h1>
+      <p class="intro">A focused workspace for architectural concepts, technical thinking, and projects in progress.</p>
+      <div class="hero-actions">
+        <button class="button" id="newProjectTop">＋ New project</button>
+        <span class="offline-indicator"><span id="networkDot"></span><span id="networkText">Checking connection…</span></span>
+      </div>
+      <div class="hero-graphic" aria-label="Abstract architectural line drawing" role="img">
+        <div class="sun"></div><div class="tower tower-one"></div><div class="tower tower-two"></div><div class="tower tower-three"></div>
+        <div class="ground"></div><div class="drawing-label">FIG. 01 / FORM STUDY</div>
+      </div>
+    </section>
 
+    <section class="section-heading">
+      <div><p class="eyebrow">YOUR WORKSPACE</p><h2>Project register</h2></div>
+      <span class="count" id="projectCount">0 projects</span>
+    </section>
+
+    <section class="toolbar">
+      <label class="searchbox"><span>⌕</span><input id="searchInput" type="search" placeholder="Search projects…" autocomplete="off"></label>
+      <select id="filterSelect" aria-label="Filter projects">
+        <option value="all">All projects</option><option value="Concept">Concept</option><option value="Academic">Academic</option><option value="Built">Built / real</option>
+      </select>
+    </section>
+
+    <section id="projectGrid" class="project-grid" aria-live="polite"></section>
+    <section id="emptyState" class="empty-state">
+      <div class="empty-icon">＋</div><h3>Your first project starts here.</h3>
+      <p>Create a concept or add a real project. Your entries are saved on this device.</p>
+      <button class="button" id="newProjectEmpty">Create a project</button>
+    </section>
+
+    <section class="note-panel">
+      <div class="note-icon">↗</div><div><h3>Designed for progress.</h3><p>This first version stores project records on your phone and works offline after its first successful load. Cloud sync and user accounts can be added in a later phase.</p></div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <a class="active" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">⌂ <span>Workspace</span></a>
+    <a href="#projectGrid" onclick="document.getElementById('projectGrid').scrollIntoView({behavior:'smooth'});return false;">▦ <span>Projects</span></a>
+    <a href="#about" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'});return false;">ⓘ <span>About</span></a>
+  </nav>
+
+  <footer id="about"><strong>SKY ARCH LAB</strong><span>Think. Test. Design. Critique.</span><a href="mailto:ibrahimquartermain17@gmail.com">Contact the studio ↗</a><small>Independent architecture workspace · Established 2025</small></footer>
+
+  <dialog id="projectDialog">
+    <form id="projectForm" method="dialog">
+      <div class="dialog-head"><div><p class="eyebrow">PROJECT REGISTER</p><h2 id="dialogTitle">New project</h2></div><button type="button" class="close-button" id="closeDialog" aria-label="Close">×</button></div>
+      <input type="hidden" id="projectId">
+      <label>Project name<input id="projectName" required maxlength="90" placeholder="e.g. Community Learning Centre"></label>
+      <div class="form-row"><label>Project type<select id="projectType"><option>Concept</option><option>Academic</option><option>Built</option></select></label><label>Status<select id="projectStatus"><option>In progress</option><option>Idea</option><option>On hold</option><option>Completed</option></select></label></div>
+      <label>Location <input id="projectLocation" maxlength="100" placeholder="Town, site, or campus"></label>
+      <label>Project notes<textarea id="projectNotes" rows="4" maxlength="1500" placeholder="Design brief, site observations, materials, structural ideas…"></textarea></label>
+      <p class="form-hint">Saved locally on this device. Do not store passwords or sensitive information here.</p>
+      <div class="dialog-actions"><button type="button" id="deleteProject" class="button button-danger" hidden>Delete</button><span class="spacer"></span><button type="button" class="button button-outline" id="cancelDialog">Cancel</button><button type="submit" class="button">Save project</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>
